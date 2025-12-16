@@ -1,3 +1,3 @@
 # Rendez-Vous.app
 
-Sistema de gestão de agendamentos para clientes e providers, desenvolvido em Java Spring Boot + Angular.
+Rendez-Vous.app est une application web de gestion de rendez-vous permettant aux clients de réserver des services auprès de différents prestataires et aux prestataires de gérer leur agenda et leurs services.
