@@ -11,7 +11,6 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-    private String description;
 
     @Enumerated(EnumType.STRING)
     private Name name;
@@ -19,10 +18,10 @@ public class Role {
     public Long getId() {
         return id;
     }
-    public String getDescription() {
-        return description;
-    }
 
+    public Name getName() {
+        return name;
+    }
 
     @Override
     public boolean equals(Object o) {

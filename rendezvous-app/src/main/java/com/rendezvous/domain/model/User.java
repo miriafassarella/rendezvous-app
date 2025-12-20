@@ -1,7 +1,7 @@
 package com.rendezvous.domain.model;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,7 +19,9 @@ public class User {
     private boolean enable;
     private LocalDateTime createdAt;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)//toda vez que eu buscar os usuarios, ja traz as permissoes dele.
+    @JoinTable(name = "role_user", joinColumns = @JoinColumn(name = "id_user")
+            , inverseJoinColumns = @JoinColumn(name = "id_role"))//coluna que faz o trabalho contrario.
     private List<Role> role;
 
     public Long getId() {

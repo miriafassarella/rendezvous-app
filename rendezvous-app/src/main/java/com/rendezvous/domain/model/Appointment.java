@@ -1,6 +1,5 @@
 package com.rendezvous.domain.model;
 
-import ch.qos.logback.core.net.server.Client;
 import jakarta.persistence.*;
 
 import com.rendezvous.domain.enums.Status;
@@ -31,7 +30,7 @@ public class Appointment {
     private ProviderProfile provider;
 
     @ManyToOne
-    private Client client;
+    private ClientProfile client;
 
     public Long getId() {
         return id;
@@ -81,11 +80,11 @@ public class Appointment {
         this.provider = provider;
     }
 
-    public Client getClient() {
+    public ClientProfile getClient() {
         return client;
     }
 
-    public void setClient(Client client) {
+    public void setClient(ClientProfile client) {
         this.client = client;
     }
 
