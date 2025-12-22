@@ -15,7 +15,7 @@ public class ClientProfile {
     private String phone;
 
     @OneToOne
-    private User user;
+    private User userId;
 
     public Long getId() {
         return id;
@@ -49,12 +49,12 @@ public class ClientProfile {
         this.phone = phone;
     }
 
-    public User getUser() {
-        return user;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     @Override

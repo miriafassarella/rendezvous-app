@@ -12,12 +12,12 @@ public class ProviderProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String businessName;
+    private String companyName;
     private String phone;
     private String description;
 
     @OneToOne
-    private User user;
+    private User userId;
 
     public Long getId() {
         return id;
@@ -27,20 +27,20 @@ public class ProviderProfile {
         this.id = id;
     }
 
-    public String getBusinessName() {
-        return businessName;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setBusinessName(String businessName) {
-        this.businessName = businessName;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
-    public User getUser() {
-        return user;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     public String getDescription() {
