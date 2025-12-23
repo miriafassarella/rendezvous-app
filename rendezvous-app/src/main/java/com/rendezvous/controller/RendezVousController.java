@@ -1,4 +1,4 @@
 package com.rendezvous.controller;
 
-public class ServiceController {
+public class RendezVousController {
 }

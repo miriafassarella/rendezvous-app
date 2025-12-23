@@ -1,6 +1,6 @@
 package com.rendezvous.domain.enums;
 
-public enum Name {
+public enum RoleName {
 
     ADMIN,
     PROVIDER,

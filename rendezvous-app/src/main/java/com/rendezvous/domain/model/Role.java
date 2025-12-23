@@ -1,6 +1,6 @@
 package com.rendezvous.domain.model;
 
-import com.rendezvous.domain.enums.Name;
+import com.rendezvous.domain.enums.RoleName;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -13,14 +13,14 @@ public class Role {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private Name name;
+    private RoleName roleName;
 
     public Long getId() {
         return id;
     }
 
-    public Name getName() {
-        return name;
+    public RoleName getName() {
+        return roleName;
     }
 
     @Override
