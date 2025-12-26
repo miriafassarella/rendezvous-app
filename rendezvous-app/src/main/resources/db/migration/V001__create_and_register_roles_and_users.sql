@@ -19,6 +19,6 @@ CREATE TABLE role_user (
     FOREIGN KEY (role_id) REFERENCES role(id)
 );
 
-INSERT INTO role (name) VALUES ('ROLE_CLIENT');
-INSERT INTO role (name) VALUES ('ROLE_PROVIDER');
-INSERT INTO role (name) VALUES ('ROLE_ADMIN');
+INSERT INTO role (name) VALUES ('CLIENT');
+INSERT INTO role (name) VALUES ('PROVIDER');
+INSERT INTO role (name) VALUES ('ADMIN');
