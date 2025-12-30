@@ -13,14 +13,14 @@ public class Role {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private RoleName roleName;
+    private RoleName name;
 
     public Long getId() {
         return id;
     }
 
     public RoleName getName() {
-        return roleName;
+        return name;
     }
 
     @Override

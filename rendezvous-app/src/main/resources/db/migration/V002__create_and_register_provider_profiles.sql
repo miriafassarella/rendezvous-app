@@ -1,4 +1,4 @@
-CREATE TABLE provider_profiles (
+CREATE TABLE provider_profile (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     company_name VARCHAR(150),
     phone VARCHAR(20),

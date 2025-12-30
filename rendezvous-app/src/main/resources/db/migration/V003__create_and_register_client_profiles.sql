@@ -1,4 +1,4 @@
-CREATE TABLE client_profiles (
+CREATE TABLE client_profile (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(100),
     last_name VARCHAR(100),

@@ -17,8 +17,10 @@ public class Service {
     private String name;
     private String description;
     private Integer durationMinutes;
+    private Integer bufferMinutes;
     private BigDecimal price;
     private boolean active;
+
 
     public Long getId() {
         return id;
@@ -50,6 +52,14 @@ public class Service {
 
     public void setDurationMinutes(Integer durationMinutes) {
         this.durationMinutes = durationMinutes;
+    }
+
+    public Integer getBufferMinutes() {
+        return bufferMinutes;
+    }
+
+    public void setBufferMinutes(Integer bufferMinutes) {
+        this.bufferMinutes = bufferMinutes;
     }
 
     public BigDecimal getPrice() {

@@ -1,23 +1,24 @@
 package com.rendezvous.domain.model;
 
+
 import jakarta.persistence.*;
+import org.hibernate.annotations.AnyDiscriminatorImplicitValues;
 
 import java.util.Objects;
-
 
 @Entity
 public class ProviderProfile {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String companyName;
+
+    private String companyname;
     private String phone;
     private String description;
 
     @OneToOne
-    private User userId;
+    private User user;
 
     public Long getId() {
         return id;
@@ -27,20 +28,20 @@ public class ProviderProfile {
         this.id = id;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getCompanyname() {
+        return companyname;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setCompanyname(String companyname) {
+        this.companyname = companyname;
     }
 
-    public User getUserId() {
-        return userId;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getDescription() {
@@ -51,12 +52,12 @@ public class ProviderProfile {
         this.description = description;
     }
 
-    public String getPhone() {
-        return phone;
+    public User getUser() {
+        return user;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

@@ -15,8 +15,8 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-    private LocalDate appointmentDate;
     private LocalTime startTime;
+    private LocalDate endTime;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -24,12 +24,15 @@ public class Appointment {
     private LocalDateTime createdAt;
 
     @ManyToOne
+    @JoinColumn(name = "service_id", nullable = false)
     private Service service;
 
     @ManyToOne
+    @JoinColumn(name = "provider_id", nullable = false)
     private ProviderProfile provider;
 
     @ManyToOne
+    @JoinColumn(name = "client_id", nullable = false)
     private ClientProfile client;
 
     public Long getId() {
@@ -41,11 +44,11 @@ public class Appointment {
     }
 
     public LocalDate getAppointmentDate() {
-        return appointmentDate;
+        return endTime;
     }
 
     public void setAppointmentDate(LocalDate appointmentDate) {
-        this.appointmentDate = appointmentDate;
+        this.endTime = appointmentDate;
     }
 
     public LocalTime getStartTime() {
@@ -72,7 +75,7 @@ public class Appointment {
         this.service = service;
     }
 
-    public ProviderProfile getProvider() {
+   public ProviderProfile getProvider() {
         return provider;
     }
 
@@ -85,7 +88,7 @@ public class Appointment {
     }
 
     public void setClient(ClientProfile client) {
-        this.client = client;
+        this.client= client;
     }
 
     @Override
