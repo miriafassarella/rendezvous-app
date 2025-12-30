@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-public class Service {
+public class TypeService {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -81,7 +81,7 @@ public class Service {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Service service = (Service) o;
+        TypeService service = (TypeService) o;
         return Objects.equals(id, service.id);
     }
 
