@@ -18,6 +18,7 @@ public class ProviderProfile {
     private String description;
 
     @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public Long getId() {

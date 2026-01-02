@@ -15,6 +15,7 @@ public class ClientProfile {
     private String phone;
 
     @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User userId;
 
     public Long getId() {
