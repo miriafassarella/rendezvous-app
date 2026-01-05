@@ -16,7 +16,7 @@ public class ClientProfile {
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User userId;
+    private User user;
 
     public Long getId() {
         return id;
@@ -50,12 +50,12 @@ public class ClientProfile {
         this.phone = phone;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

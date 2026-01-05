@@ -13,7 +13,7 @@ public class ProviderProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String companyname;
+    private String companyName;
     private String phone;
     private String description;
 
@@ -29,12 +29,12 @@ public class ProviderProfile {
         this.id = id;
     }
 
-    public String getCompanyname() {
-        return companyname;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setCompanyname(String companyname) {
-        this.companyname = companyname;
+    public void setCompanyName(String companyname) {
+        this.companyName = companyname;
     }
 
     public String getPhone() {

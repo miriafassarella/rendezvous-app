@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,11 +18,11 @@ public class User {
     private String email;
     private String password;
     private boolean enable;
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now(ZoneOffset.UTC);
 
     @ManyToMany(fetch = FetchType.EAGER)//toda vez que eu buscar os usuarios, ja traz as permissoes dele.
-    @JoinTable(name = "role_user", joinColumns = @JoinColumn(name = "id_user")
-            , inverseJoinColumns = @JoinColumn(name = "id_role"))//coluna que faz o trabalho contrario.
+    @JoinTable(name = "role_user", joinColumns = @JoinColumn(name = "user_id")
+            , inverseJoinColumns = @JoinColumn(name = "role_id"))//coluna que faz o trabalho contrario.
     private List<Role> role;
 
     public Long getId() {
