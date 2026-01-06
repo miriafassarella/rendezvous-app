@@ -1,6 +1,4 @@
-package com.rendezvous.dto;
-
-import com.rendezvous.domain.model.Role;
+package com.rendezvous.dto.ClientProfileDto;
 
 import java.util.List;
 
@@ -13,15 +11,7 @@ public class ClientProfileRequestDTO {
     private String phone;
     private boolean enable;
     private List<Long> rolesIds;
-    private Long userId;
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public String getEmail() {
         return email;

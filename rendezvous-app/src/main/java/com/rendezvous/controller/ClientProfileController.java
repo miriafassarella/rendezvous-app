@@ -1,18 +1,15 @@
 package com.rendezvous.controller;
 
 import com.rendezvous.domain.model.ClientProfile;
-import com.rendezvous.domain.repository.ClientProfileRepository;
-import com.rendezvous.domain.repository.UserRepository;
 import com.rendezvous.domain.service.ClientProfileService;
-import com.rendezvous.domain.service.UserService;
-import com.rendezvous.dto.ClientProfileRequestDTO;
+import com.rendezvous.dto.ClientProfileDto.ClientProfileRequestDTO;
+import com.rendezvous.dto.ClientProfileDto.ClientProfileResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/clients")
@@ -20,6 +17,11 @@ public class ClientProfileController {
 
     @Autowired
     ClientProfileService clientProfileService;
+
+    @GetMapping
+    public List<ClientProfileResponseDTO> findAll(){
+        return clientProfileService.findAll();
+    }
 
     @PostMapping
     public ResponseEntity<ClientProfile> createClient(@RequestBody ClientProfileRequestDTO clientDTO){

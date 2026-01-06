@@ -7,7 +7,8 @@ import com.rendezvous.domain.model.User;
 import com.rendezvous.domain.repository.ClientProfileRepository;
 import com.rendezvous.domain.repository.RoleRepository;
 import com.rendezvous.domain.repository.UserRepository;
-import com.rendezvous.dto.ClientProfileRequestDTO;
+import com.rendezvous.dto.ClientProfileDto.ClientProfileRequestDTO;
+import com.rendezvous.dto.ClientProfileDto.ClientProfileResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ClientProfileService {
@@ -29,6 +29,24 @@ public class ClientProfileService {
 
     @Autowired
     RoleRepository roleRepository;
+
+    public List<ClientProfileResponseDTO> findAll(){
+
+       return clientProfileRepository.findAll()
+               .stream()
+               .map(client-> {
+                   ClientProfileResponseDTO dto = new ClientProfileResponseDTO();
+                   dto.setId(client.getId());
+                   dto.setPhone(client.getPhone());
+                   dto.setName(client.getFirstName() + " " + client.getLastName());
+                   dto.setUser(client.getUser());
+                   if (client.getUser() != null) {
+                       dto.getUser().setEmail(client.getUser().getEmail());
+                   }
+                   return dto;
+               })
+               .toList();
+    }
 
     public ClientProfile createClient(ClientProfileRequestDTO clientDTO){
 
