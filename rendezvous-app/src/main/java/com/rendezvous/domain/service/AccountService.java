@@ -16,9 +16,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class ClientProfileService {
+public class AccountService {
 
 
     @Autowired
@@ -30,7 +31,7 @@ public class ClientProfileService {
     @Autowired
     RoleRepository roleRepository;
 
-    public List<ClientProfileResponseDTO> findAll(){
+    public List<ClientProfileResponseDTO> findClientAll(){
 
        return clientProfileRepository.findAll()
                .stream()
@@ -69,5 +70,14 @@ public class ClientProfileService {
         return clientProfileRepository.save(client);
     }
 
+    public void deleteClient(Long id){
+        Optional<ClientProfile> client = clientProfileRepository.findById(id);
+        if(client.isEmpty()){
+            //TODO
+        }else {
+            clientProfileRepository.delete(client.get());
+        }
+
+    }
 
 }

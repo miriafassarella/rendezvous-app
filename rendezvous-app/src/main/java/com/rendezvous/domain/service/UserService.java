@@ -2,6 +2,7 @@ package com.rendezvous.domain.service;
 
 import com.rendezvous.domain.model.User;
 import com.rendezvous.domain.repository.UserRepository;
+import com.rendezvous.dto.user.UserRequestDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,26 +14,9 @@ import java.util.Optional;
 public class UserService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
 
-    public User addUser(User user){
-        return userRepository.save(user);
-    }
 
-    public User updateUser(Long id, User user){
-        Optional<User> userCourrent = userRepository.findById(id);
-        BeanUtils.copyProperties(user, userCourrent.get(), "id");
-
-        return userRepository.save(userCourrent.get());
-    }
-
-    public void removeUser(Long id){
-        Optional<User> userId= userRepository.findById(id);
-        if (userId.isEmpty()) {
-            //criar exception
-        }
-        userRepository.delete(userId.get());
-    }
 
 }

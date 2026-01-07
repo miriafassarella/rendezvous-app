@@ -2,6 +2,7 @@ package com.rendezvous.domain.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -11,6 +12,7 @@ public class Availability {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
+    private LocalDate dayOfWeek;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
@@ -24,6 +26,14 @@ public class Availability {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public LocalDate getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(LocalDate dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 
     public LocalDateTime getStartTime() {

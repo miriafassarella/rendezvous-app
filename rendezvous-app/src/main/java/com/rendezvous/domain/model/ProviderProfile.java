@@ -4,6 +4,7 @@ package com.rendezvous.domain.model;
 import jakarta.persistence.*;
 import org.hibernate.annotations.AnyDiscriminatorImplicitValues;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -20,6 +21,9 @@ public class ProviderProfile {
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @OneToMany()
+    private List<Availability> availabilities;
 
     public Long getId() {
         return id;
@@ -59,6 +63,14 @@ public class ProviderProfile {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Availability> getAvailabilities() {
+        return availabilities;
+    }
+
+    public void setAvailabilities(List<Availability> availabilities) {
+        this.availabilities = availabilities;
     }
 
     @Override

@@ -34,21 +34,5 @@ public class UserController {
         return userId.get();
     }
 
-    @PostMapping
-    public ResponseEntity<User> addUser(@RequestBody User user){
-        User userSave = userService.addUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userSave);
-    }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user){
-        User userModified = userService.updateUser(id, user);
-        return ResponseEntity.status(HttpStatus.OK).body(userModified);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<User> removeUser(@PathVariable Long id){
-        userService.removeUser(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
 }
