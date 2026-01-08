@@ -6,3 +6,4 @@ CREATE TABLE availability (
     end_time DATETIME NOT NULL,
     FOREIGN KEY (provider_id) REFERENCES provider_profile(id)
 );
+

@@ -22,6 +22,9 @@ public class ProviderProfile {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @OneToMany
+    private List<TypeService> services;
+
     @OneToMany()
     private List<Availability> availabilities;
 
@@ -63,6 +66,14 @@ public class ProviderProfile {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<TypeService> getServices() {
+        return services;
+    }
+
+    public void setServices(List<TypeService> services) {
+        this.services = services;
     }
 
     public List<Availability> getAvailabilities() {

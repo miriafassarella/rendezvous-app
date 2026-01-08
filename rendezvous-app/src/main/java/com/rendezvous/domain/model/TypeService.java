@@ -1,9 +1,6 @@
 package com.rendezvous.domain.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -20,6 +17,10 @@ public class TypeService {
     private Integer bufferMinutes;
     private BigDecimal price;
     private boolean active;
+
+    @ManyToOne
+    @JoinColumn(name = "provider_profile_id")
+    private ProviderProfile provider;
 
 
     public Long getId() {
