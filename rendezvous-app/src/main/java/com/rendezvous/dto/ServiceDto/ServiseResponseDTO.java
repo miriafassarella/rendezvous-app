@@ -1,27 +1,26 @@
-package com.rendezvous.domain.model;
-
-import jakarta.persistence.*;
+package com.rendezvous.dto.ServiceDto;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
-@Entity
-public class TypeService {
+public class ServiseResponseDTO {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private Long id;
-    private String name;
-    private String description;
-    private Integer durationMinutes;
-    private Integer bufferMinutes;
-    private BigDecimal price;
-    private boolean active;
+    Long id;
+    String name;
+    String description;
+    Integer durationMinutes;
+    Integer bufferMinutes;
+    BigDecimal price;
+    boolean active;
 
-    @ManyToOne
-    @JoinColumn(name = "provider_profile_id")
-    private ProviderProfile provider;
-
+    public ServiseResponseDTO(Long id, String name, String description, Integer durationMinutes, Integer bufferMinutes, BigDecimal price, boolean active ){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.durationMinutes = durationMinutes;
+        this.bufferMinutes = bufferMinutes;
+        this.price = price;
+        this.active = active;
+    }
 
     public Long getId() {
         return id;
@@ -77,17 +76,5 @@ public class TypeService {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        TypeService service = (TypeService) o;
-        return Objects.equals(id, service.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
     }
 }

@@ -25,7 +25,7 @@ public class Appointment {
 
     @ManyToOne
     @JoinColumn(name = "service_id", nullable = false)
-    private TypeService service;
+    private TypeOfService service;
 
     @ManyToOne
     @JoinColumn(name = "provider_id", nullable = false)
@@ -67,11 +67,11 @@ public class Appointment {
         this.createdAt = createdAt;
     }
 
-    public TypeService getService() {
+    public TypeOfService getService() {
         return service;
     }
 
-    public void setService(TypeService service) {
+    public void setService(TypeOfService service) {
         this.service = service;
     }
 

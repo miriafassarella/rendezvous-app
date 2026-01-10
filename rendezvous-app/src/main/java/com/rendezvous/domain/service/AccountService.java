@@ -100,6 +100,7 @@ public class AccountService {
         ProviderProfile provider = new ProviderProfile();
         provider.setCompanyName(providerDTO.getCompanyName());
         provider.setPhone(providerDTO.getPhone());
+        provider.setDescription(providerDTO.getDescription());
         provider.setUser(userSave);
 
 

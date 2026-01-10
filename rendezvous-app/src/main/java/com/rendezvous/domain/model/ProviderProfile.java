@@ -1,8 +1,8 @@
 package com.rendezvous.domain.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.hibernate.annotations.AnyDiscriminatorImplicitValues;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,10 +22,11 @@ public class ProviderProfile {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany
-    private List<TypeService> services;
+    @OneToMany(mappedBy = "provider")
+    private List<TypeOfService> services;
 
     @OneToMany()
+    @JsonIgnore //para ignorar o atributo na serialização
     private List<Availability> availabilities;
 
     public Long getId() {
@@ -68,11 +69,11 @@ public class ProviderProfile {
         this.user = user;
     }
 
-    public List<TypeService> getServices() {
+    public List<TypeOfService> getServices() {
         return services;
     }
 
-    public void setServices(List<TypeService> services) {
+    public void setServices(List<TypeOfService> services) {
         this.services = services;
     }
 

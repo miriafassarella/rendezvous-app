@@ -6,7 +6,6 @@ import java.util.List;
 
 public class ClientProfileResponseDTO {
 
-
     private Long id;
     private String name;
     private String phone;
