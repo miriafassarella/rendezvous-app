@@ -12,6 +12,8 @@ import com.rendezvous.domain.repository.UserRepository;
 import com.rendezvous.dto.ClientProfileDto.ClientProfileRequestDTO;
 import com.rendezvous.dto.ClientProfileDto.ClientProfileResponseDTO;
 import com.rendezvous.dto.ProviderProfileDto.ProviderProfileRequestDTO;
+import com.rendezvous.dto.ProviderProfileDto.ProviderProfileResponseDTO;
+import com.rendezvous.dto.ServiceDto.ServiseResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -42,20 +44,15 @@ public class AccountService {
        return clientProfileRepository.findAll()
                .stream()
                .map(client-> {
-                   ClientProfileResponseDTO dto = new ClientProfileResponseDTO();
-                   dto.setId(client.getId());
-                   dto.setPhone(client.getPhone());
-                   dto.setName(client.getFirstName() + " " + client.getLastName());
-                   dto.setUser(client.getUser());
-                   if (client.getUser() != null) {
-                       dto.getUser().setEmail(client.getUser().getEmail());
-                   }
+                   ClientProfileResponseDTO dto = new ClientProfileResponseDTO(client.getId(), client.getFirstName() + " " + client.getLastName(),
+                           client.getPhone(), client.getUser().getEmail());
+
                    return dto;
                })
                .toList();
     }
 
-    public ClientProfile createClient(ClientProfileRequestDTO clientDTO){
+    public ClientProfileResponseDTO createClient(ClientProfileRequestDTO clientDTO){
 
         User user = new User();
         user.setEmail(clientDTO.getEmail());
@@ -73,8 +70,18 @@ public class AccountService {
         client.setPhone(clientDTO.getPhone());
         client.setUser(userSave);
 
-        return clientProfileRepository.save(client);
+       ClientProfile clientSaved =  clientProfileRepository.save(client);
+
+       return new ClientProfileResponseDTO(
+               clientSaved.getId(),
+               clientSaved.getFirstName() + " " + clientSaved.getLastName(),
+               clientSaved.getPhone(),
+               userSave.getEmail()
+
+       );
     }
+
+
 
     public void deleteClient(Long id){
         Optional<ClientProfile> client = clientProfileRepository.findById(id);
@@ -86,7 +93,7 @@ public class AccountService {
 
     }
 
-    public ProviderProfile createProvide(ProviderProfileRequestDTO providerDTO){
+    public ProviderProfileResponseDTO createProvide(ProviderProfileRequestDTO providerDTO){
         User user = new User();
         user.setEmail(providerDTO.getEmail());
         user.setPassword(providerDTO.getPassword());
@@ -104,7 +111,24 @@ public class AccountService {
         provider.setUser(userSave);
 
 
-        return providerProfileRepository.save(provider);
+        ProviderProfile providerSaved = providerProfileRepository.save(provider);
+
+        return new ProviderProfileResponseDTO(
+                providerSaved.getId(),
+                providerSaved.getCompanyName(),
+                providerSaved.getPhone(),
+                providerSaved.getDescription(),
+                userSave.getEmail()
+        );
+    }
+
+    public void deleteProvider(Long id){
+        Optional<ProviderProfile> provider = providerProfileRepository.findById(id);
+        if(provider.isEmpty()){
+            //TODO
+        }else {
+            providerProfileRepository.delete(provider.get());
+        }
 
     }
 

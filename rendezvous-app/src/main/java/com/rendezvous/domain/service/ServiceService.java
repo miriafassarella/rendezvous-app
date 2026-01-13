@@ -31,8 +31,6 @@ public class ServiceService {
         service.setPrice(serviceDTO.getPrice());
         service.setActive(serviceDTO.isActive());
 
-
-
         Optional<ProviderProfile> provider = providerRepository.findById(serviceDTO.getProviderId());
         service.setProvider(provider.get());
 
@@ -48,8 +46,5 @@ public class ServiceService {
                saved.getPrice(),
                saved.isActive()
        );
-
-
     }
-
 }

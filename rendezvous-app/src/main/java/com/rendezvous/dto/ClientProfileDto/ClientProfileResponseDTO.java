@@ -3,14 +3,25 @@ package com.rendezvous.dto.ClientProfileDto;
 import com.rendezvous.domain.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ClientProfileResponseDTO {
 
     private Long id;
     private String name;
+
     private String phone;
-    private List<Long> rolesIds;
+    private String email;
+
+    //private List<Long> rolesIds;
     private User user;
+
+    public ClientProfileResponseDTO(Long id, String name, String phone, String email){
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+    }
 
 
     public Long getId() {
@@ -21,14 +32,6 @@ public class ClientProfileResponseDTO {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -37,19 +40,19 @@ public class ClientProfileResponseDTO {
         this.phone = phone;
     }
 
-    public List<Long> getRolesIds() {
-        return rolesIds;
+    public String getName() {
+        return name;
     }
 
-    public void setRolesIds(List<Long> rolesIds) {
-        this.rolesIds = rolesIds;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public User getUser() {
-        return user;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

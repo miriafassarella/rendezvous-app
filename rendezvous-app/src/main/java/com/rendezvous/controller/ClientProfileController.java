@@ -28,8 +28,8 @@ public class ClientProfileController {
     }
 
     @PostMapping
-    public ResponseEntity<ClientProfile> createClient(@RequestBody ClientProfileRequestDTO clientDTO){
-        ClientProfile newClient = accountService.createClient(clientDTO);
+    public ResponseEntity<ClientProfileResponseDTO> createClient(@RequestBody ClientProfileRequestDTO clientDTO){
+        ClientProfileResponseDTO newClient = accountService.createClient(clientDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(newClient);
     }
 

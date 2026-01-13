@@ -22,7 +22,7 @@ public class ProviderProfile {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "provider")
+    @OneToMany()
     private List<TypeOfService> services;
 
     @OneToMany()
