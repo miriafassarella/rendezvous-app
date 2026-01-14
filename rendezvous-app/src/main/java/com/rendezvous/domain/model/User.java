@@ -23,7 +23,7 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)//toda vez que eu buscar os usuarios, ja traz as permissoes dele.
     @JoinTable(name = "role_user", joinColumns = @JoinColumn(name = "user_id")
             , inverseJoinColumns = @JoinColumn(name = "role_id"))//coluna que faz o trabalho contrario.
-    private List<Role> role;
+    private List<Role> roles;
 
     public Long getId() {
         return id;
@@ -65,12 +65,12 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public List<Role> getRole() {
-        return role;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(List<Role> role) {
-        this.role = role;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     @Override

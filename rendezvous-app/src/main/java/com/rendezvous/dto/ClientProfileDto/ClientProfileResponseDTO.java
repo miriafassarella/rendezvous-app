@@ -9,11 +9,8 @@ public class ClientProfileResponseDTO {
 
     private Long id;
     private String name;
-
     private String phone;
     private String email;
-
-    //private List<Long> rolesIds;
     private User user;
 
     public ClientProfileResponseDTO(Long id, String name, String phone, String email){

@@ -13,7 +13,8 @@ import com.rendezvous.dto.ClientProfileDto.ClientProfileRequestDTO;
 import com.rendezvous.dto.ClientProfileDto.ClientProfileResponseDTO;
 import com.rendezvous.dto.ProviderProfileDto.ProviderProfileRequestDTO;
 import com.rendezvous.dto.ProviderProfileDto.ProviderProfileResponseDTO;
-import com.rendezvous.dto.ServiceDto.ServiseResponseDTO;
+import com.rendezvous.mapper.ClientProfileMapper;
+import com.rendezvous.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -37,7 +38,13 @@ public class AccountService {
     private ProviderProfileRepositoy providerProfileRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private ClientProfileMapper clientProfileMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     public List<ClientProfileResponseDTO> findClientAll(){
 
@@ -53,32 +60,15 @@ public class AccountService {
     }
 
     public ClientProfileResponseDTO createClient(ClientProfileRequestDTO clientDTO){
-
-        User user = new User();
-        user.setEmail(clientDTO.getEmail());
-        user.setPassword(clientDTO.getPassword());
-        user.setEnable(clientDTO.isEnable());
-
         List<Role> roles = new ArrayList<>(roleRepository.findAllById(clientDTO.getRolesIds()));
-        user.setRole(roles);
 
-        User userSave =  userRepository.save(user);
+        User user = userMapper.toEntity(clientDTO.getEmail(), clientDTO.getPassword(), roles);
+        User userSaved = userRepository.save(user);
 
-        ClientProfile client = new ClientProfile();
-        client.setFirstName(clientDTO.getFirstName());
-        client.setLastName(clientDTO.getLastName());
-        client.setPhone(clientDTO.getPhone());
-        client.setUser(userSave);
+        ClientProfile client =  clientProfileMapper.toEntity(clientDTO, userSaved);
+        ClientProfile savedUser = clientProfileRepository.save(client);
 
-       ClientProfile clientSaved =  clientProfileRepository.save(client);
-
-       return new ClientProfileResponseDTO(
-               clientSaved.getId(),
-               clientSaved.getFirstName() + " " + clientSaved.getLastName(),
-               clientSaved.getPhone(),
-               userSave.getEmail()
-
-       );
+       return clientProfileMapper.toResponseDTO(savedUser);
     }
 
 
@@ -100,7 +90,7 @@ public class AccountService {
         user.setEnable(providerDTO.isEnable());
 
         List<Role> roles = new ArrayList<>(roleRepository.findAllById(providerDTO.getRolesIds()));
-        user.setRole(roles);
+        user.setRoles(roles);
 
         User userSave =  userRepository.save(user);
 
