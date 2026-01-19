@@ -14,6 +14,7 @@ import com.rendezvous.dto.ClientProfileDto.ClientProfileResponseDTO;
 import com.rendezvous.dto.ProviderProfileDto.ProviderProfileRequestDTO;
 import com.rendezvous.dto.ProviderProfileDto.ProviderProfileResponseDTO;
 import com.rendezvous.mapper.ClientProfileMapper;
+import com.rendezvous.mapper.ProviderProfileMapper;
 import com.rendezvous.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -44,20 +45,18 @@ public class AccountService {
     private ClientProfileMapper clientProfileMapper;
 
     @Autowired
+    private ProviderProfileMapper providerProfileMapper;
+
+    @Autowired
     private UserMapper userMapper;
 
+
     public List<ClientProfileResponseDTO> findClientAll(){
-
-       return clientProfileRepository.findAll()
-               .stream()
-               .map(client-> {
-                   ClientProfileResponseDTO dto = new ClientProfileResponseDTO(client.getId(), client.getFirstName() + " " + client.getLastName(),
-                           client.getPhone(), client.getUser().getEmail());
-
-                   return dto;
-               })
-               .toList();
-    }
+        List<ClientProfile> clients = clientProfileRepository.findAll();
+            return clients.stream()
+                    .map(client -> clientProfileMapper.toResponseDTO(client))
+                    .toList();
+        }
 
     public ClientProfileResponseDTO createClient(ClientProfileRequestDTO clientDTO){
         List<Role> roles = new ArrayList<>(roleRepository.findAllById(clientDTO.getRolesIds()));
@@ -66,12 +65,10 @@ public class AccountService {
         User userSaved = userRepository.save(user);
 
         ClientProfile client =  clientProfileMapper.toEntity(clientDTO, userSaved);
-        ClientProfile savedUser = clientProfileRepository.save(client);
+        ClientProfile clientSaved = clientProfileRepository.save(client);
 
-       return clientProfileMapper.toResponseDTO(savedUser);
+       return clientProfileMapper.toResponseDTO(clientSaved);
     }
-
-
 
     public void deleteClient(Long id){
         Optional<ClientProfile> client = clientProfileRepository.findById(id);
@@ -83,33 +80,24 @@ public class AccountService {
 
     }
 
+    public List<ProviderProfileResponseDTO> findProviderAll(){
+        List<ProviderProfile> providers = providerProfileRepository.findAll();
+
+        return providers.stream()
+                .map(provider -> providerProfileMapper.toResponseDTO(provider))
+                .toList();
+    }
+
     public ProviderProfileResponseDTO createProvide(ProviderProfileRequestDTO providerDTO){
-        User user = new User();
-        user.setEmail(providerDTO.getEmail());
-        user.setPassword(providerDTO.getPassword());
-        user.setEnable(providerDTO.isEnable());
-
         List<Role> roles = new ArrayList<>(roleRepository.findAllById(providerDTO.getRolesIds()));
-        user.setRoles(roles);
 
-        User userSave =  userRepository.save(user);
+        User user = userMapper.toEntity(providerDTO.getEmail(), providerDTO.getPassword(), roles);
+        User userSaved = userRepository.save(user);
 
-        ProviderProfile provider = new ProviderProfile();
-        provider.setCompanyName(providerDTO.getCompanyName());
-        provider.setPhone(providerDTO.getPhone());
-        provider.setDescription(providerDTO.getDescription());
-        provider.setUser(userSave);
-
-
+        ProviderProfile provider =  providerProfileMapper.toEntity(providerDTO, userSaved);
         ProviderProfile providerSaved = providerProfileRepository.save(provider);
 
-        return new ProviderProfileResponseDTO(
-                providerSaved.getId(),
-                providerSaved.getCompanyName(),
-                providerSaved.getPhone(),
-                providerSaved.getDescription(),
-                userSave.getEmail()
-        );
+        return providerProfileMapper.toResponseDTO(providerSaved);
     }
 
     public void deleteProvider(Long id){

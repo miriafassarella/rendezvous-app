@@ -14,6 +14,13 @@ public class ProviderProfileResponseDTO {
        this.description = description;
    }
 
+    public ProviderProfileResponseDTO(Long id, String companyName, String phone, String description){
+        this.id = id;
+        this.companyName = companyName;
+        this.phone = phone;
+        this.description = description;
+    }
+
     public Long getId() {
         return id;
     }

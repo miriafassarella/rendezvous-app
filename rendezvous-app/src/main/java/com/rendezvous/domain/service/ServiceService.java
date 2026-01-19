@@ -6,6 +6,7 @@ import com.rendezvous.domain.repository.ProviderProfileRepositoy;
 import com.rendezvous.domain.repository.ServiceRepository;
 import com.rendezvous.dto.ServiceDto.ServiceRequestDTO;
 import com.rendezvous.dto.ServiceDto.ServiseResponseDTO;
+import com.rendezvous.mapper.ServiceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,33 +19,23 @@ public class ServiceService {
     private ProviderProfileRepositoy providerRepository;
 
     @Autowired
+    private ServiceMapper serviceMapper;
+
+    @Autowired
+    private ServiceRepository serviceRepository;
+
+    @Autowired
     private ServiceRepository repository;
 
     public ServiseResponseDTO createService(ServiceRequestDTO serviceDTO){
 
-        TypeOfService service = new TypeOfService();
-
-        service.setName(serviceDTO.getName());
-        service.setDescription(serviceDTO.getDescription());
-        service.setDuration_minutes(serviceDTO.getDurationMinutes());
-        service.setBuffer_minutes(serviceDTO.getBufferMinutes());
-        service.setPrice(serviceDTO.getPrice());
-        service.setActive(serviceDTO.isActive());
-
         Optional<ProviderProfile> provider = providerRepository.findById(serviceDTO.getProviderId());
-        service.setProvider(provider.get());
 
+        TypeOfService service = serviceMapper.toEntity(serviceDTO, provider.get());
+        //TODO
+        /*validar se id provider existe*/
+        TypeOfService serviceSaved = serviceRepository.save(service);
 
-        TypeOfService saved = repository.save(service);
-
-       return new ServiseResponseDTO(
-               saved.getId(),
-               saved.getName(),
-               saved.getDescription(),
-               saved.getDuration_minutes(),
-               saved.getBuffer_minutes(),
-               saved.getPrice(),
-               saved.isActive()
-       );
+        return serviceMapper.toResponseDTO(serviceSaved);
     }
 }

@@ -10,15 +10,18 @@ public class ServiseResponseDTO {
     Integer durationMinutes;
     Integer bufferMinutes;
     BigDecimal price;
+    Long providerId;
     boolean active;
 
-    public ServiseResponseDTO(Long id, String name, String description, Integer durationMinutes, Integer bufferMinutes, BigDecimal price, boolean active ){
+
+    public ServiseResponseDTO(Long id, String name, String description, Integer durationMinutes, Integer bufferMinutes, BigDecimal price, Long providerId, boolean active ){
         this.id = id;
         this.name = name;
         this.description = description;
         this.durationMinutes = durationMinutes;
         this.bufferMinutes = bufferMinutes;
         this.price = price;
+        this.providerId = providerId;
         this.active = active;
     }
 
@@ -68,6 +71,14 @@ public class ServiseResponseDTO {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Long getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(Long providerId) {
+        this.providerId = providerId;
     }
 
     public boolean isActive() {

@@ -24,6 +24,11 @@ public class ProviderProfileController {
     @Autowired
     private AccountService accountService;
 
+    @GetMapping
+    public List<ProviderProfileResponseDTO> findProviderAll(){
+        return accountService.findProviderAll();
+    }
+
     @PostMapping
     public ResponseEntity<ProviderProfileResponseDTO> createProvider(@RequestBody ProviderProfileRequestDTO providerDTO){
         ProviderProfileResponseDTO providerSave = accountService.createProvide(providerDTO);

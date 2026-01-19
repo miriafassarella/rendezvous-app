@@ -23,7 +23,7 @@ public class ClientProfileController {
     private AccountService accountService;
 
     @GetMapping
-    public List<ClientProfileResponseDTO> findAll(){
+    public List<ClientProfileResponseDTO> findClientAll(){
         return accountService.findClientAll();
     }
 

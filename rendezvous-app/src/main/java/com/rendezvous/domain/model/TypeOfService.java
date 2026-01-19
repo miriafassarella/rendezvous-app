@@ -17,7 +17,7 @@ public class TypeOfService {
     private Integer duration_minutes;
     private Integer buffer_minutes;
     private BigDecimal price;
-    private boolean active;
+    private boolean active = true;
 
 
     @ManyToOne()

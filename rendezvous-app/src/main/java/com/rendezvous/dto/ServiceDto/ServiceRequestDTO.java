@@ -10,7 +10,7 @@ public class ServiceRequestDTO {
     private Integer bufferMinutes;
     private BigDecimal price;
     private Long providerId;
-    private boolean active;
+
 
 
     public String getName() {
@@ -61,11 +61,5 @@ public class ServiceRequestDTO {
         this.providerId = providerId;
     }
 
-    public boolean isActive() {
-        return active;
-    }
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
 }
