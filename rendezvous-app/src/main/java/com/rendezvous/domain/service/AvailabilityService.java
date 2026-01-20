@@ -1,8 +1,13 @@
 package com.rendezvous.domain.service;
 
 import com.rendezvous.domain.model.Availability;
+import com.rendezvous.domain.model.ProviderProfile;
 import com.rendezvous.domain.repository.AvailabilityRepository;
-import org.springframework.beans.BeanUtils;
+import com.rendezvous.domain.repository.ProviderProfileRepositoy;
+import com.rendezvous.dto.AvailabilityDto.AvailabilityRequestDTO;
+import com.rendezvous.dto.AvailabilityDto.AvailabilityResponseDTO;
+import com.rendezvous.mapper.AvailabilityMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,23 +17,22 @@ import java.util.Optional;
 public class AvailabilityService {
 
     @Autowired
-    AvailabilityRepository availabilityRepository;
+    private ProviderProfileRepositoy providerProfileRepositoy;
 
-    public Availability addAvailability(Availability availability){
-        return availabilityRepository.save(availability);
+    @Autowired
+    private AvailabilityRepository availabilityRepository;
+
+    @Autowired
+    private AvailabilityMapper availabilityMapper;
+
+    public AvailabilityResponseDTO createAvailability(AvailabilityRequestDTO availabilityDTO){
+
+        Optional<ProviderProfile> provider = providerProfileRepositoy.findById(availabilityDTO.getProviderId());
+        Availability availability = availabilityMapper.toEntity(availabilityDTO, provider.get());
+        Availability availabilitySaved = availabilityRepository.save(availability);
+
+        return availabilityMapper.toResponseDTO(availabilitySaved);
+
     }
 
-    public Availability updateAvailability(Long id, Availability availability){
-        Optional<Availability> availabilityCurrent = availabilityRepository.findById(id);
-        BeanUtils.copyProperties(availability, availabilityCurrent.get(), "id");
-       return  availabilityRepository.save(availabilityCurrent.get());
-    }
-
-    public void removeAvailability(Long id){
-        Optional<Availability> availability = availabilityRepository.findById(id);
-        if(availability.isEmpty()){
-            //TODO
-        }
-        availabilityRepository.delete(availability.get());
-    }
 }

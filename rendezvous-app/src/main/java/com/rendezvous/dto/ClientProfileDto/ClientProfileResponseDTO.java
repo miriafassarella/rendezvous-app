@@ -1,5 +1,7 @@
 package com.rendezvous.dto.ClientProfileDto;
 
+import com.rendezvous.domain.enums.RoleName;
+import com.rendezvous.domain.model.Role;
 import com.rendezvous.domain.model.User;
 
 import java.util.List;
@@ -11,7 +13,6 @@ public class ClientProfileResponseDTO {
     private String name;
     private String phone;
     private String email;
-    private User user;
 
     public ClientProfileResponseDTO(Long id, String name, String phone, String email){
         this.id = id;

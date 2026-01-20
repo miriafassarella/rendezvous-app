@@ -1,17 +1,21 @@
 package com.rendezvous.dto.ProviderProfileDto;
 
+import java.util.List;
+
 public class ProviderProfileResponseDTO {
 
    private Long id;
    private String companyName;
    private String phone;
    private String description;
+   private List<Long> roles;
 
-   public ProviderProfileResponseDTO(Long id, String companyName, String phone, String description, String email){
+   public ProviderProfileResponseDTO(Long id, String companyName, String phone, String description, String email, List<Long> roles){
        this.id = id;
        this.companyName = companyName;
        this.phone = phone;
        this.description = description;
+       this.roles = roles;
    }
 
     public ProviderProfileResponseDTO(Long id, String companyName, String phone, String description){

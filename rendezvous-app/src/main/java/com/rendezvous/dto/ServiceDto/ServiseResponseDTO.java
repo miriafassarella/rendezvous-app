@@ -4,13 +4,13 @@ import java.math.BigDecimal;
 
 public class ServiseResponseDTO {
 
-    Long id;
-    String name;
-    String description;
-    Integer durationMinutes;
-    Integer bufferMinutes;
-    BigDecimal price;
-    Long providerId;
+    private Long id;
+    private String name;
+    private String description;
+    private Integer durationMinutes;
+    private Integer bufferMinutes;
+    private BigDecimal price;
+    private Long providerId;
     boolean active;
 
 

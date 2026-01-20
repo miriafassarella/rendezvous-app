@@ -9,7 +9,6 @@ public class ClientProfileRequestDTO {
     private String firstName;
     private String lastName;
     private String phone;
-    private boolean enable;
     private List<Long> rolesIds;
 
 
@@ -27,14 +26,6 @@ public class ClientProfileRequestDTO {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public boolean isEnable() {
-        return enable;
-    }
-
-    public void setEnable(boolean enable) {
-        this.enable = enable;
     }
 
     public List<Long> getRolesIds() {

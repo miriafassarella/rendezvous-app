@@ -3,6 +3,8 @@ package com.rendezvous.controller;
 import com.rendezvous.domain.model.Availability;
 import com.rendezvous.domain.repository.AvailabilityRepository;
 import com.rendezvous.domain.service.AvailabilityService;
+import com.rendezvous.dto.AvailabilityDto.AvailabilityRequestDTO;
+import com.rendezvous.dto.AvailabilityDto.AvailabilityResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,27 +22,9 @@ public class AvailabilityController {
     @Autowired
     private AvailabilityRepository availabilityRepository;
 
-    @GetMapping
-    public List<Availability> listAvailabilities(){
-        return availabilityRepository.findAll();
-    }
-
     @PostMapping
-    public ResponseEntity<Availability> addAvailability(@RequestBody Availability availability){
-        Availability availabilitySave = availabilityService.addAvailability(availability);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Availability> updateAvailability(@PathVariable Long id, @RequestBody Availability availability){
-        Availability availabilityModified = availabilityService.updateAvailability(id, availability);
-        return ResponseEntity.status(HttpStatus.OK).body(availabilityModified);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Availability> removeAvailability(Long id){
-        availabilityService.removeAvailability(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-
+    public ResponseEntity<AvailabilityResponseDTO> createAvailability(@RequestBody AvailabilityRequestDTO availabilityDTO){
+       AvailabilityResponseDTO newAvailability = availabilityService.createAvailability(availabilityDTO);
+       return ResponseEntity.status(HttpStatus.CREATED).body(newAvailability);
+   }
 }
