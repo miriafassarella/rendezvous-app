@@ -22,6 +22,7 @@ public class AvailabilityMapper {
     public AvailabilityResponseDTO toResponseDTO(Availability availability){
 
         AvailabilityResponseDTO responseDTO = new AvailabilityResponseDTO();
+        responseDTO.setId(availability.getId());
         responseDTO.setDayOfWeek(availability.getDayOfWeek());
         responseDTO.setStartTime(availability.getStartTime());
         responseDTO.setEndTime(availability.getEndTime());

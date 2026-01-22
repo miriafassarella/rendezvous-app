@@ -21,34 +21,4 @@ public class AppointmentController {
     @Autowired
     private AppointmentService appointmentService;
 
-    @GetMapping
-    public List<Appointment> listAppointments(){
-        return appointmentRepository.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Appointment> searchId(@PathVariable Long id){
-        Optional<Appointment> appointment = appointmentRepository.findById(id);
-
-        return ResponseEntity.status(HttpStatus.OK).body(appointment.get());
-    }
-
-    @PostMapping
-    public ResponseEntity<Appointment> addAppointment(Appointment appointment){
-        Appointment appointmentSave = appointmentService.addAppointment(appointment);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Appointment> updateAppointment(@PathVariable Long id, @RequestBody Appointment appointment){
-        Appointment appointmentModified = appointmentService.updateAppointment(id, appointment);
-        return ResponseEntity.status(HttpStatus.OK).body(appointmentModified);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Appointment> removeAppointment(@PathVariable Long id){
-        appointmentService.removeAppointment(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-
 }

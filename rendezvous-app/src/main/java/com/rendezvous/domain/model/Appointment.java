@@ -7,6 +7,7 @@ import com.rendezvous.domain.enums.Status;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.util.Objects;
 
 @Entity
@@ -19,9 +20,9 @@ public class Appointment {
     private LocalDate endTime;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status status = Status.PEDING;
 
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now(ZoneOffset.UTC);
 
     @ManyToOne
     @JoinColumn(name = "service_id", nullable = false)
@@ -43,11 +44,11 @@ public class Appointment {
         this.id = id;
     }
 
-    public LocalDate getAppointmentDate() {
+    public LocalDate getEndTime() {
         return endTime;
     }
 
-    public void setAppointmentDate(LocalDate appointmentDate) {
+    public void setEndTime(LocalDate appointmentDate) {
         this.endTime = appointmentDate;
     }
 
