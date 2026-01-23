@@ -1,4 +1,4 @@
-CREATE TABLE service (
+CREATE TABLE provider_service (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
     description VARCHAR(100) NOT NULL,

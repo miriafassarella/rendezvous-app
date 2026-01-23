@@ -1,16 +1,16 @@
 package com.rendezvous.mapper;
 
 import com.rendezvous.domain.model.ProviderProfile;
-import com.rendezvous.domain.model.TypeOfService;
-import com.rendezvous.dto.ServiceDto.ServiceRequestDTO;
-import com.rendezvous.dto.ServiceDto.ServiseResponseDTO;
+import com.rendezvous.domain.model.ProviderService;
+import com.rendezvous.dto.ProviderServiceDto.ProviderServiceRequestDTO;
+import com.rendezvous.dto.ProviderServiceDto.ProviderServiseResponseDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ServiceMapper {
+public class ProviderServiceMapper {
 
-    public TypeOfService toEntity(ServiceRequestDTO serviceDTO, ProviderProfile provider){
-        TypeOfService service = new TypeOfService();
+    public ProviderService toEntity(ProviderServiceRequestDTO serviceDTO, ProviderProfile provider){
+        ProviderService service = new ProviderService();
         service.setName(serviceDTO.getName());
         service.setDescription(serviceDTO.getDescription());
         service.setPrice(serviceDTO.getPrice());
@@ -21,8 +21,8 @@ public class ServiceMapper {
         return service;
     }
 
-    public ServiseResponseDTO toResponseDTO(TypeOfService service){
-        return new ServiseResponseDTO(
+    public ProviderServiseResponseDTO toResponseDTO(ProviderService service){
+        return new ProviderServiseResponseDTO(
                 service.getId(),
                 service.getName(),
                 service.getDescription(),

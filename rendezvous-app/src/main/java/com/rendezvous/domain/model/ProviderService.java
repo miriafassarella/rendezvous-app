@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "service")
-public class TypeOfService {
+public class ProviderService {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -91,7 +91,7 @@ public class TypeOfService {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        TypeOfService service = (TypeOfService) o;
+        ProviderService service = (ProviderService) o;
         return Objects.equals(id, service.id);
     }
 

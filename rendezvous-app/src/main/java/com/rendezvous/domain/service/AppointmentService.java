@@ -3,15 +3,11 @@ package com.rendezvous.domain.service;
 import com.rendezvous.domain.model.Appointment;
 import com.rendezvous.domain.model.ClientProfile;
 import com.rendezvous.domain.model.ProviderProfile;
-import com.rendezvous.domain.model.TypeOfService;
-import com.rendezvous.domain.repository.AppointmentRepository;
-import com.rendezvous.domain.repository.ClientProfileRepository;
-import com.rendezvous.domain.repository.ProviderProfileRepositoy;
-import com.rendezvous.domain.repository.ServiceRepository;
+import com.rendezvous.domain.model.ProviderService;
+import com.rendezvous.domain.repository.*;
 import com.rendezvous.dto.AppointmentDto.AppointmentRequestDTO;
 import com.rendezvous.dto.AppointmentDto.AppointmentResponseDTO;
 import com.rendezvous.mapper.AppointmentMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +26,9 @@ public class AppointmentService {
     ProviderProfileRepositoy providerProfileRepositoy;
 
     @Autowired
+    AvailabilityRepository availabilityRepository;
+
+    @Autowired
     ServiceRepository serviceRepository;
 
     @Autowired
@@ -39,12 +38,29 @@ public class AppointmentService {
 
         Optional<ClientProfile> client = clientProfileRepository.findById(appointmentDTO.getClientId());
         Optional<ProviderProfile> provider = providerProfileRepositoy.findById(appointmentDTO.getProviderId());
-        Optional<TypeOfService> service = serviceRepository.findById(appointmentDTO.getServiceId());
+        Optional<ProviderService> service = serviceRepository.findById(appointmentDTO.getServiceId());
 
+        if(client.isEmpty() || provider.isEmpty() || !service.get().getProvider().getId().equals(appointmentDTO.getProviderId())) {
+
+            //TODO
+            //À modifier an ajoutant exception
+
+        }
         Appointment appointment = appointmentMapper.toEntity(appointmentDTO, provider.get(), client.get(), service.get());
-        Appointment appointmentSaved = appointmentRepository.save(appointment);
 
-        return appointmentMapper.toResponseDTO(appointmentSaved);
+        boolean available = availabilityRepository
+                .existsByProviderAndDayOfWeekAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
+                        provider.get(), appointmentDTO.getDayOfWeek(), appointmentDTO.getStartTime(),
+                        appointmentDTO.getEndTime()
+                );
+
+        if (!available) {
+            //exception
+        }
+
+            Appointment appointmentSaved = appointmentRepository.save(appointment);
+
+            return appointmentMapper.toResponseDTO(appointmentSaved);
 
     }
 

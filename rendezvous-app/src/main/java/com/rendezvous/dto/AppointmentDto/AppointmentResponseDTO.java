@@ -1,13 +1,15 @@
 package com.rendezvous.dto.AppointmentDto;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class AppointmentResponseDTO {
 
     private Long id;
+    private DayOfWeek dayOfWeek;
     private LocalTime startTime;
-    private LocalDate endTime;
+    private LocalTime endTime;
     private Long serviceId;
     private Long providerId;
     private Long clientId;
@@ -28,12 +30,20 @@ public class AppointmentResponseDTO {
         this.startTime = startTime;
     }
 
-    public LocalDate getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDate endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
+    }
+
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(DayOfWeek dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 
     public Long getServiceId() {

@@ -23,7 +23,7 @@ public class ProviderProfile {
     private User user;
 
     @OneToMany()
-    private List<TypeOfService> services;
+    private List<ProviderService> services;
 
     @OneToMany()
     @JsonIgnore //para ignorar o atributo na serialização
@@ -69,11 +69,11 @@ public class ProviderProfile {
         this.user = user;
     }
 
-    public List<TypeOfService> getServices() {
+    public List<ProviderService> getServices() {
         return services;
     }
 
-    public void setServices(List<TypeOfService> services) {
+    public void setServices(List<ProviderService> services) {
         this.services = services;
     }
 

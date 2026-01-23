@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 
 import com.rendezvous.domain.enums.Status;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.util.Objects;
 
 @Entity
@@ -17,7 +14,8 @@ public class Appointment {
     @Id
     private Long id;
     private LocalTime startTime;
-    private LocalDate endTime;
+    private DayOfWeek dayOfWeek;
+
 
     @Enumerated(EnumType.STRING)
     private Status status = Status.PEDING;
@@ -26,7 +24,9 @@ public class Appointment {
 
     @ManyToOne
     @JoinColumn(name = "service_id", nullable = false)
-    private TypeOfService service;
+    private ProviderService service;
+
+    private LocalTime endTime;
 
     @ManyToOne
     @JoinColumn(name = "provider_id", nullable = false)
@@ -44,12 +44,13 @@ public class Appointment {
         this.id = id;
     }
 
-    public LocalDate getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDate appointmentDate) {
-        this.endTime = appointmentDate;
+    public void setEndTime(LocalTime appointmentTime) {
+        this.endTime = appointmentTime;
+        calculateEndTime();
     }
 
     public LocalTime getStartTime() {
@@ -68,12 +69,13 @@ public class Appointment {
         this.createdAt = createdAt;
     }
 
-    public TypeOfService getService() {
+    public ProviderService getService() {
         return service;
     }
 
-    public void setService(TypeOfService service) {
+    public void setService(ProviderService service) {
         this.service = service;
+        calculateEndTime();
     }
 
    public ProviderProfile getProvider() {
@@ -90,6 +92,28 @@ public class Appointment {
 
     public void setClient(ClientProfile client) {
         this.client= client;
+    }
+
+    public void calculateEndTime(){
+        if(this.endTime != null && this.service != null){
+            this.endTime = this.endTime = startTime.plusMinutes(service.getDuration_minutes());
+        }
+    }
+
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(DayOfWeek dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override

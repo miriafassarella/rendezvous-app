@@ -50,4 +50,6 @@ public class AvailabilityResponseDTO {
     public void setProviderId(Long providerId) {
         this.providerId = providerId;
     }
+
+
 }

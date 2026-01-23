@@ -1,23 +1,14 @@
 package com.rendezvous.dto.AppointmentDto;
 
-import com.rendezvous.domain.enums.Status;
-import com.rendezvous.domain.model.ClientProfile;
-import com.rendezvous.domain.model.ProviderProfile;
-import com.rendezvous.domain.model.TypeOfService;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-
+import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneOffset;
 
 public class AppointmentRequestDTO {
 
+    private DayOfWeek dayOfWeek;
     private LocalTime startTime;
-    private LocalDate endTime;
+    private LocalTime endTime;
     private Long serviceId;
     private Long providerId;
     private Long clientId;
@@ -31,11 +22,11 @@ public class AppointmentRequestDTO {
         this.startTime = startTime;
     }
 
-    public LocalDate getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDate endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
@@ -61,5 +52,13 @@ public class AppointmentRequestDTO {
 
     public void setClientId(Long clientId) {
         this.clientId = clientId;
+    }
+
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(DayOfWeek dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 }
