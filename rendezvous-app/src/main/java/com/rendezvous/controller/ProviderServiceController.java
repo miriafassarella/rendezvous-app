@@ -1,6 +1,6 @@
 package com.rendezvous.controller;
 
-import com.rendezvous.domain.repository.ServiceRepository;
+import com.rendezvous.domain.repository.ProviderServiceRepository;
 import com.rendezvous.domain.service.ProviderServiceService;
 import com.rendezvous.dto.ProviderServiceDto.ProviderServiceRequestDTO;
 import com.rendezvous.dto.ProviderServiceDto.ProviderServiseResponseDTO;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProviderServiceController {
 
     @Autowired
-    private ServiceRepository serviceRepository;
+    private ProviderServiceRepository providerServiceRepository;
 
     @Autowired
     private ProviderServiceService providerServiceService;

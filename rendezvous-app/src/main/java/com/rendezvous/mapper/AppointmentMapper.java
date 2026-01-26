@@ -15,7 +15,7 @@ public class AppointmentMapper {
                                 ProviderService service){
         Appointment appointment = new Appointment();
         appointment.setStartTime(appointmentDTO.getStartTime());
-        appointment.setEndTime(appointmentDTO.getEndTime());
+        appointment.setEndTime(appointmentDTO.getStartTime().plusMinutes(service.getDuration_minutes()));
         appointment.setDayOfWeek(appointmentDTO.getDayOfWeek());
         appointment.setClient(client);
         appointment.setProvider(provider);

@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,13 +52,14 @@ public class AccountService {
     private UserMapper userMapper;
 
 
+    @Transactional
     public List<ClientProfileResponseDTO> findClientAll(){
         List<ClientProfile> clients = clientProfileRepository.findAll();
             return clients.stream()
                     .map(client -> clientProfileMapper.toResponseDTO(client))
                     .toList();
         }
-
+    @Transactional
     public ClientProfileResponseDTO createClient(ClientProfileRequestDTO clientDTO){
         List<Role> roles = new ArrayList<>(roleRepository.findAllById(clientDTO.getRolesIds()));
 
@@ -70,6 +72,7 @@ public class AccountService {
        return clientProfileMapper.toResponseDTO(clientSaved);
     }
 
+    @Transactional
     public void deleteClient(Long id){
         Optional<ClientProfile> client = clientProfileRepository.findById(id);
         if(client.isEmpty()){
@@ -80,6 +83,7 @@ public class AccountService {
 
     }
 
+    @Transactional
     public List<ProviderProfileResponseDTO> findProviderAll(){
         List<ProviderProfile> providers = providerProfileRepository.findAll();
 
@@ -88,6 +92,7 @@ public class AccountService {
                 .toList();
     }
 
+    @Transactional
     public ProviderProfileResponseDTO createProvide(ProviderProfileRequestDTO providerDTO){
         List<Role> roles = new ArrayList<>(roleRepository.findAllById(providerDTO.getRolesIds()));
 
@@ -100,6 +105,7 @@ public class AccountService {
         return providerProfileMapper.toResponseDTO(providerSaved);
     }
 
+    @Transactional
     public void deleteProvider(Long id){
         Optional<ProviderProfile> provider = providerProfileRepository.findById(id);
         if(provider.isEmpty()){

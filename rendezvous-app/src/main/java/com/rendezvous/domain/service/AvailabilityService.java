@@ -10,6 +10,7 @@ import com.rendezvous.mapper.AvailabilityMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -25,6 +26,7 @@ public class AvailabilityService {
     @Autowired
     private AvailabilityMapper availabilityMapper;
 
+    @Transactional
     public AvailabilityResponseDTO createAvailability(AvailabilityRequestDTO availabilityDTO){
 
         Optional<ProviderProfile> provider = providerProfileRepositoy.findById(availabilityDTO.getProviderId());

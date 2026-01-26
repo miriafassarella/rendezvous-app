@@ -10,7 +10,9 @@ import com.rendezvous.dto.AppointmentDto.AppointmentResponseDTO;
 import com.rendezvous.mapper.AppointmentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,38 +31,54 @@ public class AppointmentService {
     AvailabilityRepository availabilityRepository;
 
     @Autowired
-    ServiceRepository serviceRepository;
+    ProviderServiceRepository providerServiceRepository;
 
     @Autowired
     AppointmentMapper appointmentMapper;
 
+    @Transactional
     public AppointmentResponseDTO createAppointment(AppointmentRequestDTO appointmentDTO){
 
-        Optional<ClientProfile> client = clientProfileRepository.findById(appointmentDTO.getClientId());
-        Optional<ProviderProfile> provider = providerProfileRepositoy.findById(appointmentDTO.getProviderId());
-        Optional<ProviderService> service = serviceRepository.findById(appointmentDTO.getServiceId());
+        ProviderProfile provider = providerProfileRepositoy.findById(appointmentDTO.getProviderId())
+                .orElseThrow(() -> new RuntimeException("Provider not found"));
 
-        if(client.isEmpty() || provider.isEmpty() || !service.get().getProvider().getId().equals(appointmentDTO.getProviderId())) {
+        ClientProfile client = clientProfileRepository.findById(appointmentDTO.getClientId())
+                .orElseThrow(() -> new RuntimeException("Client not found"));
 
-            //TODO
-            //À modifier an ajoutant exception
+        ProviderService service = providerServiceRepository.findById(appointmentDTO.getServiceId())
+                .orElseThrow(() -> new RuntimeException("Service type not found"));
 
+        /*Garantindo que o serviço pertence ao provider*/
+        if (!service.getProvider().getId().equals(appointmentDTO.getProviderId())) {
+            throw new RuntimeException("Service does not belong to this provider");
         }
-        Appointment appointment = appointmentMapper.toEntity(appointmentDTO, provider.get(), client.get(), service.get());
 
+        /*aplica LOCK no banco - bloqueia todos os agendamentos para este provider para este dia enquanto
+        * a transação esta sendo feita*/
+        List<Appointment> conflictingAppointments =
+                appointmentRepository.findConflictingAppointmentsForLock(provider, appointmentDTO.getDayOfWeek(),
+                        appointmentDTO.getStartTime(), appointmentDTO.getEndTime());
+
+        /*exceção se un agendamento esta dentro do horaio de outro agendamento já existente*/
+        if (!conflictingAppointments.isEmpty()) {
+            throw new RuntimeException("Time slot already booked");
+        }
+        /*garantindo que o provider possui o horario disponível*/
         boolean available = availabilityRepository
                 .existsByProviderAndDayOfWeekAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
-                        provider.get(), appointmentDTO.getDayOfWeek(), appointmentDTO.getStartTime(),
-                        appointmentDTO.getEndTime()
+                        provider, appointmentDTO.getDayOfWeek(), appointmentDTO.getStartTime(),
+                        appointmentDTO.getStartTime().plusMinutes(service.getDuration_minutes())
                 );
 
         if (!available) {
+            throw new RuntimeException("The chosen time or day is not available.");
             //exception
         }
 
-            Appointment appointmentSaved = appointmentRepository.save(appointment);
+        Appointment appointment = appointmentMapper.toEntity(appointmentDTO, provider, client, service);
+        Appointment appointmentSaved = appointmentRepository.save(appointment);
 
-            return appointmentMapper.toResponseDTO(appointmentSaved);
+        return appointmentMapper.toResponseDTO(appointmentSaved);
 
     }
 
