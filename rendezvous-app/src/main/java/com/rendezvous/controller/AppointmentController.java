@@ -23,6 +23,11 @@ public class AppointmentController {
     @Autowired
     private AppointmentService appointmentService;
 
+    @GetMapping
+    public List<AppointmentResponseDTO> findAppointmentsAll(){
+        return appointmentService.findAppointmentsAll();
+    }
+
     @PostMapping
     public ResponseEntity<AppointmentResponseDTO> createAppointment(@RequestBody AppointmentRequestDTO appointmentDTO){
 

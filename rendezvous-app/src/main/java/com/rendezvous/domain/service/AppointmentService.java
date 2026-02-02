@@ -1,5 +1,6 @@
 package com.rendezvous.domain.service;
 
+import com.rendezvous.domain.enums.Status;
 import com.rendezvous.domain.model.Appointment;
 import com.rendezvous.domain.model.ClientProfile;
 import com.rendezvous.domain.model.ProviderProfile;
@@ -7,6 +8,7 @@ import com.rendezvous.domain.model.ProviderService;
 import com.rendezvous.domain.repository.*;
 import com.rendezvous.dto.AppointmentDto.AppointmentRequestDTO;
 import com.rendezvous.dto.AppointmentDto.AppointmentResponseDTO;
+import com.rendezvous.dto.ClientProfileDto.ClientProfileResponseDTO;
 import com.rendezvous.mapper.AppointmentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,15 @@ public class AppointmentService {
 
     @Autowired
     AppointmentMapper appointmentMapper;
+
+
+    @Transactional
+    public List<AppointmentResponseDTO> findAppointmentsAll(){
+        List<Appointment> appointments =  appointmentRepository.findAll();
+        return appointments.stream()
+                .map(appointment -> appointmentMapper.toResponseDTO(appointment))
+                .toList();
+    }
 
     @Transactional
     public AppointmentResponseDTO createAppointment(AppointmentRequestDTO appointmentDTO){
@@ -76,6 +87,7 @@ public class AppointmentService {
         }
 
         Appointment appointment = appointmentMapper.toEntity(appointmentDTO, provider, client, service);
+        appointment.setStatus(Status.PENDING);
         Appointment appointmentSaved = appointmentRepository.save(appointment);
 
         return appointmentMapper.toResponseDTO(appointmentSaved);

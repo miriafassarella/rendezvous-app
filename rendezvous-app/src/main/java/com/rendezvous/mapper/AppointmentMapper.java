@@ -20,20 +20,13 @@ public class AppointmentMapper {
         appointment.setClient(client);
         appointment.setProvider(provider);
         appointment.setService(service);
-
         return appointment;
     }
 
     public AppointmentResponseDTO toResponseDTO(Appointment appointment){
-        AppointmentResponseDTO appointmentResponseDTO = new AppointmentResponseDTO();
-        appointmentResponseDTO.setClientId(appointment.getId());
-        appointmentResponseDTO.setStartTime(appointment.getStartTime());
-        appointmentResponseDTO.setEndTime(appointment.getEndTime());
-        appointmentResponseDTO.setDayOfWeek(appointment.getDayOfWeek());
-        appointmentResponseDTO.setClientId(appointment.getClient().getId());
-        appointmentResponseDTO.setProviderId(appointment.getProvider().getId());
-        appointmentResponseDTO.setServiceId(appointment.getService().getId());
+        return new AppointmentResponseDTO(appointment.getId(), appointment.getDayOfWeek(),
+                appointment.getStartTime(), appointment.getEndTime(), appointment.getService().getId(),
+                appointment.getProvider().getId(), appointment.getClient().getId(), appointment.getStatus());
 
-        return appointmentResponseDTO;
     }
 }

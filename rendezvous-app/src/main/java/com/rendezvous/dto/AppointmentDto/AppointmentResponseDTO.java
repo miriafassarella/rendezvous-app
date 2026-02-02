@@ -1,5 +1,7 @@
 package com.rendezvous.dto.AppointmentDto;
 
+import com.rendezvous.domain.enums.Status;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -13,6 +15,19 @@ public class AppointmentResponseDTO {
     private Long serviceId;
     private Long providerId;
     private Long clientId;
+    private Status status;
+
+    public AppointmentResponseDTO(Long id, DayOfWeek dayOfWeek, LocalTime startTime,
+                                  LocalTime endTime, Long serviceId, Long providerId, Long clientId, Status status){
+        this.id = id;
+        this.dayOfWeek = dayOfWeek;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.serviceId = serviceId;
+        this.providerId = providerId;
+        this.clientId = clientId;
+        this.status = status;
+    }
 
     public Long getId() {
         return id;
@@ -68,5 +83,13 @@ public class AppointmentResponseDTO {
 
     public void setClientId(Long clientId) {
         this.clientId = clientId;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

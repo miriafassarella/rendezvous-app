@@ -14,11 +14,15 @@ public class Appointment {
     @Id
     private Long id;
     private LocalTime startTime;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private DayOfWeek dayOfWeek;
 
 
     @Enumerated(EnumType.STRING)
-    private Status status = Status.PEDING;
+    @Column(name = "status", nullable = false)
+    private Status status;
 
     private LocalDateTime createdAt = LocalDateTime.now(ZoneOffset.UTC);
 

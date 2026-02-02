@@ -1,5 +1,7 @@
 package com.rendezvous.dto.AppointmentDto;
 
+import com.rendezvous.domain.enums.Status;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -12,7 +14,6 @@ public class AppointmentRequestDTO {
     private Long serviceId;
     private Long providerId;
     private Long clientId;
-
 
     public LocalTime getStartTime() {
         return startTime;

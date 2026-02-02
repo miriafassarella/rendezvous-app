@@ -23,6 +23,7 @@ public class ProviderProfile {
     private User user;
 
     @OneToMany()
+    @JsonIgnore //à verificar a causa do erro de não listar appointments por causa da lista
     private List<ProviderService> services;
 
     @OneToMany()

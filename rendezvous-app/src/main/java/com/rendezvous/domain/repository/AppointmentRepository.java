@@ -15,17 +15,18 @@ import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 
+    /*Verificando no banco se há conflito de horario e bloqueando a modificação neste intervalo de horario*/
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("""
     SELECT a FROM Appointment a
     WHERE a.provider = :provider
-      AND a.day_of_week = :ay_of_week
+      AND a.dayOfWeek = :dayOfWeek
       AND a.startTime < :endTime
       AND a.endTime > :startTime
 """)
     List<Appointment> findConflictingAppointmentsForLock(
             @Param("provider") ProviderProfile provider,
-            @Param("ay_of_week") DayOfWeek ay_of_week,
+            @Param("dayOfWeek") DayOfWeek dayOfWeek,
             @Param("startTime") LocalTime startTime,
             @Param("endTime") LocalTime endTime
     );
