@@ -23,8 +23,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
       AND a.dayOfWeek = :dayOfWeek
       AND a.startTime < :endTime
       AND a.endTime > :startTime
-""")
-    List<Appointment> findConflictingAppointmentsForLock(
+""") List<Appointment> findConflictingAppointmentsForLock(
             @Param("provider") ProviderProfile provider,
             @Param("dayOfWeek") DayOfWeek dayOfWeek,
             @Param("startTime") LocalTime startTime,

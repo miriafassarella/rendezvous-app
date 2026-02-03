@@ -22,14 +22,6 @@ public class ProviderProfile {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany()
-    @JsonIgnore //à verificar a causa do erro de não listar appointments por causa da lista
-    private List<ProviderService> services;
-
-    @OneToMany()
-    @JsonIgnore //para ignorar o atributo na serialização
-    private List<Availability> availabilities;
-
     public Long getId() {
         return id;
     }
@@ -68,22 +60,6 @@ public class ProviderProfile {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public List<ProviderService> getServices() {
-        return services;
-    }
-
-    public void setServices(List<ProviderService> services) {
-        this.services = services;
-    }
-
-    public List<Availability> getAvailabilities() {
-        return availabilities;
-    }
-
-    public void setAvailabilities(List<Availability> availabilities) {
-        this.availabilities = availabilities;
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.rendezvous.domain.repository.UserRepository;
 import com.rendezvous.domain.service.AccountService;
 import com.rendezvous.dto.ProviderProfileDto.ProviderProfileRequestDTO;
 import com.rendezvous.dto.ProviderProfileDto.ProviderProfileResponseDTO;
+import com.rendezvous.dto.ProviderServiceDto.ProviderServiseResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,11 @@ public class ProviderProfileController {
     @GetMapping
     public List<ProviderProfileResponseDTO> findProviderAll(){
         return accountService.findProviderAll();
+    }
+
+    @GetMapping("{providerId}/services")
+    public List<ProviderServiseResponseDTO> findServicesAllByProvider(@PathVariable Long providerId){
+        return accountService.findServicesAllByProvider(providerId);
     }
 
     @PostMapping
