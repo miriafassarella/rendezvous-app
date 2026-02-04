@@ -1,11 +1,4 @@
-package com.rendezvous.dto.ClientProfileDto;
-
-import com.rendezvous.domain.enums.RoleName;
-import com.rendezvous.domain.model.Role;
-import com.rendezvous.domain.model.User;
-
-import java.util.List;
-import java.util.Optional;
+package com.rendezvous.dto.clientProfileDto;
 
 public class ClientProfileResponseDTO {
 

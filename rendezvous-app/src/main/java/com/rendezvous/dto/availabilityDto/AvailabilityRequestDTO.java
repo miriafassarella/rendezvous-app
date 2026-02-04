@@ -1,8 +1,4 @@
-package com.rendezvous.dto.AvailabilityDto;
-
-import com.rendezvous.domain.model.ProviderProfile;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+package com.rendezvous.dto.availabilityDto;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;

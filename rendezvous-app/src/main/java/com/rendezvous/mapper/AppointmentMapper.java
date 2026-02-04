@@ -4,8 +4,8 @@ import com.rendezvous.domain.model.Appointment;
 import com.rendezvous.domain.model.ClientProfile;
 import com.rendezvous.domain.model.ProviderProfile;
 import com.rendezvous.domain.model.ProviderService;
-import com.rendezvous.dto.AppointmentDto.AppointmentRequestDTO;
-import com.rendezvous.dto.AppointmentDto.AppointmentResponseDTO;
+import com.rendezvous.dto.appointmentDto.AppointmentRequestDTO;
+import com.rendezvous.dto.appointmentDto.AppointmentResponseDTO;
 import org.springframework.stereotype.Component;
 
 @Component

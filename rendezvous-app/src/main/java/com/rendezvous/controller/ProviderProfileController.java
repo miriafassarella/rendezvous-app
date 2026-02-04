@@ -1,13 +1,11 @@
 package com.rendezvous.controller;
 
-import com.rendezvous.domain.model.ClientProfile;
 import com.rendezvous.domain.model.ProviderProfile;
 import com.rendezvous.domain.repository.ProviderProfileRepositoy;
-import com.rendezvous.domain.repository.UserRepository;
 import com.rendezvous.domain.service.AccountService;
-import com.rendezvous.dto.ProviderProfileDto.ProviderProfileRequestDTO;
-import com.rendezvous.dto.ProviderProfileDto.ProviderProfileResponseDTO;
-import com.rendezvous.dto.ProviderServiceDto.ProviderServiseResponseDTO;
+import com.rendezvous.dto.providerProfileDto.ProviderProfileRequestDTO;
+import com.rendezvous.dto.providerProfileDto.ProviderProfileResponseDTO;
+import com.rendezvous.dto.providerServiceDto.ProviderServiseResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,11 +26,6 @@ public class ProviderProfileController {
     @GetMapping
     public List<ProviderProfileResponseDTO> findProviderAll(){
         return accountService.findProviderAll();
-    }
-
-    @GetMapping("{providerId}/services")
-    public List<ProviderServiseResponseDTO> findServicesAllByProvider(@PathVariable Long providerId){
-        return accountService.findServicesAllByProvider(providerId);
     }
 
     @PostMapping

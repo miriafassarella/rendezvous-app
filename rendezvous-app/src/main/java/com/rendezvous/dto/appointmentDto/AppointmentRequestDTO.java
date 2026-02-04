@@ -1,31 +1,16 @@
-package com.rendezvous.dto.AvailabilityDto;
+package com.rendezvous.dto.appointmentDto;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
-public class AvailabilityResponseDTO {
+public class AppointmentRequestDTO {
 
-    private Long id;
     private DayOfWeek dayOfWeek;
     private LocalTime startTime;
     private LocalTime endTime;
+    private Long serviceId;
     private Long providerId;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public DayOfWeek getDayOfWeek() {
-        return dayOfWeek;
-    }
-
-    public void setDayOfWeek(DayOfWeek dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
-    }
+    private Long clientId;
 
     public LocalTime getStartTime() {
         return startTime;
@@ -43,6 +28,14 @@ public class AvailabilityResponseDTO {
         this.endTime = endTime;
     }
 
+    public Long getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(Long serviceId) {
+        this.serviceId = serviceId;
+    }
+
     public Long getProviderId() {
         return providerId;
     }
@@ -51,5 +44,19 @@ public class AvailabilityResponseDTO {
         this.providerId = providerId;
     }
 
+    public Long getClientId() {
+        return clientId;
+    }
 
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
+    }
+
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(DayOfWeek dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
 }

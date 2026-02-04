@@ -3,11 +3,12 @@ package com.rendezvous.domain.service;
 
 import com.rendezvous.domain.model.*;
 import com.rendezvous.domain.repository.*;
-import com.rendezvous.dto.ClientProfileDto.ClientProfileRequestDTO;
-import com.rendezvous.dto.ClientProfileDto.ClientProfileResponseDTO;
-import com.rendezvous.dto.ProviderProfileDto.ProviderProfileRequestDTO;
-import com.rendezvous.dto.ProviderProfileDto.ProviderProfileResponseDTO;
-import com.rendezvous.dto.ProviderServiceDto.ProviderServiseResponseDTO;
+import com.rendezvous.dto.clientProfileDto.ClientProfileRequestDTO;
+import com.rendezvous.dto.clientProfileDto.ClientProfileResponseDTO;
+import com.rendezvous.dto.providerProfileDto.ProviderProfileRequestDTO;
+import com.rendezvous.dto.providerProfileDto.ProviderProfileResponseDTO;
+import com.rendezvous.dto.providerServiceDto.ProviderServiseResponseDTO;
+import com.rendezvous.exception.EntityNotFoundException;
 import com.rendezvous.mapper.ClientProfileMapper;
 import com.rendezvous.mapper.ProviderProfileMapper;
 import com.rendezvous.mapper.ProviderServiceMapper;
@@ -46,12 +47,6 @@ public class AccountService {
 
     @Autowired
     private UserMapper userMapper;
-
-    @Autowired
-    private ProviderServiceRepository serviceRepositoy;
-
-    @Autowired
-    private ProviderServiceMapper providerServiceMapper;
 
 
     @Transactional
@@ -94,19 +89,6 @@ public class AccountService {
                 .toList();
     }
 
-    /* Usando DDD, mas verificar a coerência desse metodo aqui*/
-    @Transactional
-    public List<ProviderServiseResponseDTO> findServicesAllByProvider(Long providerId){
-        Optional<ProviderProfile> provider = providerProfileRepository.findById(providerId);
-
-        if (provider != null) {
-            //TODO
-        }
-        List<ProviderService> services = serviceRepositoy.findByProviderId(providerId);
-        return services.stream()
-                .map(service -> providerServiceMapper.toResponseDTO(service))
-                .toList();
-    }
 
     @Transactional
     public ProviderProfileResponseDTO createProvide(ProviderProfileRequestDTO providerDTO){

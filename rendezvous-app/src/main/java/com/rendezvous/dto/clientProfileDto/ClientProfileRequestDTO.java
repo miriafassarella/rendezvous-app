@@ -1,4 +1,4 @@
-package com.rendezvous.dto.ClientProfileDto;
+package com.rendezvous.dto.clientProfileDto;
 
 import java.util.List;
 

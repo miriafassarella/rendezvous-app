@@ -4,8 +4,8 @@ import com.rendezvous.domain.model.Availability;
 import com.rendezvous.domain.model.ProviderProfile;
 import com.rendezvous.domain.repository.AvailabilityRepository;
 import com.rendezvous.domain.repository.ProviderProfileRepositoy;
-import com.rendezvous.dto.AvailabilityDto.AvailabilityRequestDTO;
-import com.rendezvous.dto.AvailabilityDto.AvailabilityResponseDTO;
+import com.rendezvous.dto.availabilityDto.AvailabilityRequestDTO;
+import com.rendezvous.dto.availabilityDto.AvailabilityResponseDTO;
 import com.rendezvous.mapper.AvailabilityMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;

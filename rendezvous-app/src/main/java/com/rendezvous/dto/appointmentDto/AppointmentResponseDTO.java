@@ -1,9 +1,8 @@
-package com.rendezvous.dto.AppointmentDto;
+package com.rendezvous.dto.appointmentDto;
 
 import com.rendezvous.domain.enums.Status;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class AppointmentResponseDTO {

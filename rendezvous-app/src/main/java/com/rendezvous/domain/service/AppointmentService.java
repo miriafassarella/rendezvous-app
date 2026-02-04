@@ -6,16 +6,14 @@ import com.rendezvous.domain.model.ClientProfile;
 import com.rendezvous.domain.model.ProviderProfile;
 import com.rendezvous.domain.model.ProviderService;
 import com.rendezvous.domain.repository.*;
-import com.rendezvous.dto.AppointmentDto.AppointmentRequestDTO;
-import com.rendezvous.dto.AppointmentDto.AppointmentResponseDTO;
-import com.rendezvous.dto.ClientProfileDto.ClientProfileResponseDTO;
+import com.rendezvous.dto.appointmentDto.AppointmentRequestDTO;
+import com.rendezvous.dto.appointmentDto.AppointmentResponseDTO;
 import com.rendezvous.mapper.AppointmentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AppointmentService {

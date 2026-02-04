@@ -2,8 +2,8 @@ package com.rendezvous.mapper;
 
 import com.rendezvous.domain.model.ProviderProfile;
 import com.rendezvous.domain.model.ProviderService;
-import com.rendezvous.dto.ProviderServiceDto.ProviderServiceRequestDTO;
-import com.rendezvous.dto.ProviderServiceDto.ProviderServiseResponseDTO;
+import com.rendezvous.dto.providerServiceDto.ProviderServiceRequestDTO;
+import com.rendezvous.dto.providerServiceDto.ProviderServiseResponseDTO;
 import org.springframework.stereotype.Component;
 
 @Component
