@@ -1,13 +1,23 @@
 package com.rendezvous.dto.exceptionError;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 
 public class ErrorResponse {
 
+
+        @NotNull
         private LocalDateTime timestamp;
+
         private int status;
+
+        @NotBlank
         private String error;
+        @NotBlank
         private String message;
+        @NotBlank
         private String path;
 
         public ErrorResponse(LocalDateTime timestamp, int status, String error, String message, String path) {

@@ -1,14 +1,23 @@
 package com.rendezvous.dto.providerServiceDto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 
 public class ProviderServiceRequestDTO {
 
+    @NotBlank
     private String name;
+    @NotBlank
     private String description;
+    @NotNull
     private Integer durationMinutes;
+    @NotNull
     private Integer bufferMinutes;
+    @NotNull
     private BigDecimal price;
+    @NotNull
     private Long providerId;
 
 

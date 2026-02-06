@@ -4,6 +4,7 @@ import com.rendezvous.domain.repository.AppointmentRepository;
 import com.rendezvous.domain.service.AppointmentService;
 import com.rendezvous.dto.appointmentDto.AppointmentRequestDTO;
 import com.rendezvous.dto.appointmentDto.AppointmentResponseDTO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class AppointmentController {
     }
 
     @PostMapping
-    public ResponseEntity<AppointmentResponseDTO> createAppointment(@RequestBody AppointmentRequestDTO appointmentDTO){
+    public ResponseEntity<AppointmentResponseDTO> createAppointment(@Valid @RequestBody AppointmentRequestDTO appointmentDTO){
 
         AppointmentResponseDTO appointmentSaved = appointmentService.createAppointment(appointmentDTO);
 

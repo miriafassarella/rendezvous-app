@@ -5,6 +5,7 @@ import com.rendezvous.domain.repository.ProviderServiceRepository;
 import com.rendezvous.domain.service.ProviderServiceService;
 import com.rendezvous.dto.providerServiceDto.ProviderServiceRequestDTO;
 import com.rendezvous.dto.providerServiceDto.ProviderServiseResponseDTO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class ProviderServiceController {
     }
 
     @PostMapping("/service")
-    public ResponseEntity<ProviderServiseResponseDTO> createService(@RequestBody ProviderServiceRequestDTO serviceDTO){
+    public ResponseEntity<ProviderServiseResponseDTO> createService(@Valid @RequestBody ProviderServiceRequestDTO serviceDTO){
          ProviderServiseResponseDTO serviceSave = providerServiceService.createService(serviceDTO);
          return ResponseEntity.status(HttpStatus.CREATED).body(serviceSave);
     }

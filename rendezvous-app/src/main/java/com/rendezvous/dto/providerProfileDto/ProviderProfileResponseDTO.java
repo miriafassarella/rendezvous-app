@@ -1,13 +1,24 @@
 package com.rendezvous.dto.providerProfileDto;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 public class ProviderProfileResponseDTO {
 
+   @NotNull
    private Long id;
+   @NotBlank
    private String companyName;
+   @NotBlank
    private String phone;
+   @NotBlank
    private String description;
+   @NotEmpty
+   @Valid
    private List<Long> roles;
 
    public ProviderProfileResponseDTO(Long id, String companyName, String phone, String description, String email, List<Long> roles){

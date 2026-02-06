@@ -4,6 +4,7 @@ import com.rendezvous.domain.repository.AvailabilityRepository;
 import com.rendezvous.domain.service.AvailabilityService;
 import com.rendezvous.dto.availabilityDto.AvailabilityRequestDTO;
 import com.rendezvous.dto.availabilityDto.AvailabilityResponseDTO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class AvailabilityController {
     private AvailabilityRepository availabilityRepository;
 
     @PostMapping
-    public ResponseEntity<AvailabilityResponseDTO> createAvailability(@RequestBody AvailabilityRequestDTO availabilityDTO){
+    public ResponseEntity<AvailabilityResponseDTO> createAvailability(@Valid @RequestBody AvailabilityRequestDTO availabilityDTO){
        AvailabilityResponseDTO newAvailability = availabilityService.createAvailability(availabilityDTO);
        return ResponseEntity.status(HttpStatus.CREATED).body(newAvailability);
    }

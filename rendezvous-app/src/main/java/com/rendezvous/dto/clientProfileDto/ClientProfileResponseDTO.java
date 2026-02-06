@@ -1,10 +1,19 @@
 package com.rendezvous.dto.clientProfileDto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class ClientProfileResponseDTO {
 
+    @NotNull
     private Long id;
+    @NotBlank
     private String name;
+    @NotBlank
     private String phone;
+    @NotBlank
+    @Email
     private String email;
 
     public ClientProfileResponseDTO(Long id, String name, String phone, String email){

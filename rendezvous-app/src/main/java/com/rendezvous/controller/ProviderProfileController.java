@@ -2,10 +2,11 @@ package com.rendezvous.controller;
 
 import com.rendezvous.domain.model.ProviderProfile;
 import com.rendezvous.domain.repository.ProviderProfileRepositoy;
-import com.rendezvous.domain.service.AccountService;
+import com.rendezvous.domain.service.ClientProfileService;
+import com.rendezvous.domain.service.ProviderProfileService;
 import com.rendezvous.dto.providerProfileDto.ProviderProfileRequestDTO;
 import com.rendezvous.dto.providerProfileDto.ProviderProfileResponseDTO;
-import com.rendezvous.dto.providerServiceDto.ProviderServiseResponseDTO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,22 +22,22 @@ public class ProviderProfileController {
     private ProviderProfileRepositoy repositoy;
 
     @Autowired
-    private AccountService accountService;
+    private ProviderProfileService providerProfileService;
 
     @GetMapping
     public List<ProviderProfileResponseDTO> findProviderAll(){
-        return accountService.findProviderAll();
+        return providerProfileService.findProviderAll();
     }
 
     @PostMapping
-    public ResponseEntity<ProviderProfileResponseDTO> createProvider(@RequestBody ProviderProfileRequestDTO providerDTO){
-        ProviderProfileResponseDTO providerSave = accountService.createProvide(providerDTO);
+    public ResponseEntity<ProviderProfileResponseDTO> createProvider(@Valid @RequestBody ProviderProfileRequestDTO providerDTO){
+        ProviderProfileResponseDTO providerSave = providerProfileService.createProvide(providerDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(providerSave);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ProviderProfile> delete(@PathVariable Long id){
-        accountService.deleteProvider(id);
+        providerProfileService.deleteProvider(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
