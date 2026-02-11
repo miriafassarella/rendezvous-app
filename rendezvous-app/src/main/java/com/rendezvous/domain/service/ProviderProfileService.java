@@ -23,21 +23,23 @@ import java.util.Optional;
 @Service
 public class ProviderProfileService {
 
-
-    @Autowired
     private UserRepository userRepository;
 
-    @Autowired
     private ProviderProfileRepositoy providerProfileRepository;
 
-    @Autowired
     private RoleRepository roleRepository;
 
-    @Autowired
     private ProviderProfileMapper providerProfileMapper;
 
-    @Autowired
     private UserMapper userMapper;
+
+    public ProviderProfileService(UserRepository userRepository,
+                                  ProviderProfileRepositoy providerProfileRepositoy,
+                                  RoleRepository roleRepository,
+                                  ProviderProfileMapper providerProfileMapper,
+                                  UserMapper userMapper){
+
+    }
 
 
     @Transactional

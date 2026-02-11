@@ -23,21 +23,23 @@ import java.util.Optional;
 @Service
 public class ClientProfileService {
 
-
-    @Autowired
     private UserRepository userRepository;
 
-    @Autowired
     private ClientProfileRepository clientProfileRepository;
 
-    @Autowired
     private RoleRepository roleRepository;
 
-    @Autowired
     private ClientProfileMapper clientProfileMapper;
 
-    @Autowired
     private UserMapper userMapper;
+
+    public ClientProfileService(UserRepository userRepository,
+                                ClientProfileRepository clientProfileRepository,
+                                RoleRepository roleRepository,
+                                ClientProfileMapper clientProfileMapper,
+                                UserMapper userMapper){
+
+    }
 
 
     @Transactional

@@ -18,23 +18,25 @@ import java.util.List;
 @Service
 public class AppointmentService {
 
-    @Autowired
     AppointmentRepository appointmentRepository;
 
-    @Autowired
     ClientProfileRepository clientProfileRepository;
 
-    @Autowired
     ProviderProfileRepositoy providerProfileRepositoy;
 
-    @Autowired
     AvailabilityRepository availabilityRepository;
 
-    @Autowired
     ProviderServiceRepository providerServiceRepository;
 
-    @Autowired
     AppointmentMapper appointmentMapper;
+
+    public AppointmentService(AppointmentRepository appointmentRepository,
+                              ClientProfileRepository clientProfileRepository,
+                              ProviderProfileRepositoy providerProfileRepositoy,
+                              AvailabilityRepository availabilityRepository,
+                              ProviderServiceRepository providerServiceRepository,
+                              AppointmentMapper appointmentMapper){
+    }
 
 
     @Transactional

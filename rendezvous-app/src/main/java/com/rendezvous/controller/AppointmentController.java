@@ -16,11 +16,12 @@ import java.util.List;
 @RequestMapping("/appointments")
 public class AppointmentController {
 
-    @Autowired
-    private AppointmentRepository appointmentRepository;
 
-    @Autowired
     private AppointmentService appointmentService;
+
+    public AppointmentController(AppointmentService appointmentService){
+        this.appointmentService = appointmentService;
+    }
 
     @GetMapping
     public List<AppointmentResponseDTO> findAppointmentsAll(){

@@ -17,11 +17,14 @@ import java.util.List;
 @RequestMapping("/clients")
 public class ClientProfileController {
 
-    @Autowired
     private UserService userService;
 
-    @Autowired
     private ClientProfileService clientProfileService;
+
+    public ClientProfileController(UserService userService, ClientProfileService clientProfileService){
+        this.userService = userService;
+        this.clientProfileService = clientProfileService;
+    }
 
     @GetMapping
     public List<ClientProfileResponseDTO> findClientAll(){

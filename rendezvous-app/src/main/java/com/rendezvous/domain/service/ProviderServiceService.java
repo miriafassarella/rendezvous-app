@@ -18,17 +18,18 @@ import java.util.Optional;
 @Service
 public class ProviderServiceService {
 
-    @Autowired
     private ProviderProfileRepositoy providerRepository;
 
-    @Autowired
     private ProviderServiceMapper providerServiceMapper;
 
-    @Autowired
     private ProviderServiceRepository providerServiceRepository;
 
-    @Autowired
-    private ProviderServiceRepository repository;
+    public ProviderServiceService(ProviderProfileRepositoy providerProfileRepositoy,
+                                  ProviderServiceMapper providerServiceMapper,
+                                  ProviderServiceRepository providerServiceRepository
+                                  ){
+
+    }
 
     @Transactional
     public ProviderServiseResponseDTO createService(ProviderServiceRequestDTO serviceDTO){
@@ -55,7 +56,7 @@ public class ProviderServiceService {
         ProviderProfile provider = providerRepository.findById(providerId)
                 .orElseThrow(()-> new EntityNotFoundException("This provider id " + providerId + " does not exist."));
 
-        List<ProviderService> services = repository.findByProviderId(providerId);
+        List<ProviderService> services = providerServiceRepository.findByProviderId(providerId);
         return services.stream()
                 .map(service -> providerServiceMapper.toResponseDTO(service))
                 .toList();

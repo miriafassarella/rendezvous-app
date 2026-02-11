@@ -17,14 +17,17 @@ import java.util.Optional;
 @Service
 public class AvailabilityService {
 
-    @Autowired
     private ProviderProfileRepositoy providerProfileRepositoy;
 
-    @Autowired
     private AvailabilityRepository availabilityRepository;
 
-    @Autowired
     private AvailabilityMapper availabilityMapper;
+
+    public AvailabilityService(ProviderProfileRepositoy providerProfileRepositoy,
+                               AvailabilityRepository availabilityRepository,
+                               AvailabilityMapper availabilityMapper){
+
+    }
 
     @Transactional
     public AvailabilityResponseDTO createAvailability(AvailabilityRequestDTO availabilityDTO){
