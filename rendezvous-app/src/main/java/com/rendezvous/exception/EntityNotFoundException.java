@@ -1,6 +1,6 @@
 package com.rendezvous.exception;
 
-public class EntityNotFoundException extends RuntimeException{
+public class EntityNotFoundException extends BusinessException{
 
     public EntityNotFoundException(String message){
         super(message);
