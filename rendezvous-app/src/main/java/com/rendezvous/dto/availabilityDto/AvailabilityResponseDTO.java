@@ -1,15 +1,24 @@
 package com.rendezvous.dto.availabilityDto;
 
+import jakarta.validation.constraints.NotNull;
+
+import java.lang.annotation.Native;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 public class AvailabilityResponseDTO {
 
+    @NotNull
     private Long id;
+    @NotNull
     private DayOfWeek dayOfWeek;
+    @NotNull
     private LocalTime startTime;
+    @NotNull
     private LocalTime endTime;
+    @NotNull
     private Long providerId;
+
 
     public Long getId() {
         return id;

@@ -18,7 +18,7 @@ import java.util.Optional;
 @Service
 public class ProviderServiceService {
 
-    private ProviderProfileRepositoy providerRepository;
+    private ProviderProfileRepositoy providerProfileRepository;
 
     private ProviderServiceMapper providerServiceMapper;
 
@@ -28,13 +28,15 @@ public class ProviderServiceService {
                                   ProviderServiceMapper providerServiceMapper,
                                   ProviderServiceRepository providerServiceRepository
                                   ){
-
+        this.providerProfileRepository = providerProfileRepositoy;
+        this.providerServiceMapper = providerServiceMapper;
+        this.providerServiceRepository = providerServiceRepository;
     }
 
     @Transactional
     public ProviderServiseResponseDTO createService(ProviderServiceRequestDTO serviceDTO){
 
-        Optional<ProviderProfile> provider = providerRepository.findById(serviceDTO.getProviderId());
+        Optional<ProviderProfile> provider = providerProfileRepository.findById(serviceDTO.getProviderId());
 
         ProviderService service = providerServiceMapper.toEntity(serviceDTO, provider.get());
         //TODO
@@ -53,7 +55,7 @@ public class ProviderServiceService {
 
     @Transactional
     public List<ProviderServiseResponseDTO> findServicesAllByProvider(Long providerId){
-        ProviderProfile provider = providerRepository.findById(providerId)
+        ProviderProfile provider = providerProfileRepository.findById(providerId)
                 .orElseThrow(()-> new EntityNotFoundException("This provider id " + providerId + " does not exist."));
 
         List<ProviderService> services = providerServiceRepository.findByProviderId(providerId);

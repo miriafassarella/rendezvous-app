@@ -18,7 +18,6 @@ public class ProviderProfileResponseDTO {
    @NotBlank
    private String description;
    @NotEmpty
-   @Valid
    private List<Long> roles;
 
    public ProviderProfileResponseDTO(Long id, String companyName, String phone, String description, String email, List<Long> roles){

@@ -21,7 +21,6 @@ public class ClientProfileRequestDTO {
     @NotBlank
     private String phone;
     @NotEmpty
-    @Valid
     private List<Long> rolesIds;
 
 

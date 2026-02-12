@@ -38,6 +38,11 @@ public class ClientProfileService {
                                 RoleRepository roleRepository,
                                 ClientProfileMapper clientProfileMapper,
                                 UserMapper userMapper){
+        this.userRepository = userRepository;
+        this.clientProfileRepository = clientProfileRepository;
+        this.roleRepository = roleRepository;
+        this.clientProfileMapper = clientProfileMapper;
+        this.userMapper = userMapper;
 
     }
 

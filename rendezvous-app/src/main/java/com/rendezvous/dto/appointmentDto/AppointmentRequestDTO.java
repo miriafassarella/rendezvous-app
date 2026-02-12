@@ -11,8 +11,7 @@ public class AppointmentRequestDTO {
     private DayOfWeek dayOfWeek;
     @NotNull
     private LocalTime startTime;
-    @NotNull
-    private LocalTime endTime;
+
     @NotNull
     private Long serviceId;
     @NotNull
@@ -26,14 +25,6 @@ public class AppointmentRequestDTO {
 
     public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
     }
 
     public Long getServiceId() {

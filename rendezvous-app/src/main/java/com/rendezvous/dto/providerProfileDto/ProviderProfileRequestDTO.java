@@ -23,7 +23,6 @@ public class ProviderProfileRequestDTO {
 
     private boolean enable;
     @NotEmpty
-    @Valid
     private List<Long> rolesIds;
 
     public String getEmail() {

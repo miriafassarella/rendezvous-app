@@ -27,6 +27,10 @@ public class AvailabilityService {
                                AvailabilityRepository availabilityRepository,
                                AvailabilityMapper availabilityMapper){
 
+        this.providerProfileRepositoy = providerProfileRepositoy;
+        this.availabilityRepository = availabilityRepository;
+        this.availabilityMapper = availabilityMapper;
+
     }
 
     @Transactional

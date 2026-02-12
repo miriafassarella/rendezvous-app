@@ -36,6 +36,12 @@ public class AppointmentService {
                               AvailabilityRepository availabilityRepository,
                               ProviderServiceRepository providerServiceRepository,
                               AppointmentMapper appointmentMapper){
+        this.appointmentRepository = appointmentRepository;
+        this.clientProfileRepository = clientProfileRepository;
+        this.providerProfileRepositoy = providerProfileRepositoy;
+        this.availabilityRepository = availabilityRepository;
+        this.providerServiceRepository = providerServiceRepository;
+        this.appointmentMapper = appointmentMapper;
     }
 
 
@@ -68,7 +74,8 @@ public class AppointmentService {
         * a transação esta sendo feita*/
         List<Appointment> conflictingAppointments =
                 appointmentRepository.findConflictingAppointmentsForLock(provider, appointmentDTO.getDayOfWeek(),
-                        appointmentDTO.getStartTime(), appointmentDTO.getEndTime());
+                        appointmentDTO.getStartTime(), appointmentDTO.getStartTime().plusMinutes(service.getDuration_minutes()));
+
 
         /*exceção se un agendamento esta dentro do horaio de outro agendamento já existente*/
         if (!conflictingAppointments.isEmpty()) {
