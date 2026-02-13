@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,6 +32,14 @@ public class AvailabilityService {
         this.availabilityRepository = availabilityRepository;
         this.availabilityMapper = availabilityMapper;
 
+    }
+
+    @Transactional
+    public List<AvailabilityResponseDTO> findAvailabilityAll(){
+        List<Availability> availabilities = availabilityRepository.findAll();
+        return availabilities.stream()
+                .map(availability -> availabilityMapper.toResponseDTO(availability))
+                .toList();
     }
 
     @Transactional

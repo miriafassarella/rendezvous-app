@@ -41,4 +41,10 @@ public class AppointmentController {
         List<AppointmentResponseDTO> appointments =  appointmentService.findByProviderId(providerId);
         return ResponseEntity.status(HttpStatus.OK).body(appointments);
     }
+
+    @GetMapping("client/{clientId}")
+    public ResponseEntity<List<AppointmentResponseDTO>> findByClientId(@PathVariable Long clientId){
+        List<AppointmentResponseDTO> appointments = appointmentService.findByClientId(clientId);
+        return ResponseEntity.status(HttpStatus.OK).body(appointments);
+    }
 }

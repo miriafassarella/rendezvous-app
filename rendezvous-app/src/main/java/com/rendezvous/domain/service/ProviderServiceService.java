@@ -7,6 +7,7 @@ import com.rendezvous.domain.repository.ProviderServiceRepository;
 import com.rendezvous.dto.providerServiceDto.ProviderServiceRequestDTO;
 import com.rendezvous.dto.providerServiceDto.ProviderServiseResponseDTO;
 import com.rendezvous.exception.EntityNotFoundException;
+import com.rendezvous.exception.ProviderNotFoundException;
 import com.rendezvous.mapper.ProviderServiceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,14 +36,11 @@ public class ProviderServiceService {
 
     @Transactional
     public ProviderServiseResponseDTO createService(ProviderServiceRequestDTO serviceDTO){
+        ProviderProfile provider = providerProfileRepository.findById(serviceDTO.getProviderId())
+                .orElseThrow(()-> new ProviderNotFoundException());
 
-        Optional<ProviderProfile> provider = providerProfileRepository.findById(serviceDTO.getProviderId());
-
-        ProviderService service = providerServiceMapper.toEntity(serviceDTO, provider.get());
-        //TODO
-        /*validar se id provider existe*/
+        ProviderService service = providerServiceMapper.toEntity(serviceDTO, provider);
         ProviderService serviceSaved = providerServiceRepository.save(service);
-
         return providerServiceMapper.toResponseDTO(serviceSaved);
     }
 

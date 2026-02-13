@@ -101,14 +101,28 @@ public class AppointmentService {
 
     }
 
+    @Transactional
     public List<AppointmentResponseDTO> findByProviderId(Long providerId){
-        List<Appointment> appointments = appointmentRepository.findAllByProvider_Id(providerId);
+        ProviderProfile provider = providerProfileRepositoy.findById(providerId)
+                .orElseThrow(()-> new ProviderNotFoundException());
+
+        List<Appointment> appointments = appointmentRepository.findAllByProvider_Id(provider.getId());
 
         return appointments.stream()
                 .map(appointment -> appointmentMapper.toResponseDTO(appointment))
                 .toList();
 
+    }
 
+    @Transactional
+    public  List<AppointmentResponseDTO> findByClientId(Long clientId){
+        ClientProfile client = clientProfileRepository.findById(clientId)
+                .orElseThrow(()-> new ClientNotFoundException());
+
+        List<Appointment> appointments = appointmentRepository.findAllByClient_Id(client.getId());
+        return appointments.stream()
+                .map(appointment-> appointmentMapper.toResponseDTO(appointment))
+                .toList();
     }
 
 }
