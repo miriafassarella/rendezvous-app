@@ -101,4 +101,14 @@ public class AppointmentService {
 
     }
 
+    public List<AppointmentResponseDTO> findByProviderId(Long providerId){
+        List<Appointment> appointments = appointmentRepository.findAllByProvider_Id(providerId);
+
+        return appointments.stream()
+                .map(appointment -> appointmentMapper.toResponseDTO(appointment))
+                .toList();
+
+
+    }
+
 }

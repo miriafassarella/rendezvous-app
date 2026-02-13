@@ -15,6 +15,9 @@ import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 
+
+    List<Appointment> findAllByProvider_Id(Long id);
+
     /*Verificando no banco se há conflito de horario e bloqueando a modificação neste intervalo de horario*/
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("""
