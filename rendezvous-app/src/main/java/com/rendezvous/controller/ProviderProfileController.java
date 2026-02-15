@@ -72,4 +72,10 @@ public class ProviderProfileController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newAvailability);
     }
 
+    @PutMapping("/availability/{availabilityId}")
+    public ResponseEntity<AvailabilityResponseDTO> modifyAvailability(@RequestBody AvailabilityRequestDTO availabilityRequestDTO, @PathVariable Long availabilityId){
+        AvailabilityResponseDTO availabilityResponseDTO = availabilityService.modifyAvailability(availabilityRequestDTO, availabilityId);
+        return ResponseEntity.status(HttpStatus.OK).body(availabilityResponseDTO);
+    }
+
 }

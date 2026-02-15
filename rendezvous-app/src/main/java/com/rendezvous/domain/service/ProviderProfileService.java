@@ -7,6 +7,7 @@ import com.rendezvous.dto.clientProfileDto.ClientProfileRequestDTO;
 import com.rendezvous.dto.clientProfileDto.ClientProfileResponseDTO;
 import com.rendezvous.dto.providerProfileDto.ProviderProfileRequestDTO;
 import com.rendezvous.dto.providerProfileDto.ProviderProfileResponseDTO;
+import com.rendezvous.exception.ProviderNotFoundException;
 import com.rendezvous.mapper.ClientProfileMapper;
 import com.rendezvous.mapper.ProviderProfileMapper;
 import com.rendezvous.mapper.UserMapper;
@@ -72,13 +73,8 @@ public class ProviderProfileService {
 
     @Transactional
     public void deleteProvider(Long id){
-        Optional<ProviderProfile> provider = providerProfileRepository.findById(id);
-        if(provider.isEmpty()){
-            //TODO
-        }else {
-            providerProfileRepository.delete(provider.get());
-        }
-
+        ProviderProfile provider = providerProfileRepository.findById(id)
+                .orElseThrow(()-> new ProviderNotFoundException());
+            providerProfileRepository.delete(provider);
     }
-
 }

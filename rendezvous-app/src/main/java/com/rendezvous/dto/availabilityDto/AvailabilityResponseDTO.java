@@ -19,6 +19,13 @@ public class AvailabilityResponseDTO {
     @NotNull
     private Long providerId;
 
+    public AvailabilityResponseDTO(Long id, DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime, Long providerId){
+        this.id = id;
+        this.dayOfWeek = dayOfWeek;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.providerId = providerId;
+    }
 
     public Long getId() {
         return id;

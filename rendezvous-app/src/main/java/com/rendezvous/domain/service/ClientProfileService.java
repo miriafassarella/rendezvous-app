@@ -7,6 +7,7 @@ import com.rendezvous.dto.clientProfileDto.ClientProfileRequestDTO;
 import com.rendezvous.dto.clientProfileDto.ClientProfileResponseDTO;
 import com.rendezvous.dto.providerProfileDto.ProviderProfileRequestDTO;
 import com.rendezvous.dto.providerProfileDto.ProviderProfileResponseDTO;
+import com.rendezvous.exception.ClientNotFoundException;
 import com.rendezvous.mapper.ClientProfileMapper;
 import com.rendezvous.mapper.ProviderProfileMapper;
 import com.rendezvous.mapper.UserMapper;
@@ -69,13 +70,8 @@ public class ClientProfileService {
 
     @Transactional
     public void deleteClient(Long id){
-        Optional<ClientProfile> client = clientProfileRepository.findById(id);
-        if(client.isEmpty()){
-            //TODO
-        }else {
-            clientProfileRepository.delete(client.get());
-        }
-
+        ClientProfile client = clientProfileRepository.findById(id)
+                .orElseThrow(()-> new ClientNotFoundException());
+            clientProfileRepository.delete(client);
     }
-
 }
