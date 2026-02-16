@@ -54,6 +54,7 @@ public class AvailabilityService {
         return availabilityMapper.toResponseDTO(availabilitySaved);
     }
 
+    @Transactional
     public AvailabilityResponseDTO modifyAvailability(AvailabilityRequestDTO availabilityDTO, Long availabilityId){
         Availability availability = availabilityRepository.findById(availabilityId)
                 .orElseThrow(()-> new AvailabilityNotFoundException());
@@ -61,6 +62,13 @@ public class AvailabilityService {
         BeanUtils.copyProperties(availabilityDTO, availability, "id");
         Availability availabilitySaved = availabilityRepository.save(availability);
         return availabilityMapper.toResponseDTO(availabilitySaved);
+    }
+
+    @Transactional
+    public void deleteAvailability(Long availabilityId){
+        Availability availability = availabilityRepository.findById(availabilityId)
+                .orElseThrow(()-> new AvailabilityNotFoundException());
+        availabilityRepository.delete(availability);
     }
 
 }

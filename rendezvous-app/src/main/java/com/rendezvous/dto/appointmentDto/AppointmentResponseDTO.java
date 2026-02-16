@@ -37,6 +37,10 @@ public class AppointmentResponseDTO {
         this.status = status;
     }
 
+    public AppointmentResponseDTO(){
+
+    }
+
     public Long getId() {
         return id;
     }

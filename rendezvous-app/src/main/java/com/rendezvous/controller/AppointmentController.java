@@ -36,6 +36,12 @@ public class AppointmentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(appointmentSaved);
     }
 
+    @DeleteMapping("/{appointmentId}")
+    public ResponseEntity<?> deleteAppointment(@PathVariable Long appointmentId){
+        appointmentService.deleteAppointment(appointmentId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
     @GetMapping("/provider/{providerId}")
     public ResponseEntity<List<AppointmentResponseDTO>> findByProviderId(@PathVariable Long providerId){
         List<AppointmentResponseDTO> appointments =  appointmentService.findByProviderId(providerId);

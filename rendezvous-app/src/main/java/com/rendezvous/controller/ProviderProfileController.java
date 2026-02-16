@@ -78,4 +78,10 @@ public class ProviderProfileController {
         return ResponseEntity.status(HttpStatus.OK).body(availabilityResponseDTO);
     }
 
+    @DeleteMapping("/availability/{availabilityId}")
+    public ResponseEntity<?> deleteAvailability(@PathVariable Long availabilityId){
+        availabilityService.deleteAvailability(availabilityId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+    }
 }

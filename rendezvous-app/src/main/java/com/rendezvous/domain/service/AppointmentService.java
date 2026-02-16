@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -49,6 +50,7 @@ public class AppointmentService {
     @Transactional
     public List<AppointmentResponseDTO> findAppointmentsAll(){
         List<Appointment> appointments =  appointmentRepository.findAll();
+
         return appointments.stream()
                 .map(appointment -> appointmentMapper.toResponseDTO(appointment))
                 .toList();
@@ -99,6 +101,13 @@ public class AppointmentService {
 
         return appointmentMapper.toResponseDTO(appointmentSaved);
 
+    }
+
+    @Transactional
+    public void deleteAppointment(Long appointmentId){
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(()-> new AvailabilityNotFoundException());
+        appointmentRepository.delete(appointment);
     }
 
     @Transactional
