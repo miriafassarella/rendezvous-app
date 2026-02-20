@@ -29,8 +29,7 @@ public class ProviderServiceMapper {
                 service.getDuration_minutes(),
                 service.getBuffer_minutes(),
                 service.getPrice(),
-                service.getProvider().getId(),
-                service.isActive()
+                service.getProvider().getId()
         );
     }
 }

@@ -120,6 +120,13 @@ public class Appointment {
         this.status = status;
     }
 
+    public void statusConfirm(){
+        setStatus(Status.CONFIRMED);
+    }
+    public void statusCanceled(){
+        setStatus(Status.CANCELED);
+    }
+
 
     @Override
     public boolean equals(Object o) {

@@ -17,7 +17,6 @@ public class ProviderService {
     private Integer duration_minutes;
     private Integer buffer_minutes;
     private BigDecimal price;
-    private boolean active = true;
 
 
     @ManyToOne()
@@ -70,14 +69,6 @@ public class ProviderService {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
     }
 
     public ProviderProfile getProvider() {

@@ -71,6 +71,7 @@ public class AvailabilityService {
         availabilityRepository.delete(availability);
     }
 
+    @Transactional
     public List<AvailabilityResponseDTO> findByProviderId(Long providerId){
         ProviderProfile providerProfile = providerProfileRepositoy.findById(providerId)
                 .orElseThrow(()-> new ProviderNotFoundException());

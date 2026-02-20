@@ -60,6 +60,7 @@ public class ClientProfileService {
         List<Role> roles = new ArrayList<>(roleRepository.findAllById(clientDTO.getRolesIds()));
 
         User user = userMapper.toEntity(clientDTO.getEmail(), clientDTO.getPassword(), roles);
+        user.setEnable(true); // avaliar se deve ficar aqui
         User userSaved = userRepository.save(user);
 
         ClientProfile client =  clientProfileMapper.toEntity(clientDTO, userSaved);

@@ -5,7 +5,6 @@ CREATE TABLE provider_service (
     duration_minutes INTEGER NOT NULL,
     buffer_minutes INTEGER DEFAULT 0,
     price DECIMAL(10, 2) NOT NULL,
-    active BOOLEAN NOT NULL DEFAULT TRUE,
     provider_profile_id BIGINT NOT NULL,
 
     CONSTRAINT fk_service_provider

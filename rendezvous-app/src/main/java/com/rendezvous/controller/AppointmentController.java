@@ -43,7 +43,7 @@ public class AppointmentController {
     @PutMapping("/{appointmentId}")
     public ResponseEntity<AppointmentResponseDTO> modifyAppointment(@RequestBody AppointmentRequestDTO appointmentDTO, @PathVariable Long appointmentId){
         AppointmentResponseDTO appointmentResponseDTO = appointmentService.modifyAppointment(appointmentDTO, appointmentId);
-        return ResponseEntity.status(HttpStatus.OK).body(appointmentResponseDTO);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(appointmentResponseDTO);
     }
 
     @DeleteMapping("/{appointmentId}")
@@ -62,5 +62,17 @@ public class AppointmentController {
     public ResponseEntity<List<AppointmentResponseDTO>> findByClientId(@PathVariable Long clientId){
         List<AppointmentResponseDTO> appointments = appointmentService.findByClientId(clientId);
         return ResponseEntity.status(HttpStatus.OK).body(appointments);
+    }
+
+    @PatchMapping("/{appointmentId}/cancel")
+    public ResponseEntity<AppointmentResponseDTO> canceledAppointment(@PathVariable Long appointmentId){
+        AppointmentResponseDTO appointmentDTO = appointmentService.canceledAppointment(appointmentId);
+        return ResponseEntity.status(HttpStatus.OK).body(appointmentDTO);
+    }
+
+    @PatchMapping("/{appointmentId}/confirm")
+    public ResponseEntity<AppointmentResponseDTO> confirmedAppointemnt(@PathVariable Long appointmentId){
+       AppointmentResponseDTO appointmentDTO = appointmentService.confirmedAppointment(appointmentId);
+        return ResponseEntity.status(HttpStatus.OK).body(appointmentDTO);
     }
 }

@@ -147,4 +147,22 @@ public class AppointmentService {
                 .toList();
     }
 
+    @Transactional
+    public AppointmentResponseDTO canceledAppointment(Long appointmentId){
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(()-> new AppointmentNotFoundException());
+        appointment.statusCanceled();
+        //todo adicionar validações de quando um appointment pode ser cancelado
+       Appointment appointmentSaved = appointmentRepository.save(appointment);
+       return appointmentMapper.toResponseDTO(appointmentSaved);
+    }
+
+    @Transactional
+    public AppointmentResponseDTO confirmedAppointment(Long appointmentId){
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(()-> new AppointmentNotFoundException());
+        appointment.statusConfirm();
+       Appointment appointmentSaved =  appointmentRepository.save(appointment);
+       return appointmentMapper.toResponseDTO(appointmentSaved);
+    }
 }

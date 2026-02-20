@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.time.DayOfWeek;
 
 @Entity
-public class Availability {
+public class   Availability {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

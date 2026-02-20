@@ -22,10 +22,8 @@ public class ProviderServiceResponseDTO {
     @NotNull
     private Long providerId;
 
-    boolean active;
 
-
-    public ProviderServiceResponseDTO(Long id, String name, String description, Integer durationMinutes, Integer bufferMinutes, BigDecimal price, Long providerId, boolean active ){
+    public ProviderServiceResponseDTO(Long id, String name, String description, Integer durationMinutes, Integer bufferMinutes, BigDecimal price, Long providerId){
         this.id = id;
         this.name = name;
         this.description = description;
@@ -33,7 +31,6 @@ public class ProviderServiceResponseDTO {
         this.bufferMinutes = bufferMinutes;
         this.price = price;
         this.providerId = providerId;
-        this.active = active;
     }
 
     public Long getId() {
@@ -92,11 +89,4 @@ public class ProviderServiceResponseDTO {
         this.providerId = providerId;
     }
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
 }

@@ -36,7 +36,7 @@ public class ProviderServiceController {
     @PutMapping("{providerServiceId}")
     public ResponseEntity<ProviderServiceResponseDTO> modifyProviderService(@RequestBody ProviderServiceRequestDTO providerServiceDTO, @PathVariable Long providerServiceId){
         ProviderServiceResponseDTO providerServiceResponseDTO = providerServiceService.modifyProviderService(providerServiceDTO, providerServiceId);
-        return ResponseEntity.status(HttpStatus.OK).body(providerServiceResponseDTO);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(providerServiceResponseDTO);
 
         //TODO não posso modificar um servico se existe um rendez-vous pra ele.
     }

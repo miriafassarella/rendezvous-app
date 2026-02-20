@@ -91,7 +91,7 @@ public class ProviderServiceService {
     @Transactional
     public List<ProviderServiceResponseDTO> findServicesAllByProvider(Long providerId){
         ProviderProfile provider = providerProfileRepository.findById(providerId)
-                .orElseThrow(()-> new EntityNotFoundException("This provider id " + providerId + " does not exist."));
+                .orElseThrow(()-> new ProviderNotFoundException());
 
         List<ProviderService> services = providerServiceRepository.findByProviderId(providerId);
         return services.stream()
