@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
-public class ProviderServiseResponseDTO {
+public class ProviderServiceResponseDTO {
 
     @NotNull
     private Long id;
@@ -25,7 +25,7 @@ public class ProviderServiseResponseDTO {
     boolean active;
 
 
-    public ProviderServiseResponseDTO(Long id, String name, String description, Integer durationMinutes, Integer bufferMinutes, BigDecimal price, Long providerId, boolean active ){
+    public ProviderServiceResponseDTO(Long id, String name, String description, Integer durationMinutes, Integer bufferMinutes, BigDecimal price, Long providerId, boolean active ){
         this.id = id;
         this.name = name;
         this.description = description;

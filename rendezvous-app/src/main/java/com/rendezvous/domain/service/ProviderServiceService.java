@@ -5,16 +5,16 @@ import com.rendezvous.domain.model.ProviderService;
 import com.rendezvous.domain.repository.ProviderProfileRepositoy;
 import com.rendezvous.domain.repository.ProviderServiceRepository;
 import com.rendezvous.dto.providerServiceDto.ProviderServiceRequestDTO;
-import com.rendezvous.dto.providerServiceDto.ProviderServiseResponseDTO;
+import com.rendezvous.dto.providerServiceDto.ProviderServiceResponseDTO;
 import com.rendezvous.exception.EntityNotFoundException;
 import com.rendezvous.exception.ProviderNotFoundException;
+import com.rendezvous.exception.ServiceNotFoundException;
 import com.rendezvous.mapper.ProviderServiceMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProviderServiceService {
@@ -34,14 +34,51 @@ public class ProviderServiceService {
         this.providerServiceRepository = providerServiceRepository;
     }
 
+
+    /**
+     * A method for creating a new type of service.
+     * @param serviceDTO is the serviceDTO is the received object.
+     * @return Returns the type of service that was saved.
+     * @throws throws the exception ProviderNotFoundException if the provider does not exist
+     * */
+
     @Transactional
-    public ProviderServiseResponseDTO createService(ProviderServiceRequestDTO serviceDTO){
+    public ProviderServiceResponseDTO createService(ProviderServiceRequestDTO serviceDTO){
         ProviderProfile provider = providerProfileRepository.findById(serviceDTO.getProviderId())
                 .orElseThrow(()-> new ProviderNotFoundException());
 
         ProviderService service = providerServiceMapper.toEntity(serviceDTO, provider);
         ProviderService serviceSaved = providerServiceRepository.save(service);
         return providerServiceMapper.toResponseDTO(serviceSaved);
+    }
+
+    /**
+     * Method for modifying a service type.
+     * @param providerServiceId is the providerService ID and providerServiceDTO is the received object.
+     * @return returns the type of service that was modified and transformed into a DTO.
+     * @throws throws the exception ServiceNotFoundException if the providerService does not exist
+     * */
+
+    @Transactional
+    public ProviderServiceResponseDTO modifyProviderService(ProviderServiceRequestDTO providerServiceDTO, Long providerServiceId){
+        ProviderService providerService = providerServiceRepository.findById(providerServiceId)
+                .orElseThrow(()-> new ServiceNotFoundException());
+        BeanUtils.copyProperties(providerServiceDTO, providerService, "id");
+        ProviderService providerServiceSaved = providerServiceRepository.save(providerService);
+        return providerServiceMapper.toResponseDTO(providerServiceSaved);
+    }
+
+    /**
+     * Method for excluding a type of service.
+     * @param providerServiceId is the providerService ID
+     * @throws throws the exception ServiceNotFoundException if the providerService does not exist
+     * */
+
+    @Transactional
+    public void deleteProviderService(Long providerServiceId){
+        ProviderService providerService = providerServiceRepository.findById(providerServiceId)
+                .orElseThrow(()-> new ServiceNotFoundException());
+        providerServiceRepository.delete(providerService);
     }
 
     /**
@@ -52,7 +89,7 @@ public class ProviderServiceService {
      * */
 
     @Transactional
-    public List<ProviderServiseResponseDTO> findServicesAllByProvider(Long providerId){
+    public List<ProviderServiceResponseDTO> findServicesAllByProvider(Long providerId){
         ProviderProfile provider = providerProfileRepository.findById(providerId)
                 .orElseThrow(()-> new EntityNotFoundException("This provider id " + providerId + " does not exist."));
 

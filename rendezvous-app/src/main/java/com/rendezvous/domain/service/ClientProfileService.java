@@ -47,14 +47,14 @@ public class ClientProfileService {
 
     }
 
-
     @Transactional
     public List<ClientProfileResponseDTO> findClientAll(){
         List<ClientProfile> clients = clientProfileRepository.findAll();
             return clients.stream()
                     .map(client -> clientProfileMapper.toResponseDTO(client))
                     .toList();
-        }
+    }
+
     @Transactional
     public ClientProfileResponseDTO createClient(ClientProfileRequestDTO clientDTO){
         List<Role> roles = new ArrayList<>(roleRepository.findAllById(clientDTO.getRolesIds()));

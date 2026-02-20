@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleResourceNotFound(EntityNotFoundException ex, WebRequest request) {
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ErrorResponse> handleResourceNotFound(BusinessException ex, WebRequest request) {
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),
@@ -23,5 +23,6 @@ public class GlobalExceptionHandler {
         );
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
+
 
 }

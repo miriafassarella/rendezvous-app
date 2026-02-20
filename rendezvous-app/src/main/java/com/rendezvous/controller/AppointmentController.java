@@ -1,15 +1,19 @@
 package com.rendezvous.controller;
 
+import com.rendezvous.domain.model.Appointment;
 import com.rendezvous.domain.repository.AppointmentRepository;
 import com.rendezvous.domain.service.AppointmentService;
 import com.rendezvous.dto.appointmentDto.AppointmentRequestDTO;
 import com.rendezvous.dto.appointmentDto.AppointmentResponseDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -36,8 +40,14 @@ public class AppointmentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(appointmentSaved);
     }
 
+    @PutMapping("/{appointmentId}")
+    public ResponseEntity<AppointmentResponseDTO> modifyAppointment(@RequestBody AppointmentRequestDTO appointmentDTO, @PathVariable Long appointmentId){
+        AppointmentResponseDTO appointmentResponseDTO = appointmentService.modifyAppointment(appointmentDTO, appointmentId);
+        return ResponseEntity.status(HttpStatus.OK).body(appointmentResponseDTO);
+    }
+
     @DeleteMapping("/{appointmentId}")
-    public ResponseEntity<?> deleteAppointment(@PathVariable Long appointmentId){
+    public ResponseEntity<Appointment> deleteAppointment(@PathVariable Long appointmentId){
         appointmentService.deleteAppointment(appointmentId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

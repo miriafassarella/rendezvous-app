@@ -10,10 +10,13 @@ import com.rendezvous.dto.appointmentDto.AppointmentRequestDTO;
 import com.rendezvous.dto.appointmentDto.AppointmentResponseDTO;
 import com.rendezvous.exception.*;
 import com.rendezvous.mapper.AppointmentMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,6 +76,17 @@ public class AppointmentService {
             throw new InvalidProviderServiceException();
         }
 
+        /*garantindo usando keywords que o provider possui disponibilidade neste período*/
+        boolean available = availabilityRepository
+                .existsByProviderAndDayOfWeekAndStartTimeLessThanAndEndTimeGreaterThan(
+                        provider, appointmentDTO.getDayOfWeek(), appointmentDTO.getStartTime(),
+                        appointmentDTO.getStartTime().plusMinutes(service.getDuration_minutes())
+                );
+
+        if (!available) {
+            throw new ProviderNotAvailableException();
+        }
+
         /*aplica LOCK no banco - bloqueia todos os agendamentos para este provider para este dia enquanto
         * a transação esta sendo feita*/
         List<Appointment> conflictingAppointments =
@@ -84,16 +98,6 @@ public class AppointmentService {
         if (!conflictingAppointments.isEmpty()) {
             throw new TimeSlotAlreadyBookedException();
         }
-        /*garantindo que o provider possui o horario disponível*/
-        boolean available = availabilityRepository
-                .existsByProviderAndDayOfWeekAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
-                        provider, appointmentDTO.getDayOfWeek(), appointmentDTO.getStartTime(),
-                        appointmentDTO.getStartTime().plusMinutes(service.getDuration_minutes())
-                );
-
-        if (!available) {
-            throw new ProviderNotAvailableException();
-        }
 
         Appointment appointment = appointmentMapper.toEntity(appointmentDTO, provider, client, service);
         appointment.setStatus(Status.PENDING);
@@ -104,9 +108,18 @@ public class AppointmentService {
     }
 
     @Transactional
+    public AppointmentResponseDTO modifyAppointment(AppointmentRequestDTO appointmentDTO, Long appointmentId){
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(()-> new AppointmentNotFoundException());
+        BeanUtils.copyProperties(appointmentDTO, appointment, "id");
+       Appointment appointmentSaved = appointmentRepository.save(appointment);
+        return appointmentMapper.toResponseDTO(appointmentSaved);
+    }
+
+    @Transactional
     public void deleteAppointment(Long appointmentId){
         Appointment appointment = appointmentRepository.findById(appointmentId)
-                .orElseThrow(()-> new AvailabilityNotFoundException());
+                .orElseThrow(()-> new AppointmentNotFoundException());
         appointmentRepository.delete(appointment);
     }
 

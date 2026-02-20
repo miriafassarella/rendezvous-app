@@ -7,10 +7,10 @@ import com.rendezvous.domain.repository.ProviderProfileRepositoy;
 import com.rendezvous.dto.availabilityDto.AvailabilityRequestDTO;
 import com.rendezvous.dto.availabilityDto.AvailabilityResponseDTO;
 import com.rendezvous.exception.AvailabilityNotFoundException;
+import com.rendezvous.exception.ProviderNotFoundException;
 import com.rendezvous.mapper.AvailabilityMapper;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,6 +69,15 @@ public class AvailabilityService {
         Availability availability = availabilityRepository.findById(availabilityId)
                 .orElseThrow(()-> new AvailabilityNotFoundException());
         availabilityRepository.delete(availability);
+    }
+
+    public List<AvailabilityResponseDTO> findByProviderId(Long providerId){
+        ProviderProfile providerProfile = providerProfileRepositoy.findById(providerId)
+                .orElseThrow(()-> new ProviderNotFoundException());
+        List<Availability> availabilities = availabilityRepository.findByProvider(providerProfile);
+        return availabilities.stream()
+                .map(availability-> availabilityMapper.toResponseDTO(availability))
+                .toList();
     }
 
 }

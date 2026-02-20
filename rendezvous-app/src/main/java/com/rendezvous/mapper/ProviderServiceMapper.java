@@ -3,7 +3,7 @@ package com.rendezvous.mapper;
 import com.rendezvous.domain.model.ProviderProfile;
 import com.rendezvous.domain.model.ProviderService;
 import com.rendezvous.dto.providerServiceDto.ProviderServiceRequestDTO;
-import com.rendezvous.dto.providerServiceDto.ProviderServiseResponseDTO;
+import com.rendezvous.dto.providerServiceDto.ProviderServiceResponseDTO;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,8 +21,8 @@ public class ProviderServiceMapper {
         return service;
     }
 
-    public ProviderServiseResponseDTO toResponseDTO(ProviderService service){
-        return new ProviderServiseResponseDTO(
+    public ProviderServiceResponseDTO toResponseDTO(ProviderService service){
+        return new ProviderServiceResponseDTO(
                 service.getId(),
                 service.getName(),
                 service.getDescription(),

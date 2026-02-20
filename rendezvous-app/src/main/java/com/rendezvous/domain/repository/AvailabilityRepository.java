@@ -7,22 +7,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 public interface AvailabilityRepository extends JpaRepository<Availability, Long> {
 
-    /*
-    existsBy
-    Date
-    LessThan
-    Equal
-    Greater
-    ThanEqual
-    */
-    boolean existsByProviderAndDayOfWeekAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
+    boolean existsByProviderAndDayOfWeekAndStartTimeLessThanAndEndTimeGreaterThan(
             ProviderProfile provider,
             DayOfWeek dayOfWeek,
             LocalTime startTime,
             LocalTime endTime
     );
 
+    List<Availability> findByProvider(ProviderProfile providerProfile);
 }

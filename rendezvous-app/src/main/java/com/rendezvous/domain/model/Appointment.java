@@ -120,6 +120,7 @@ public class Appointment {
         this.status = status;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
