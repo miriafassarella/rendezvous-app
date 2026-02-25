@@ -34,6 +34,4 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
             @Param("startTime") LocalTime startTime,
             @Param("endTime") LocalTime endTime
     );
-
-
 }

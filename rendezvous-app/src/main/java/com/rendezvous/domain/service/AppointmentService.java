@@ -49,7 +49,6 @@ public class AppointmentService {
         this.appointmentMapper = appointmentMapper;
     }
 
-
     @Transactional
     public List<AppointmentResponseDTO> findAppointmentsAll(){
         List<Appointment> appointments =  appointmentRepository.findAll();
@@ -151,7 +150,7 @@ public class AppointmentService {
     public AppointmentResponseDTO canceledAppointment(Long appointmentId){
         Appointment appointment = appointmentRepository.findById(appointmentId)
                 .orElseThrow(()-> new AppointmentNotFoundException());
-        appointment.statusCanceled();
+        appointment.cancel();
         //todo adicionar validações de quando um appointment pode ser cancelado
        Appointment appointmentSaved = appointmentRepository.save(appointment);
        return appointmentMapper.toResponseDTO(appointmentSaved);
@@ -161,7 +160,7 @@ public class AppointmentService {
     public AppointmentResponseDTO confirmedAppointment(Long appointmentId){
         Appointment appointment = appointmentRepository.findById(appointmentId)
                 .orElseThrow(()-> new AppointmentNotFoundException());
-        appointment.statusConfirm();
+        appointment.confirm();
        Appointment appointmentSaved =  appointmentRepository.save(appointment);
        return appointmentMapper.toResponseDTO(appointmentSaved);
     }

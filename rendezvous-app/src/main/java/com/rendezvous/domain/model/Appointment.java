@@ -1,5 +1,6 @@
 package com.rendezvous.domain.model;
 
+import com.rendezvous.exception.AppointmentStatusException;
 import jakarta.persistence.*;
 
 import com.rendezvous.domain.enums.Status;
@@ -39,6 +40,7 @@ public class Appointment {
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
     private ClientProfile client;
+
 
     public Long getId() {
         return id;
@@ -120,10 +122,23 @@ public class Appointment {
         this.status = status;
     }
 
-    public void statusConfirm(){
+    public void confirm(){
+        if (this.status == Status.PENDING){
+            throw new AppointmentStatusException("Cannot confirm a cancelled appointment");
+        }
+        if (this.status == Status.CONFIRMED){
+            throw new AppointmentStatusException("Appointment already confirmed");
+        }
         setStatus(Status.CONFIRMED);
     }
-    public void statusCanceled(){
+
+    public void cancel(){
+        if (this.status == Status.CANCELED){
+            throw new AppointmentStatusException("Appointment already cancelled");
+        }
+        if (this.status == Status.COMPLETED){
+            throw new AppointmentStatusException("Cannot cancel completed appointment");
+        }
         setStatus(Status.CANCELED);
     }
 
