@@ -14,7 +14,7 @@ public class ProviderServiceResponseDTO {
     @NotBlank
     private String description;
     @NotNull
-    private Integer durationMinutes;
+    private Long durationMinutes;
     @NotNull
     private Integer bufferMinutes;
     @NotNull
@@ -23,7 +23,7 @@ public class ProviderServiceResponseDTO {
     private Long providerId;
 
 
-    public ProviderServiceResponseDTO(Long id, String name, String description, Integer durationMinutes, Integer bufferMinutes, BigDecimal price, Long providerId){
+    public ProviderServiceResponseDTO(Long id, String name, String description, Long durationMinutes, Integer bufferMinutes, BigDecimal price, Long providerId){
         this.id = id;
         this.name = name;
         this.description = description;
@@ -57,11 +57,11 @@ public class ProviderServiceResponseDTO {
         this.description = description;
     }
 
-    public Integer getDurationMinutes() {
+    public Long getDurationMinutes() {
         return durationMinutes;
     }
 
-    public void setDurationMinutes(Integer durationMinutes) {
+    public void setDurationMinutes(Long durationMinutes) {
         this.durationMinutes = durationMinutes;
     }
 

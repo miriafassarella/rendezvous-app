@@ -14,7 +14,7 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-    private LocalTime startTime;
+    private LocalDateTime startTime;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -31,7 +31,7 @@ public class Appointment {
     @JoinColumn(name = "service_id", nullable = false)
     private ProviderService service;
 
-    private LocalTime endTime;
+    private LocalDateTime endTime;
 
     @ManyToOne
     @JoinColumn(name = "provider_id", nullable = false)
@@ -50,20 +50,20 @@ public class Appointment {
         this.id = id;
     }
 
-    public LocalTime getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalTime appointmentTime) {
+    public void setEndTime(LocalDateTime appointmentTime) {
         this.endTime = appointmentTime;
         calculateEndTime();
     }
 
-    public LocalTime getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
@@ -102,7 +102,7 @@ public class Appointment {
 
     public void calculateEndTime(){
         if(this.endTime != null && this.service != null){
-            this.endTime = this.endTime = startTime.plusMinutes(service.getDuration_minutes());
+            this.endTime = startTime.plusMinutes(getService().getDuration_minutes());
         }
     }
 
@@ -123,7 +123,7 @@ public class Appointment {
     }
 
     public void confirm(){
-        if (this.status == Status.PENDING){
+        if (this.status == Status.CANCELED){
             throw new AppointmentStatusException("Cannot confirm a cancelled appointment");
         }
         if (this.status == Status.CONFIRMED){
@@ -140,6 +140,10 @@ public class Appointment {
             throw new AppointmentStatusException("Cannot cancel completed appointment");
         }
         setStatus(Status.CANCELED);
+    }
+
+    public void completed(){
+        this.setStatus(Status.COMPLETED);
     }
 
 

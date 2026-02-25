@@ -2,6 +2,7 @@ package com.rendezvous.domain.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
 
@@ -17,8 +18,8 @@ public class   Availability {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private DayOfWeek dayOfWeek;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     @ManyToOne
     @JoinColumn(name = "provider_id")
@@ -32,11 +33,11 @@ public class   Availability {
         this.id = id;
     }
 
-    public LocalTime getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
@@ -48,11 +49,11 @@ public class   Availability {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public LocalTime getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 

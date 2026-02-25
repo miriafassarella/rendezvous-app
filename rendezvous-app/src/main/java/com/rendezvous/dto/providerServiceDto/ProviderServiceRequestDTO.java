@@ -12,7 +12,7 @@ public class ProviderServiceRequestDTO {
     @NotBlank
     private String description;
     @NotNull
-    private Integer durationMinutes;
+    private Long durationMinutes;
     @NotNull
     private Integer bufferMinutes;
     @NotNull
@@ -38,11 +38,11 @@ public class ProviderServiceRequestDTO {
         this.description = description;
     }
 
-    public Integer getDurationMinutes() {
+    public Long getDurationMinutes() {
         return durationMinutes;
     }
 
-    public void setDurationMinutes(Integer durationMinutes) {
+    public void setDurationMinutes(Long durationMinutes) {
         this.durationMinutes = durationMinutes;
     }
 

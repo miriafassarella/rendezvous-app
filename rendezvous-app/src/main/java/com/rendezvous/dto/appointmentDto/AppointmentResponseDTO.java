@@ -4,7 +4,8 @@ import com.rendezvous.domain.enums.Status;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.DayOfWeek;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+
 
 public class AppointmentResponseDTO {
 
@@ -13,9 +14,9 @@ public class AppointmentResponseDTO {
     @NotNull
     private DayOfWeek dayOfWeek;
     @NotNull
-    private LocalTime startTime;
+    private LocalDateTime startTime;
     @NotNull
-    private LocalTime endTime;
+    private LocalDateTime endTime;
     @NotNull
     private Long serviceId;
     @NotNull
@@ -25,8 +26,8 @@ public class AppointmentResponseDTO {
     @NotNull
     private Status status;
 
-    public AppointmentResponseDTO(Long id, DayOfWeek dayOfWeek, LocalTime startTime,
-                                  LocalTime endTime, Long serviceId, Long providerId, Long clientId, Status status){
+    public AppointmentResponseDTO(Long id, DayOfWeek dayOfWeek, LocalDateTime startTime,
+                                  LocalDateTime endTime, Long serviceId, Long providerId, Long clientId, Status status){
         this.id = id;
         this.dayOfWeek = dayOfWeek;
         this.startTime = startTime;
@@ -49,19 +50,19 @@ public class AppointmentResponseDTO {
         this.id = id;
     }
 
-    public LocalTime getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public LocalTime getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 

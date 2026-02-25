@@ -12,10 +12,12 @@ import com.rendezvous.exception.*;
 import com.rendezvous.mapper.AppointmentMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -151,7 +153,6 @@ public class AppointmentService {
         Appointment appointment = appointmentRepository.findById(appointmentId)
                 .orElseThrow(()-> new AppointmentNotFoundException());
         appointment.cancel();
-        //todo adicionar validações de quando um appointment pode ser cancelado
        Appointment appointmentSaved = appointmentRepository.save(appointment);
        return appointmentMapper.toResponseDTO(appointmentSaved);
     }

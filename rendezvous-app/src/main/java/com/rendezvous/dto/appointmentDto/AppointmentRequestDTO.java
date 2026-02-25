@@ -3,14 +3,15 @@ package com.rendezvous.dto.appointmentDto;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.DayOfWeek;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+
 
 public class AppointmentRequestDTO {
 
     @NotNull
     private DayOfWeek dayOfWeek;
     @NotNull
-    private LocalTime startTime;
+    private LocalDateTime startTime;
 
     @NotNull
     private Long serviceId;
@@ -19,11 +20,11 @@ public class AppointmentRequestDTO {
     @NotNull
     private Long clientId;
 
-    public LocalTime getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 

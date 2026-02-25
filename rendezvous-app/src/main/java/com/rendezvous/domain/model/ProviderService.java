@@ -14,7 +14,7 @@ public class ProviderService {
     private Long id;
     private String name;
     private String description;
-    private Integer duration_minutes;
+    private Long duration_minutes;
     private Integer buffer_minutes;
     private BigDecimal price;
 
@@ -47,11 +47,11 @@ public class ProviderService {
         this.description = description;
     }
 
-    public Integer getDuration_minutes() {
+    public Long getDuration_minutes() {
         return duration_minutes;
     }
 
-    public void setDuration_minutes(Integer duration_minutes) {
+    public void setDuration_minutes(Long duration_minutes) {
         this.duration_minutes = duration_minutes;
     }
 

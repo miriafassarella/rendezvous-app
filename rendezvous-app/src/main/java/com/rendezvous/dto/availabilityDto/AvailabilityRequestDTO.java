@@ -3,6 +3,7 @@ package com.rendezvous.dto.availabilityDto;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class AvailabilityRequestDTO {
@@ -10,9 +11,9 @@ public class AvailabilityRequestDTO {
     @NotNull
     private DayOfWeek dayOfWeek;
     @NotNull
-    private LocalTime startTime;
+    private LocalDateTime startTime;
     @NotNull
-    private LocalTime endTime;
+    private LocalDateTime endTime;
     @NotNull
     private Long providerId;
 
@@ -24,19 +25,19 @@ public class AvailabilityRequestDTO {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public LocalTime getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public LocalTime getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 

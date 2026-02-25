@@ -2,7 +2,7 @@ CREATE TABLE provider_service (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
     description VARCHAR(100) NOT NULL,
-    duration_minutes INTEGER NOT NULL,
+    duration_minutes BIGINT NOT NULL,
     buffer_minutes INTEGER DEFAULT 0,
     price DECIMAL(10, 2) NOT NULL,
     provider_profile_id BIGINT NOT NULL,

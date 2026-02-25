@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -31,7 +32,12 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 """) List<Appointment> findConflictingAppointmentsForLock(
             @Param("provider") ProviderProfile provider,
             @Param("dayOfWeek") DayOfWeek dayOfWeek,
-            @Param("startTime") LocalTime startTime,
-            @Param("endTime") LocalTime endTime
+            @Param("startTime") LocalDateTime startTime,
+            @Param("endTime") LocalDateTime endTime
     );
+
+    @Query("""
+            SELECT a FROM Appointment a
+            WHERE a.endTime < :currentTime
+""") List<Appointment> findAppointmentsToComplete(@Param("currentTime") LocalDateTime currentTime);
 }
