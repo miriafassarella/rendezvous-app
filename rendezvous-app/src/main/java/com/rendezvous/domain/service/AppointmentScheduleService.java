@@ -5,8 +5,10 @@ import com.rendezvous.domain.model.Appointment;
 import com.rendezvous.domain.repository.AppointmentRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Service
@@ -18,10 +20,11 @@ public class AppointmentScheduleService {
         this.appointmentRepository = appointmentRepository;
     }
 
-    @Scheduled(fixedDelay = 300000)
+    @Scheduled(fixedDelay = 60000)
+    @Transactional
     public void autoCompleteAppointments() {
-        List<Appointment> appointments = appointmentRepository.findAppointmentsToComplete(LocalDateTime.now());
+        List<Appointment> appointments = appointmentRepository.findAppointmentsToComplete(LocalDateTime.now(ZoneOffset.UTC));
         appointments.stream()
-                .forEach(a-> a.completed());
+                .forEach(Appointment::completed);
     }
 }

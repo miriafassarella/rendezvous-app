@@ -113,8 +113,8 @@ public class AppointmentService {
         Appointment appointment = appointmentRepository.findById(appointmentId)
                 .orElseThrow(()-> new AppointmentNotFoundException());
         BeanUtils.copyProperties(appointmentDTO, appointment, "id");
-       Appointment appointmentSaved = appointmentRepository.save(appointment);
-        return appointmentMapper.toResponseDTO(appointmentSaved);
+        return appointmentMapper.toResponseDTO(appointment);
+        //transaction não precisa do metodo save() para uma entidade que já existe no banco
     }
 
     @Transactional

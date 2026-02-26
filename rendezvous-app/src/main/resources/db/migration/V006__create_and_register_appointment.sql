@@ -4,8 +4,8 @@ CREATE TABLE appointment (
       service_id BIGINT NOT NULL,
       client_id BIGINT NOT NULL,
       day_of_week VARCHAR(10) NOT NULL,
-      start_time DATETIME NOT NULL,
-      end_time DATETIME NOT NULL,
+      start_time TIMESTAMP NOT NULL,
+      end_time TIMESTAMP NOT NULL,
       status VARCHAR(20) NOT NULL, -- SCHEDULED / CANCELLED / DONE
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (client_id) REFERENCES client_profile(id),
