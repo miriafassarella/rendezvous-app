@@ -12,11 +12,11 @@ import java.util.List;
 
 public interface AvailabilityRepository extends JpaRepository<Availability, Long> {
 
-    boolean existsByProviderAndDayOfWeekAndStartTimeLessThanAndEndTimeGreaterThan(
+    boolean  existsByProviderAndDayOfWeekAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
             ProviderProfile provider,
             DayOfWeek dayOfWeek,
-            LocalDateTime startTime,
-            LocalDateTime endTime
+            LocalTime startTime,
+            LocalTime endTime
     );
 
     List<Availability> findByProvider(ProviderProfile providerProfile);

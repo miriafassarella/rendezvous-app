@@ -56,7 +56,6 @@ public class Appointment {
 
     public void setEndTime(LocalDateTime appointmentTime) {
         this.endTime = appointmentTime;
-        calculateEndTime();
     }
 
     public LocalDateTime getStartTime() {
@@ -65,6 +64,7 @@ public class Appointment {
 
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
+        calculateEndTime();
     }
 
     public LocalDateTime getCreatedAt() {
@@ -100,8 +100,8 @@ public class Appointment {
         this.client= client;
     }
 
-    public void calculateEndTime(){
-        if(this.endTime != null && this.service != null){
+   public void calculateEndTime(){
+        if(this.startTime != null && this.service != null){
             this.endTime = startTime.plusMinutes(getService().getDuration_minutes());
         }
     }

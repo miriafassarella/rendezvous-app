@@ -14,13 +14,13 @@ public class AvailabilityResponseDTO {
     @NotNull
     private DayOfWeek dayOfWeek;
     @NotNull
-    private LocalDateTime startTime;
+    private LocalTime startTime;
     @NotNull
-    private LocalDateTime endTime;
+    private LocalTime endTime;
     @NotNull
     private Long providerId;
 
-    public AvailabilityResponseDTO(Long id, DayOfWeek dayOfWeek, LocalDateTime startTime, LocalDateTime endTime, Long providerId){
+    public AvailabilityResponseDTO(Long id, DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime, Long providerId){
         this.id = id;
         this.dayOfWeek = dayOfWeek;
         this.startTime = startTime;
@@ -44,19 +44,19 @@ public class AvailabilityResponseDTO {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public LocalDateTime getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 

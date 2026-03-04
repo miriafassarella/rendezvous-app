@@ -56,7 +56,8 @@ public class AppointmentService {
         List<Appointment> appointments =  appointmentRepository.findAll();
 
         return appointments.stream()
-                .map(appointment -> appointmentMapper.toResponseDTO(appointment))
+                .map(appointmentMapper::toResponseDTO)
+                /*.map(appointment-> appointmentmapper.toResponseDTO(appointment))*/
                 .toList();
     }
 
@@ -79,10 +80,11 @@ public class AppointmentService {
 
         /*garantindo usando keywords que o provider possui disponibilidade neste período*/
         boolean available = availabilityRepository
-                .existsByProviderAndDayOfWeekAndStartTimeLessThanAndEndTimeGreaterThan(
-                        provider, appointmentDTO.getDayOfWeek(), appointmentDTO.getStartTime(),
-                        appointmentDTO.getStartTime().plusMinutes(service.getDuration_minutes())
+                . existsByProviderAndDayOfWeekAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
+                        provider, appointmentDTO.getStartTime().getDayOfWeek(), appointmentDTO.getStartTime().toLocalTime(),
+                        appointmentDTO.getStartTime().plusMinutes(service.getDuration_minutes()).toLocalTime()
                 );
+
 
         if (!available) {
             throw new ProviderNotAvailableException();
@@ -94,14 +96,16 @@ public class AppointmentService {
                 appointmentRepository.findConflictingAppointmentsForLock(provider, appointmentDTO.getDayOfWeek(),
                         appointmentDTO.getStartTime(), appointmentDTO.getStartTime().plusMinutes(service.getDuration_minutes()));
 
-
         /*exceção se un agendamento esta dentro do horaio de outro agendamento já existente*/
+
+
         if (!conflictingAppointments.isEmpty()) {
+
             throw new TimeSlotAlreadyBookedException();
         }
 
         Appointment appointment = appointmentMapper.toEntity(appointmentDTO, provider, client, service);
-        appointment.setStatus(Status.PENDING);
+                appointment.setStatus(Status.PENDING);
         Appointment appointmentSaved = appointmentRepository.save(appointment);
 
         return appointmentMapper.toResponseDTO(appointmentSaved);
@@ -112,7 +116,10 @@ public class AppointmentService {
     public AppointmentResponseDTO modifyAppointment(AppointmentRequestDTO appointmentDTO, Long appointmentId){
         Appointment appointment = appointmentRepository.findById(appointmentId)
                 .orElseThrow(()-> new AppointmentNotFoundException());
-        BeanUtils.copyProperties(appointmentDTO, appointment, "id");
+        appointment.setDayOfWeek(appointmentDTO.getDayOfWeek());
+        appointment.setStartTime(appointmentDTO.getStartTime());
+        appointment.setEndTime(appointment.getStartTime().plusMinutes(appointment.getService().getDuration_minutes()));
+        appointment.getService().setId(appointmentDTO.getServiceId());
         return appointmentMapper.toResponseDTO(appointment);
         //transaction não precisa do metodo save() para uma entidade que já existe no banco
     }

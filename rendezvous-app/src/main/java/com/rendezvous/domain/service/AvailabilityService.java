@@ -60,8 +60,8 @@ public class AvailabilityService {
                 .orElseThrow(()-> new AvailabilityNotFoundException());
 
         BeanUtils.copyProperties(availabilityDTO, availability, "id");
-        Availability availabilitySaved = availabilityRepository.save(availability);
-        return availabilityMapper.toResponseDTO(availabilitySaved);
+
+        return availabilityMapper.toResponseDTO(availability);
     }
 
     @Transactional

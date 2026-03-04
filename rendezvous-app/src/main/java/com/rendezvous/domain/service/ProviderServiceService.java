@@ -64,8 +64,8 @@ public class ProviderServiceService {
         ProviderService providerService = providerServiceRepository.findById(providerServiceId)
                 .orElseThrow(()-> new ServiceNotFoundException());
         BeanUtils.copyProperties(providerServiceDTO, providerService, "id");
-        ProviderService providerServiceSaved = providerServiceRepository.save(providerService);
-        return providerServiceMapper.toResponseDTO(providerServiceSaved);
+
+        return providerServiceMapper.toResponseDTO(providerService);
     }
 
     /**

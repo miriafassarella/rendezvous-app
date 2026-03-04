@@ -20,11 +20,11 @@ public class AppointmentScheduleService {
         this.appointmentRepository = appointmentRepository;
     }
 
-    @Scheduled(fixedDelay = 60000)
+    @Scheduled(fixedDelay = 300000)
     @Transactional
     public void autoCompleteAppointments() {
-        List<Appointment> appointments = appointmentRepository.findAppointmentsToComplete(LocalDateTime.now(ZoneOffset.UTC));
-        appointments.stream()
-                .forEach(Appointment::completed);
+        List<Appointment> appointments = appointmentRepository.findAppointmentsToComplete(
+                LocalDateTime.now(ZoneOffset.UTC));
+        appointments.forEach(Appointment::completed);
     }
 }

@@ -63,7 +63,7 @@ public class ProviderProfileService {
         List<Role> roles = new ArrayList<>(roleRepository.findAllById(providerDTO.getRolesIds()));
 
         User user = userMapper.toEntity(providerDTO.getEmail(), providerDTO.getPassword(), roles);
-        user.setEnable(true); // a verificar
+        user.enableUser();
         User userSaved = userRepository.save(user);
 
         ProviderProfile provider =  providerProfileMapper.toEntity(providerDTO, userSaved);

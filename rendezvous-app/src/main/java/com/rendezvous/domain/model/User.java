@@ -73,6 +73,10 @@ public class User {
         this.roles = roles;
     }
 
+    public void enableUser(){
+        setEnable(true);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
