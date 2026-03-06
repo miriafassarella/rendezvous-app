@@ -8,8 +8,7 @@ import java.time.LocalDateTime;
 
 public class AppointmentRequestDTO {
 
-    @NotNull
-    private DayOfWeek dayOfWeek;
+
     @NotNull
     private LocalDateTime startTime;
 
@@ -52,11 +51,5 @@ public class AppointmentRequestDTO {
         this.clientId = clientId;
     }
 
-    public DayOfWeek getDayOfWeek() {
-        return dayOfWeek;
-    }
 
-    public void setDayOfWeek(DayOfWeek dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
-    }
 }

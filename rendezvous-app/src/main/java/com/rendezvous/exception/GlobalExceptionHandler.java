@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),
-                "Entity Not Found",
+                "Business error",
                 ex.getMessage(),
                 request.getDescription(false)
         );

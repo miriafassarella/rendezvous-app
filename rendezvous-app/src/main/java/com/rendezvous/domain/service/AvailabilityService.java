@@ -6,6 +6,7 @@ import com.rendezvous.domain.repository.AvailabilityRepository;
 import com.rendezvous.domain.repository.ProviderProfileRepositoy;
 import com.rendezvous.dto.availabilityDto.AvailabilityRequestDTO;
 import com.rendezvous.dto.availabilityDto.AvailabilityResponseDTO;
+import com.rendezvous.exception.AvailabilityFoundException;
 import com.rendezvous.exception.AvailabilityNotFoundException;
 import com.rendezvous.exception.ProviderNotFoundException;
 import com.rendezvous.mapper.AvailabilityMapper;
@@ -47,8 +48,17 @@ public class AvailabilityService {
     @Transactional
     public AvailabilityResponseDTO createAvailability(AvailabilityRequestDTO availabilityDTO){
 
-        Optional<ProviderProfile> provider = providerProfileRepositoy.findById(availabilityDTO.getProviderId());
-        Availability availability = availabilityMapper.toEntity(availabilityDTO, provider.get());
+        ProviderProfile provider = providerProfileRepositoy.findById(availabilityDTO.getProviderId())
+                .orElseThrow(()-> new ProviderNotFoundException());
+
+        //impedindo que duas disponibilidades iguais sejam registradas para o mesmo provider
+        boolean available = availabilityRepository.existsByProviderAndDayOfWeekAndStartTimeAndEndTime(
+            provider, availabilityDTO.getDayOfWeek(), availabilityDTO.getStartTime(), availabilityDTO.getEndTime()
+        );
+        if (available){
+            throw  new AvailabilityFoundException();
+        }
+        Availability availability = availabilityMapper.toEntity(availabilityDTO, provider);
         Availability availabilitySaved = availabilityRepository.save(availability);
 
         return availabilityMapper.toResponseDTO(availabilitySaved);
