@@ -19,12 +19,5 @@ public interface AvailabilityRepository extends JpaRepository<Availability, Long
             LocalTime endTime
     );
 
-    boolean existsByProviderAndDayOfWeekAndStartTimeAndEndTime(
-            ProviderProfile provider,
-            DayOfWeek dayOfWeek,
-            LocalTime startTime,
-            LocalTime endTime
-    );
-
     List<Availability> findByProvider(ProviderProfile providerProfile);
 }

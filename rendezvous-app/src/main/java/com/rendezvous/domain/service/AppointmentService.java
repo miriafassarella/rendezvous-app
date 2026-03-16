@@ -128,17 +128,29 @@ public class AppointmentService {
         Optional<ProviderProfile> provider = providerProfileRepositoy.findById(appointmentDTO.getProviderId());
         ProviderService service = providerServiceRepository.findById(appointmentDTO.getServiceId())
                 .orElseThrow();
-
+/*Validações -------------------------------------------------------------------------------------------*/
         boolean available = availabilityRepository
                 . existsByProviderAndDayOfWeekAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
                         provider.get(), appointmentDTO.getStartTime().getDayOfWeek(), appointmentDTO.getStartTime().toLocalTime(),
                         appointmentDTO.getStartTime().plusMinutes(service.getDuration_minutes()).toLocalTime()
                 );
-
         if (!available) {
             throw new ProviderNotAvailableException();
         }
-
+        LocalDateTime now = LocalDateTime.now().plusMinutes(30);
+        if (appointmentDTO.getStartTime().isBefore(now)) {
+            throw new TimeSlotAlreadyBookedException("Appointments must be scheduled at least 30 minutes in advance.");
+        }
+        /*aplica LOCK no banco - bloqueia todos os agendamentos para este provider para este dia enquanto
+         * a transação esta sendo feita*/
+        List<Appointment> conflictingAppointments =
+                appointmentRepository.findConflictingAppointmentsForLock(provider.get(),
+                        appointmentDTO.getStartTime(), appointmentDTO.getStartTime().plusMinutes(service.getDuration_minutes()));
+        /*exceção se un agendamento esta dentro do horaio de outro agendamento já existente*/
+        if (!conflictingAppointments.isEmpty()) {
+            throw new TimeSlotAlreadyBookedException();
+        }
+/*--------------------------------------------------------------------------------------------------------------*/
         appointment.setStartTime(appointmentDTO.getStartTime());
         appointment.setEndTime(appointment.getStartTime().plusMinutes(appointment.getService().getDuration_minutes()));
         appointment.getService().setId(appointmentDTO.getServiceId());

@@ -52,7 +52,8 @@ public class AvailabilityService {
                 .orElseThrow(()-> new ProviderNotFoundException());
 
         //impedindo que duas disponibilidades iguais sejam registradas para o mesmo provider
-        boolean available = availabilityRepository.existsByProviderAndDayOfWeekAndStartTimeAndEndTime(
+        //preciso modificar
+        boolean available = availabilityRepository.existsByProviderAndDayOfWeekAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
             provider, availabilityDTO.getDayOfWeek(), availabilityDTO.getStartTime(), availabilityDTO.getEndTime()
         );
         if (available){
@@ -69,7 +70,17 @@ public class AvailabilityService {
         Availability availability = availabilityRepository.findById(availabilityId)
                 .orElseThrow(()-> new AvailabilityNotFoundException());
 
-        BeanUtils.copyProperties(availabilityDTO, availability, "id");
+
+        boolean available = availabilityRepository.existsByProviderAndDayOfWeekAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
+                availability.getProvider(), availabilityDTO.getDayOfWeek(), availabilityDTO.getStartTime(), availabilityDTO.getEndTime()
+        );
+        if (available){
+            throw  new AvailabilityFoundException();
+        }
+
+        availability.setDayOfWeek(availabilityDTO.getDayOfWeek());
+        availability.setStartTime(availabilityDTO.getStartTime());
+        availability.setEndTime(availabilityDTO.getEndTime());
 
         return availabilityMapper.toResponseDTO(availability);
     }
