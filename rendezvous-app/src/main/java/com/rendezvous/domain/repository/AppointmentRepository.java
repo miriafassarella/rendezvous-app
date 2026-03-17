@@ -34,6 +34,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
             @Param("endTime") LocalDateTime endTime
     );
 
+    //verifica se um appointment já passou da data e hora para sinaliar que le foi completado.
     @Query("""
             SELECT a FROM Appointment a
             WHERE a.endTime < :currentTime

@@ -6,7 +6,7 @@ import com.rendezvous.domain.repository.ProviderProfileRepositoy;
 import com.rendezvous.domain.repository.ProviderServiceRepository;
 import com.rendezvous.dto.providerServiceDto.ProviderServiceRequestDTO;
 import com.rendezvous.dto.providerServiceDto.ProviderServiceResponseDTO;
-import com.rendezvous.exception.EntityNotFoundException;
+
 import com.rendezvous.exception.ProviderNotFoundException;
 import com.rendezvous.exception.ServiceNotFoundException;
 import com.rendezvous.mapper.ProviderServiceMapper;

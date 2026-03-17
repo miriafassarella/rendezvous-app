@@ -3,6 +3,8 @@ package com.rendezvous.controller;
 
 import com.rendezvous.domain.model.User;
 import com.rendezvous.domain.repository.UserRepository;
+import com.rendezvous.domain.service.UserService;
+import com.rendezvous.dto.userDto.UserResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,20 +17,22 @@ public class UserController {
 
     UserRepository userRepository;
 
-    public UserController(UserRepository userRepository){
+    UserService userService;
+
+    public UserController(UserRepository userRepository, UserService userService){
+
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
-    @GetMapping
-    public List<User> listUsers(){
-        return userRepository.findAll();
+    @GetMapping()
+    public List<UserResponseDTO> findUserAll(){
+        return userService.findUserAll();
     }
 
     @GetMapping("/{id}")
-    public User searchId(@PathVariable Long id){
-        Optional<User> userId = userRepository.findById(id);
-        return userId.get();
+    public UserResponseDTO searchId(@PathVariable Long id){
+        return userService.findUserById(id);
     }
-
 
 }

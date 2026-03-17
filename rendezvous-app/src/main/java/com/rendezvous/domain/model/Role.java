@@ -16,10 +16,12 @@ public class Role {
     private RoleName name;
 
     public Long getId() {
+
         return id;
     }
 
     public RoleName getName() {
+
         return name;
     }
 

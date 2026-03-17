@@ -107,7 +107,6 @@ public class AppointmentService {
         /*exceção se un agendamento esta dentro do horaio de outro agendamento já existente*/
 
         if (!conflictingAppointments.isEmpty()) {
-
             throw new TimeSlotAlreadyBookedException();
         }
 

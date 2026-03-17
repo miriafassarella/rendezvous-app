@@ -36,7 +36,7 @@ public class AvailabilityController {
     public ResponseEntity<AvailabilityResponseDTO> modifyAvailability(@RequestBody AvailabilityRequestDTO availabilityRequestDTO, @PathVariable Long availabilityId){
         AvailabilityResponseDTO availabilityResponseDTO = availabilityService.modifyAvailability(availabilityRequestDTO, availabilityId);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(availabilityResponseDTO);
-        //TODO também não devo poder modificar uma disponibilidade se existe um rendez-vous nesta disponibilidade.
+
     }
 
     @DeleteMapping("/{availabilityId}")
