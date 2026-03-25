@@ -1,4 +1,4 @@
-package com.rendezvous.config;
+package com.rendezvous.sheduled;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
