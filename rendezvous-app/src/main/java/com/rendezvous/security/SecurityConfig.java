@@ -31,6 +31,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/clients/**").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated())
                 // Registra o JwtFilter ANTES do filtro padrão do Spring
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

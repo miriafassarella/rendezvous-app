@@ -3,6 +3,7 @@ package com.rendezvous.mapper;
 import com.rendezvous.domain.model.Role;
 import com.rendezvous.domain.model.User;
 import com.rendezvous.dto.userDto.UserResponseDTO;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -10,10 +11,16 @@ import java.util.List;
 @Component
 public class UserMapper {
 
+    private final PasswordEncoder passwordEncoder;
+
+    public UserMapper(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
     public User toEntity(String email, String password, List<Role> roles) {
         User user = new User();
         user.setEmail(email);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
         user.setRoles(roles);
         return user;
     }
