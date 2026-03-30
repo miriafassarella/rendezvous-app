@@ -4,6 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -16,12 +17,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private JwtUtil jwtUtil;
 
-    private UserDetailsServiceImpl userDetailsService;
+    private UserDetailsServiceImpl userDetailsServiceImpl;
 
-    public JwtFilter(JwtUtil jwtUtil, UserDetailsServiceImpl userDetailsService){
+    public JwtFilter(JwtUtil jwtUtil, UserDetailsServiceImpl userDetailsServiceImpl){
 
         this.jwtUtil = jwtUtil;
-        this.userDetailsService = userDetailsService;
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
     }
 
 
@@ -39,10 +40,22 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null){
+
             if (jwtUtil.isTokenValid(token) && !jwtUtil.isTokenExpired(token)){
-                UserDetails userDetails; //a concluir
+
+                UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(email);
+
+                UsernamePasswordAuthenticationToken authtoken =
+                        new UsernamePasswordAuthenticationToken(
+                                userDetails,
+                                null,
+                                userDetails.getAuthorities());
+
+                SecurityContextHolder.getContext().setAuthentication(authtoken);
+
             }
         }
 
+        filterChain.doFilter(request, response);
     }
 }
