@@ -4,6 +4,7 @@ import com.rendezvous.domain.enums.RoleName;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Role {
@@ -14,6 +15,12 @@ public class Role {
 
     @Enumerated(EnumType.STRING)
     private RoleName name;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "role_permissions",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "permission_id"))
+    private Set<Permission> permissions;
 
     public Long getId() {
 
