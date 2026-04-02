@@ -40,3 +40,41 @@ INSERT INTO role_permissions (role_id, permissions_id) values (1, 9);
 INSERT INTO role_permissions (role_id, permissions_id) values (1, 10);
 INSERT INTO role_permissions (role_id, permissions_id) values (1, 12);
 INSERT INTO role_permissions (role_id, permissions_id) values (1, 15);
+
+INSERT INTO role_permissions (role_id, permissions_id) values (2, 1);
+INSERT INTO role_permissions (role_id, permissions_id) values (2, 2);
+INSERT INTO role_permissions (role_id, permissions_id) values (2, 3);
+INSERT INTO role_permissions (role_id, permissions_id) values (2, 4);
+INSERT INTO role_permissions (role_id, permissions_id) values (2, 5);
+INSERT INTO role_permissions (role_id, permissions_id) values (2, 6);
+INSERT INTO role_permissions (role_id, permissions_id) values (2, 13);
+INSERT INTO role_permissions (role_id, permissions_id) values (2, 14);
+INSERT INTO role_permissions (role_id, permissions_id) values (2, 16);
+INSERT INTO role_permissions (role_id, permissions_id) values (2, 17);
+INSERT INTO role_permissions (role_id, permissions_id) values (2, 18);
+INSERT INTO role_permissions (role_id, permissions_id) values (2, 19);
+INSERT INTO role_permissions (role_id, permissions_id) values (2, 20);
+
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 1);
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 2);
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 3);
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 4);
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 5);
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 6);
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 7);
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 8);
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 9);
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 10);
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 11);
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 12);
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 13);
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 14);
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 15);
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 16);
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 17);
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 18);
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 19);
+INSERT INTO role_permissions (role_id, permissions_id) values (3, 20);
+
+
+

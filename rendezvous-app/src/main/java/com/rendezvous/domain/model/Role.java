@@ -27,9 +27,25 @@ public class Role {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public RoleName getName() {
 
         return name;
+    }
+
+    public void setName(RoleName name) {
+        this.name = name;
+    }
+
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
     }
 
     @Override
