@@ -37,7 +37,8 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // Converte suas Roles em GrantedAuthority que o Spring entende
         return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                .flatMap(role-> role.getPermissions().stream())
+                .map(permission -> new SimpleGrantedAuthority(permission.getName()))
                 .collect(Collectors.toList());
     }
 
