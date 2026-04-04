@@ -7,6 +7,7 @@ import com.rendezvous.dto.clientProfileDto.ClientProfileResponseDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,7 +33,9 @@ public class ClientProfileController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newClient);
     }
 
+
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('CANCEL_CLIENT_PROFILE')")
     public ResponseEntity<ClientProfile> delete(@PathVariable Long id){
         clientProfileService.deleteClient(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
