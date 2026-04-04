@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Permission {
+public class Permissions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

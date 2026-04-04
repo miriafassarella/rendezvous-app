@@ -20,7 +20,7 @@ public class Role {
     @JoinTable(name = "role_permissions",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id"))
-    private Set<Permission> permissions;
+    private Set<Permissions> permissions;
 
     public Long getId() {
 
@@ -40,11 +40,11 @@ public class Role {
         this.name = name;
     }
 
-    public Set<Permission> getPermissions() {
+    public Set<Permissions> getPermissions() {
         return permissions;
     }
 
-    public void setPermissions(Set<Permission> permissions) {
+    public void setPermissions(Set<Permissions> permissions) {
         this.permissions = permissions;
     }
 
