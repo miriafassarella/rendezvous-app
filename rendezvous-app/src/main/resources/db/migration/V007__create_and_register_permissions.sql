@@ -33,6 +33,7 @@ INSERT INTO permissions (id, name) VALUES (19, 'SEARCH_PROVIDER_SERVICE');
 INSERT INTO permissions (id, name) VALUES (20, 'UPDATE_PROVIDER_SERVICE');
 
 
+
 INSERT INTO role_permissions (role_id, permission_id) values (1, 1);
 INSERT INTO role_permissions (role_id, permission_id) values (1, 2);
 INSERT INTO role_permissions (role_id, permission_id) values (1, 4);

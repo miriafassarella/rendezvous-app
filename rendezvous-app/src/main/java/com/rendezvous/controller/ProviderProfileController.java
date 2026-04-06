@@ -33,7 +33,7 @@ public class ProviderProfileController {
         return providerProfileService.findProviderAll();
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<ProviderProfileResponseDTO> createProvider(@Valid @RequestBody ProviderProfileRequestDTO providerDTO){
         ProviderProfileResponseDTO providerSave = providerProfileService.createProvide(providerDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(providerSave);
