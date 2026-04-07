@@ -174,9 +174,13 @@ public class AppointmentService {
     }
 
     @Transactional
-    public  List<AppointmentResponseDTO> findByClientId(Long clientId){
-        ClientProfile client = clientProfileRepository.findById(clientId)
+    public  List<AppointmentResponseDTO> findByClientId(Long clientId, User loggedUser){
+        ClientProfile client = clientProfileRepository.findByUserId(loggedUser.getId())
                 .orElseThrow(()-> new ClientNotFoundException());
+
+        if (!client.getId().equals(clientId)){
+            throw new AccessDeniedException();
+        }
 
         List<Appointment> appointments = appointmentRepository.findAllByClient_Id(client.getId());
         return appointments.stream()

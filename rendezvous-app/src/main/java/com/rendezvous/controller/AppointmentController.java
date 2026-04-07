@@ -57,15 +57,18 @@ public class AppointmentController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    //AuthenticationPrincipal pega o usuario no token
     @GetMapping("/provider/{providerId}")
+    @PreAuthorize("hasAuthority('SEARCH_OWN_APPOINTMENT')")
     public ResponseEntity<List<AppointmentResponseDTO>> findByProviderId(@PathVariable Long providerId, @AuthenticationPrincipal User loggedUser){
         List<AppointmentResponseDTO> appointments =  appointmentService.findByProviderId(providerId, loggedUser);
         return ResponseEntity.status(HttpStatus.OK).body(appointments);
     }
 
     @GetMapping("client/{clientId}")
-    public ResponseEntity<List<AppointmentResponseDTO>> findByClientId(@PathVariable Long clientId){
-        List<AppointmentResponseDTO> appointments = appointmentService.findByClientId(clientId);
+    @PreAuthorize("hasAuthority('SEARCH_OWN_APPOINTMENT')")
+    public ResponseEntity<List<AppointmentResponseDTO>> findByClientId(@PathVariable Long clientId, @AuthenticationPrincipal User loggedUser){
+        List<AppointmentResponseDTO> appointments = appointmentService.findByClientId(clientId, loggedUser);
         return ResponseEntity.status(HttpStatus.OK).body(appointments);
     }
 

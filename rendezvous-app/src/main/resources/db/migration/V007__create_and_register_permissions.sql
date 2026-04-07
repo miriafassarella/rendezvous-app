@@ -32,6 +32,8 @@ INSERT INTO permissions (id, name) VALUES (18, 'CANCEL_PROVIDER_SERVICE');
 INSERT INTO permissions (id, name) VALUES (19, 'SEARCH_PROVIDER_SERVICE');
 INSERT INTO permissions (id, name) VALUES (20, 'UPDATE_PROVIDER_SERVICE');
 
+INSERT INTO permissions (id, name) VALUES (21, 'SEARCH_OWN_APPOINTMENT');
+
 
 
 INSERT INTO role_permissions (role_id, permission_id) values (1, 1);
@@ -41,6 +43,7 @@ INSERT INTO role_permissions (role_id, permission_id) values (1, 9);
 INSERT INTO role_permissions (role_id, permission_id) values (1, 10);
 INSERT INTO role_permissions (role_id, permission_id) values (1, 12);
 INSERT INTO role_permissions (role_id, permission_id) values (1, 15);
+INSERT INTO role_permissions (role_id, permission_id) values (1, 21);
 
 INSERT INTO role_permissions (role_id, permission_id) values (2, 1);
 INSERT INTO role_permissions (role_id, permission_id) values (2, 2);
@@ -55,6 +58,7 @@ INSERT INTO role_permissions (role_id, permission_id) values (2, 17);
 INSERT INTO role_permissions (role_id, permission_id) values (2, 18);
 INSERT INTO role_permissions (role_id, permission_id) values (2, 19);
 INSERT INTO role_permissions (role_id, permission_id) values (2, 20);
+INSERT INTO role_permissions (role_id, permission_id) values (2, 21);
 
 INSERT INTO role_permissions (role_id, permission_id) values (3, 1);
 INSERT INTO role_permissions (role_id, permission_id) values (3, 2);
