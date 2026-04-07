@@ -54,7 +54,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return enable;
     }
     // Esses três você pode deixar true por enquanto
     // (são para expiração de conta e bloqueio — pode implementar depois)

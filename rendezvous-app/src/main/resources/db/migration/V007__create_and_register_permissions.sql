@@ -12,27 +12,31 @@ CREATE TABLE role_permissions (
 );
 
 INSERT INTO permissions (id, name) VALUES (1, 'CREATE_APPOINTMENT');
-INSERT INTO permissions (id, name) VALUES (2, 'CANCEL_APPOINTMENT');
+INSERT INTO permissions (id, name) VALUES (2, 'DELETE_APPOINTMENT');
 INSERT INTO permissions (id, name) VALUES (3, 'SEARCH_APPOINTMENT');
 INSERT INTO permissions (id, name) VALUES (4, 'UPDATE_APPOINTMENT');
 INSERT INTO permissions (id, name) VALUES (5, 'CREATE_AVAIBILITY');
-INSERT INTO permissions (id, name) VALUES (6, 'CANCEL_AVAIBILITY');
+INSERT INTO permissions (id, name) VALUES (6, 'DELETE_AVAIBILITY');
 INSERT INTO permissions (id, name) VALUES (7, 'SEARCH_AVAIBILITY');
 INSERT INTO permissions (id, name) VALUES (8, 'UPDATE_AVAIBILITY');
 INSERT INTO permissions (id, name) VALUES (9, 'CREATE_CLIENT_PROFILE');
-INSERT INTO permissions (id, name) VALUES (10, 'CANCEL_CLIENT_PROFILE');
+INSERT INTO permissions (id, name) VALUES (10, 'DELETE_CLIENT_PROFILE');
 INSERT INTO permissions (id, name) VALUES (11, 'SEARCH_CLIENT_PROFILE');
 INSERT INTO permissions (id, name) VALUES (12, 'UPDATE_CLIENT_PROFILE');
 INSERT INTO permissions (id, name) VALUES (13, 'CREATE_PROVIDER_PROFILE');
-INSERT INTO permissions (id, name) VALUES (14, 'CANCEL_PROVIDER_PROFILE');
+INSERT INTO permissions (id, name) VALUES (14, 'DELETE_PROVIDER_PROFILE');
 INSERT INTO permissions (id, name) VALUES (15, 'SEARCH_PROVIDER_PROFILE');
 INSERT INTO permissions (id, name) VALUES (16, 'UPDATE_PROVIDER_PROFILE');
 INSERT INTO permissions (id, name) VALUES (17, 'CREATE_PROVIDER_SERVICE');
-INSERT INTO permissions (id, name) VALUES (18, 'CANCEL_PROVIDER_SERVICE');
+INSERT INTO permissions (id, name) VALUES (18, 'DELETE_PROVIDER_SERVICE');
 INSERT INTO permissions (id, name) VALUES (19, 'SEARCH_PROVIDER_SERVICE');
 INSERT INTO permissions (id, name) VALUES (20, 'UPDATE_PROVIDER_SERVICE');
 
+
 INSERT INTO permissions (id, name) VALUES (21, 'SEARCH_OWN_APPOINTMENT');
+INSERT INTO permissions (id, name) VALUES (22, 'CONFIRM_APPOINTMENT');
+INSERT INTO permissions (id, name) VALUES (23, 'CANCEL_APPOINTMENT');
+INSERT INTO permissions (id, name) VALUES (24, 'SEARCH_OWN_AVAIBILITY');
 
 
 
@@ -44,6 +48,7 @@ INSERT INTO role_permissions (role_id, permission_id) values (1, 10);
 INSERT INTO role_permissions (role_id, permission_id) values (1, 12);
 INSERT INTO role_permissions (role_id, permission_id) values (1, 15);
 INSERT INTO role_permissions (role_id, permission_id) values (1, 21);
+INSERT INTO role_permissions (role_id, permission_id) values (1, 23);
 
 INSERT INTO role_permissions (role_id, permission_id) values (2, 1);
 INSERT INTO role_permissions (role_id, permission_id) values (2, 2);
@@ -59,6 +64,8 @@ INSERT INTO role_permissions (role_id, permission_id) values (2, 18);
 INSERT INTO role_permissions (role_id, permission_id) values (2, 19);
 INSERT INTO role_permissions (role_id, permission_id) values (2, 20);
 INSERT INTO role_permissions (role_id, permission_id) values (2, 21);
+INSERT INTO role_permissions (role_id, permission_id) values (2, 22);
+INSERT INTO role_permissions (role_id, permission_id) values (2, 24);
 
 INSERT INTO role_permissions (role_id, permission_id) values (3, 1);
 INSERT INTO role_permissions (role_id, permission_id) values (3, 2);
@@ -80,6 +87,10 @@ INSERT INTO role_permissions (role_id, permission_id) values (3, 17);
 INSERT INTO role_permissions (role_id, permission_id) values (3, 18);
 INSERT INTO role_permissions (role_id, permission_id) values (3, 19);
 INSERT INTO role_permissions (role_id, permission_id) values (3, 20);
+INSERT INTO role_permissions (role_id, permission_id) values (3, 21);
+INSERT INTO role_permissions (role_id, permission_id) values (3, 22);
+INSERT INTO role_permissions (role_id, permission_id) values (3, 23);
+INSERT INTO role_permissions (role_id, permission_id) values (3, 24);
 
 
 

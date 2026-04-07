@@ -12,6 +12,7 @@ import com.rendezvous.dto.providerProfileDto.ProviderProfileResponseDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class ProviderProfileController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('SEARCH_PROVIDER_PROFILE')")
     public List<ProviderProfileResponseDTO> findProviderAll(){
         return providerProfileService.findProviderAll();
     }
@@ -40,6 +42,7 @@ public class ProviderProfileController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('DELETE_PROVIDER_PROFILE')")
     public ResponseEntity<ProviderProfile> deleteProvider(@PathVariable Long id){
         providerProfileService.deleteProvider(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

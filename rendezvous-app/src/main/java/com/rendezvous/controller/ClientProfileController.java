@@ -36,7 +36,7 @@ public class ClientProfileController {
 
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('CANCEL_CLIENT_PROFILE')")
+    @PreAuthorize("hasAuthority('DELETE_CLIENT_PROFILE')")
     public ResponseEntity<ClientProfile> delete(@PathVariable Long id){
         clientProfileService.deleteClient(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

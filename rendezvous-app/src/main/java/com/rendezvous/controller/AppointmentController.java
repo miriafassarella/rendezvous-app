@@ -51,7 +51,7 @@ public class AppointmentController {
     }
 
     @DeleteMapping("/{appointmentId}")
-    @PreAuthorize("hasAuthority('CANCEL_APPOINTMENT')")
+    @PreAuthorize("hasAuthority('DELETE_APPOINTMENT')")
     public ResponseEntity<Appointment> deleteAppointment(@PathVariable Long appointmentId){
         appointmentService.deleteAppointment(appointmentId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -73,12 +73,14 @@ public class AppointmentController {
     }
 
     @PatchMapping("/{appointmentId}/cancel")
+    @PreAuthorize("hasAuthority('CANCEL_APPOINTMENT')")
     public ResponseEntity<AppointmentResponseDTO> canceledAppointment(@PathVariable Long appointmentId){
         AppointmentResponseDTO appointmentDTO = appointmentService.canceledAppointment(appointmentId);
         return ResponseEntity.status(HttpStatus.OK).body(appointmentDTO);
     }
 
     @PatchMapping("/{appointmentId}/confirm")
+    @PreAuthorize("hasAuthority('CONFIRM_APPOINTMENT')")
     public ResponseEntity<AppointmentResponseDTO> confirmedAppointemnt(@PathVariable Long appointmentId){
        AppointmentResponseDTO appointmentDTO = appointmentService.confirmedAppointment(appointmentId);
         return ResponseEntity.status(HttpStatus.OK).body(appointmentDTO);

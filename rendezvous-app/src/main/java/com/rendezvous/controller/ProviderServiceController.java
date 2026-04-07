@@ -7,6 +7,7 @@ import com.rendezvous.dto.providerServiceDto.ProviderServiceResponseDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,17 +24,20 @@ public class ProviderServiceController {
 
 
     @GetMapping("/{providerId}")
+    @PreAuthorize("hasAuthority('SEARCH_PROVIDER_SERVICE')")
     public List<ProviderServiceResponseDTO> findServicesAllByProvider(@PathVariable Long providerId){
         return providerServiceService.findServicesAllByProvider(providerId);
     }
 
     @PostMapping()
+    @PreAuthorize("hasAuthority('CREATE_PROVIDER_SERVICE')")
     public ResponseEntity<ProviderServiceResponseDTO> createService(@Valid @RequestBody ProviderServiceRequestDTO serviceDTO){
         ProviderServiceResponseDTO serviceSave = providerServiceService.createService(serviceDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(serviceSave);
     }
 
     @PutMapping("{providerServiceId}")
+    @PreAuthorize("hasAuthority('UPDATE_PROVIDER_SERVICE')")
     public ResponseEntity<ProviderServiceResponseDTO> modifyProviderService(@RequestBody ProviderServiceRequestDTO providerServiceDTO, @PathVariable Long providerServiceId){
         ProviderServiceResponseDTO providerServiceResponseDTO = providerServiceService.modifyProviderService(providerServiceDTO, providerServiceId);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(providerServiceResponseDTO);
@@ -42,6 +46,7 @@ public class ProviderServiceController {
     }
 
     @DeleteMapping("{providerServiceId}")
+    @PreAuthorize("hasAuthority('DELETE_PROVIDER_SERVICE')")
     public ResponseEntity<ProviderService> deleteProviderService(@PathVariable Long providerServiceId){
         providerServiceService.deleteProviderService(providerServiceId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

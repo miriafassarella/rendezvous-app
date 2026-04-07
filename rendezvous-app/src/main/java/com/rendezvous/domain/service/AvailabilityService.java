@@ -2,10 +2,12 @@ package com.rendezvous.domain.service;
 
 import com.rendezvous.domain.model.Availability;
 import com.rendezvous.domain.model.ProviderProfile;
+import com.rendezvous.domain.model.User;
 import com.rendezvous.domain.repository.AvailabilityRepository;
 import com.rendezvous.domain.repository.ProviderProfileRepositoy;
 import com.rendezvous.dto.availabilityDto.AvailabilityRequestDTO;
 import com.rendezvous.dto.availabilityDto.AvailabilityResponseDTO;
+import com.rendezvous.exception.AccessDeniedException;
 import com.rendezvous.exception.AvailabilityFoundException;
 import com.rendezvous.exception.AvailabilityNotFoundException;
 import com.rendezvous.exception.ProviderNotFoundException;
@@ -93,10 +95,14 @@ public class AvailabilityService {
     }
 
     @Transactional
-    public List<AvailabilityResponseDTO> findByProviderId(Long providerId){
-        ProviderProfile providerProfile = providerProfileRepositoy.findById(providerId)
+    public List<AvailabilityResponseDTO> findByProviderId(Long providerId, User loggedUser){
+        ProviderProfile provider = providerProfileRepositoy.findByUserId(loggedUser.getId())
                 .orElseThrow(()-> new ProviderNotFoundException());
-        List<Availability> availabilities = availabilityRepository.findByProvider(providerProfile);
+
+        if (!provider.getId().equals(providerId)){
+            throw new AccessDeniedException();
+        }
+        List<Availability> availabilities = availabilityRepository.findByProvider(provider);
         return availabilities.stream()
                 .map(availability-> availabilityMapper.toResponseDTO(availability))
                 .toList();
