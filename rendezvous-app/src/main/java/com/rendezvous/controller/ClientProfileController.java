@@ -23,11 +23,12 @@ public class ClientProfileController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('SEARCH_CLIENT_PROFILE')")
     public List<ClientProfileResponseDTO> findClientAll(){
         return clientProfileService.findClientAll();
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<ClientProfileResponseDTO> createClient(@Valid @RequestBody ClientProfileRequestDTO clientDTO){
         ClientProfileResponseDTO newClient = clientProfileService.createClient(clientDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(newClient);

@@ -1,25 +1,17 @@
 package com.rendezvous.domain.service;
 
 import com.rendezvous.domain.enums.Status;
-import com.rendezvous.domain.model.Appointment;
-import com.rendezvous.domain.model.ClientProfile;
-import com.rendezvous.domain.model.ProviderProfile;
-import com.rendezvous.domain.model.ProviderService;
+import com.rendezvous.domain.model.*;
 import com.rendezvous.domain.repository.*;
 import com.rendezvous.dto.appointmentDto.AppointmentRequestDTO;
 import com.rendezvous.dto.appointmentDto.AppointmentResponseDTO;
 import com.rendezvous.exception.*;
 import com.rendezvous.mapper.AppointmentMapper;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.DayOfWeek;
+
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +22,7 @@ public class AppointmentService {
 
     ClientProfileRepository clientProfileRepository;
 
-    ProviderProfileRepositoy providerProfileRepositoy;
+    ProviderProfileRepositoy providerProfileRepository;
 
     AvailabilityRepository availabilityRepository;
 
@@ -40,13 +32,13 @@ public class AppointmentService {
 
     public AppointmentService(AppointmentRepository appointmentRepository,
                               ClientProfileRepository clientProfileRepository,
-                              ProviderProfileRepositoy providerProfileRepositoy,
+                              ProviderProfileRepositoy providerProfileRepository,
                               AvailabilityRepository availabilityRepository,
                               ProviderServiceRepository providerServiceRepository,
                               AppointmentMapper appointmentMapper){
         this.appointmentRepository = appointmentRepository;
         this.clientProfileRepository = clientProfileRepository;
-        this.providerProfileRepositoy = providerProfileRepositoy;
+        this.providerProfileRepository = providerProfileRepository;
         this.availabilityRepository = availabilityRepository;
         this.providerServiceRepository = providerServiceRepository;
         this.appointmentMapper = appointmentMapper;
@@ -65,7 +57,7 @@ public class AppointmentService {
     @Transactional
     public AppointmentResponseDTO createAppointment(AppointmentRequestDTO appointmentDTO){
 
-        ProviderProfile provider = providerProfileRepositoy.findById(appointmentDTO.getProviderId())
+        ProviderProfile provider = providerProfileRepository.findById(appointmentDTO.getProviderId())
                 .orElseThrow(() -> new ProviderNotFoundException());
 
         ClientProfile client = clientProfileRepository.findById(appointmentDTO.getClientId())
@@ -124,7 +116,7 @@ public class AppointmentService {
         Appointment appointment = appointmentRepository.findById(appointmentId)
                 .orElseThrow(()-> new AppointmentNotFoundException());
 
-        Optional<ProviderProfile> provider = providerProfileRepositoy.findById(appointmentDTO.getProviderId());
+        Optional<ProviderProfile> provider = providerProfileRepository.findById(appointmentDTO.getProviderId());
         ProviderService service = providerServiceRepository.findById(appointmentDTO.getServiceId())
                 .orElseThrow();
 /*Validações -------------------------------------------------------------------------------------------*/
@@ -165,9 +157,13 @@ public class AppointmentService {
     }
 
     @Transactional
-    public List<AppointmentResponseDTO> findByProviderId(Long providerId){
-        ProviderProfile provider = providerProfileRepositoy.findById(providerId)
+    public List<AppointmentResponseDTO> findByProviderId(Long providerId, User loggedUser) {
+        ProviderProfile provider = providerProfileRepository.findByUserId(loggedUser.getId())
                 .orElseThrow(()-> new ProviderNotFoundException());
+//impedindo que um usuario tente acessar os appointemnts de um outro usuário colocando outro id na url
+        if (!provider.getId().equals(providerId)){
+            throw new AccessDeniedException();
+        }
 
         List<Appointment> appointments = appointmentRepository.findAllByProvider_Id(provider.getId());
 
@@ -178,9 +174,13 @@ public class AppointmentService {
     }
 
     @Transactional
-    public  List<AppointmentResponseDTO> findByClientId(Long clientId){
-        ClientProfile client = clientProfileRepository.findById(clientId)
+    public  List<AppointmentResponseDTO> findByClientId(Long clientId, User loggedUser){
+        ClientProfile client = clientProfileRepository.findByUserId(loggedUser.getId())
                 .orElseThrow(()-> new ClientNotFoundException());
+
+        if (!client.getId().equals(clientId)){
+            throw new AccessDeniedException();
+        }
 
         List<Appointment> appointments = appointmentRepository.findAllByClient_Id(client.getId());
         return appointments.stream()
