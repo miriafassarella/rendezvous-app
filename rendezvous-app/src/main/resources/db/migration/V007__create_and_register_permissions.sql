@@ -33,10 +33,16 @@ INSERT INTO permissions (id, name) VALUES (19, 'SEARCH_PROVIDER_SERVICE');
 INSERT INTO permissions (id, name) VALUES (20, 'UPDATE_PROVIDER_SERVICE');
 
 
+
 INSERT INTO permissions (id, name) VALUES (21, 'SEARCH_OWN_APPOINTMENT');
 INSERT INTO permissions (id, name) VALUES (22, 'CONFIRM_APPOINTMENT');
 INSERT INTO permissions (id, name) VALUES (23, 'CANCEL_APPOINTMENT');
 INSERT INTO permissions (id, name) VALUES (24, 'SEARCH_OWN_AVAIBILITY');
+
+INSERT INTO permissions (id, name) VALUES (25, 'CREATE_ADMIN_PROFILE');
+INSERT INTO permissions (id, name) VALUES (26, 'DELETE_ADMIN_PROFILE');
+INSERT INTO permissions (id, name) VALUES (27, 'SEARCH_ADMIN_PROFILE');
+INSERT INTO permissions (id, name) VALUES (28, 'UPDATE_ADMIN_PROFILE');
 
 
 
@@ -91,6 +97,10 @@ INSERT INTO role_permissions (role_id, permission_id) values (3, 21);
 INSERT INTO role_permissions (role_id, permission_id) values (3, 22);
 INSERT INTO role_permissions (role_id, permission_id) values (3, 23);
 INSERT INTO role_permissions (role_id, permission_id) values (3, 24);
+INSERT INTO role_permissions (role_id, permission_id) values (3, 25);
+INSERT INTO role_permissions (role_id, permission_id) values (3, 26);
+INSERT INTO role_permissions (role_id, permission_id) values (3, 27);
+INSERT INTO role_permissions (role_id, permission_id) values (3, 28);
 
 
 

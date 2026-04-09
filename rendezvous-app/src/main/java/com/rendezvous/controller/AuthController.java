@@ -1,7 +1,7 @@
 package com.rendezvous.controller;
 
-import com.rendezvous.dto.LoginRequestDto;
-import com.rendezvous.dto.LoginResponseDto;
+import com.rendezvous.dto.loginDto.LoginRequestDto;
+import com.rendezvous.dto.loginDto.LoginResponseDto;
 import com.rendezvous.security.JwtUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

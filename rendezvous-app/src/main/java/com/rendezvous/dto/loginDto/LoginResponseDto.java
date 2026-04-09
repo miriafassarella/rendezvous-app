@@ -1,4 +1,4 @@
-package com.rendezvous.dto;
+package com.rendezvous.dto.loginDto;
 
 public class LoginResponseDto {
 
