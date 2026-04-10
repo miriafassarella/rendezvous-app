@@ -22,3 +22,9 @@ CREATE TABLE role_user (
 INSERT INTO role (name) VALUES ('CLIENT');
 INSERT INTO role (name) VALUES ('PROVIDER');
 INSERT INTO role (name) VALUES ('ADMIN');
+
+INSERT INTO user (email, password)
+VALUES ('admin@gmail.com', '$2a$12$KNiuKHV2dLRogdYF1RGPiOJ30K/sVUzHkyisIyHTJVFSJeHbtwCGO');
+
+INSERT INTO role_user (user_id, role_id)
+VALUES (1, 3);

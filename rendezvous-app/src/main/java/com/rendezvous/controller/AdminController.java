@@ -26,7 +26,7 @@ public class AdminController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasAuthority('')")
+    @PreAuthorize("hasAuthority('CREATE_ADMIN_PROFILE')")
     public ResponseEntity<AdminProfileResponseDTO> createAdmin(@Valid @RequestBody AdminProfileRequestDTO adminDTO){
         AdminProfileResponseDTO newAdmin = adminProfileService.createAdmin(adminDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(newAdmin);

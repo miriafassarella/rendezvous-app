@@ -1,7 +1,7 @@
 package com.rendezvous.domain.service;
 
 import com.rendezvous.domain.model.AdminProfile;
-import com.rendezvous.domain.model.ClientProfile;
+
 import com.rendezvous.domain.model.Role;
 import com.rendezvous.domain.model.User;
 import com.rendezvous.domain.repository.AdminProfileRepository;
@@ -9,8 +9,7 @@ import com.rendezvous.domain.repository.RoleRepository;
 import com.rendezvous.domain.repository.UserRepository;
 import com.rendezvous.dto.adminProfileDto.AdminProfileRequestDTO;
 import com.rendezvous.dto.adminProfileDto.AdminProfileResponseDTO;
-import com.rendezvous.dto.clientProfileDto.ClientProfileRequestDTO;
-import com.rendezvous.dto.clientProfileDto.ClientProfileResponseDTO;
+
 import com.rendezvous.mapper.AdminProfileMapper;
 import com.rendezvous.mapper.UserMapper;
 import org.springframework.stereotype.Service;
@@ -35,6 +34,9 @@ public class AdminProfileService {
                                UserRepository userRepository){
         this.adminProfileRepository = adminProfileRepository;
         this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
+        this.adminProfileMapper = adminProfileMapper;
+        this.userMapper = userMapper;
     }
 
     @Transactional

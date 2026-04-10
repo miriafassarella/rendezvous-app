@@ -8,5 +8,6 @@ CREATE TABLE admin_profile (
         FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
---adicionar insert
 
+INSERT INTO admin_profile (first_name, last_name, phone, user_id)
+VALUES ('Miria', 'Fassarela', '4188887777', 1);
