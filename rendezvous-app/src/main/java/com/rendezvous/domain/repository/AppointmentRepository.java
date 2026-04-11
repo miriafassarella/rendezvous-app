@@ -1,7 +1,9 @@
 package com.rendezvous.domain.repository;
 
 import com.rendezvous.domain.model.Appointment;
+import com.rendezvous.domain.model.ClientProfile;
 import com.rendezvous.domain.model.ProviderProfile;
+import com.rendezvous.domain.model.ProviderService;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
@@ -38,4 +40,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
             SELECT a FROM Appointment a
             WHERE a.endTime < :currentTime
 """) List<Appointment> findAppointmentsToComplete(@Param("currentTime") LocalDateTime currentTime);
+
+    boolean existsByService(ProviderService service);
+    boolean existsByProvider(ProviderProfile provider);
+    boolean existsByClient(ClientProfile client);
 }

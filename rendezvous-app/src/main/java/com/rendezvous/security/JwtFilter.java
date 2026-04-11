@@ -41,7 +41,7 @@ public class JwtFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith("Bearer ")){
             token = authHeader.substring(7);
 
-            try {
+           try {
                 email = jwtUtil.extractEmail(token);
             } catch (ExpiredJwtException e) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

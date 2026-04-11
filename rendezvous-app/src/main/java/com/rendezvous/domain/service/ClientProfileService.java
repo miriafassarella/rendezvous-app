@@ -30,6 +30,8 @@ public class ClientProfileService {
 
     private RoleRepository roleRepository;
 
+    private AppointmentRepository appointmentRepository;
+
     private ClientProfileMapper clientProfileMapper;
 
     private UserMapper userMapper;
@@ -37,11 +39,13 @@ public class ClientProfileService {
     public ClientProfileService(UserRepository userRepository,
                                 ClientProfileRepository clientProfileRepository,
                                 RoleRepository roleRepository,
+                                AppointmentRepository appointmentRepository,
                                 ClientProfileMapper clientProfileMapper,
                                 UserMapper userMapper){
         this.userRepository = userRepository;
         this.clientProfileRepository = clientProfileRepository;
         this.roleRepository = roleRepository;
+        this.appointmentRepository = appointmentRepository;
         this.clientProfileMapper = clientProfileMapper;
         this.userMapper = userMapper;
 
@@ -73,6 +77,7 @@ public class ClientProfileService {
     public void deleteClient(Long id){
         ClientProfile client = clientProfileRepository.findById(id)
                 .orElseThrow(()-> new ClientNotFoundException());
+
             clientProfileRepository.delete(client);
     }
 }

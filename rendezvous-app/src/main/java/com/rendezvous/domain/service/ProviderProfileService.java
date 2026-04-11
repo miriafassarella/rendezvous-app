@@ -30,6 +30,8 @@ public class ProviderProfileService {
 
     private RoleRepository roleRepository;
 
+    private AppointmentRepository appointmentRepository;
+
     private ProviderProfileMapper providerProfileMapper;
 
     private UserMapper userMapper;
@@ -37,11 +39,13 @@ public class ProviderProfileService {
     public ProviderProfileService(UserRepository userRepository,
                                   ProviderProfileRepositoy providerProfileRepositoy,
                                   RoleRepository roleRepository,
+                                  AppointmentRepository appointmentRepository,
                                   ProviderProfileMapper providerProfileMapper,
                                   UserMapper userMapper){
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.providerProfileRepository = providerProfileRepositoy;
+        this.appointmentRepository = appointmentRepository;
         this.providerProfileMapper = providerProfileMapper;
         this.userMapper = userMapper;
 
@@ -76,6 +80,7 @@ public class ProviderProfileService {
     public void deleteProvider(Long id){
         ProviderProfile provider = providerProfileRepository.findById(id)
                 .orElseThrow(()-> new ProviderNotFoundException());
+
             providerProfileRepository.delete(provider);
     }
 }

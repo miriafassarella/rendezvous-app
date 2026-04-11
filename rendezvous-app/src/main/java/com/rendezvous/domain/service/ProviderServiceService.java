@@ -2,12 +2,14 @@ package com.rendezvous.domain.service;
 
 import com.rendezvous.domain.model.ProviderProfile;
 import com.rendezvous.domain.model.ProviderService;
+import com.rendezvous.domain.repository.AppointmentRepository;
 import com.rendezvous.domain.repository.ProviderProfileRepositoy;
 import com.rendezvous.domain.repository.ProviderServiceRepository;
 import com.rendezvous.dto.providerServiceDto.ProviderServiceRequestDTO;
 import com.rendezvous.dto.providerServiceDto.ProviderServiceResponseDTO;
 
 import com.rendezvous.exception.ProviderNotFoundException;
+import com.rendezvous.exception.ServiceExceptionInUse;
 import com.rendezvous.exception.ServiceNotFoundException;
 import com.rendezvous.mapper.ProviderServiceMapper;
 import org.springframework.beans.BeanUtils;
@@ -25,13 +27,17 @@ public class ProviderServiceService {
 
     private ProviderServiceRepository providerServiceRepository;
 
+    private AppointmentRepository appointmentRepository;
+
     public ProviderServiceService(ProviderProfileRepositoy providerProfileRepositoy,
                                   ProviderServiceMapper providerServiceMapper,
-                                  ProviderServiceRepository providerServiceRepository
+                                  ProviderServiceRepository providerServiceRepository,
+                                  AppointmentRepository appointmentRepository
                                   ){
         this.providerProfileRepository = providerProfileRepositoy;
         this.providerServiceMapper = providerServiceMapper;
         this.providerServiceRepository = providerServiceRepository;
+        this.appointmentRepository = appointmentRepository;
     }
 
 
@@ -78,6 +84,11 @@ public class ProviderServiceService {
     public void deleteProviderService(Long providerServiceId){
         ProviderService providerService = providerServiceRepository.findById(providerServiceId)
                 .orElseThrow(()-> new ServiceNotFoundException());
+
+        if(appointmentRepository.existsByService(providerService)){
+            throw new ServiceExceptionInUse();
+        }
+
         providerServiceRepository.delete(providerService);
     }
 
