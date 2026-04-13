@@ -27,10 +27,17 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ServiceExceptionInUse.class)
-    public ResponseEntity<String> handleServiceExceptionInUse(ServiceExceptionInUse e) {
-        return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(e.getMessage());
+    public ResponseEntity<ErrorResponse> handleServiceExceptionInUse(ServiceExceptionInUse ex, WebRequest request) {
+        ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                "Business error",
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+
     }
 
 
