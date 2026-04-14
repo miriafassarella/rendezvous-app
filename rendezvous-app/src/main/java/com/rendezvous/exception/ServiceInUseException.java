@@ -1,12 +1,12 @@
 package com.rendezvous.exception;
 
 
-public class ServiceExceptionInUse extends BusinessException{
-    public ServiceExceptionInUse(String message) {
+public class ServiceInUseException extends BusinessException{
+    public ServiceInUseException(String message) {
         super(message);
     }
 
-    public ServiceExceptionInUse(){
+    public ServiceInUseException(){
         super("It is not possible to delete a service because it is linked to one or more appointments.");
     }
 }

@@ -30,57 +30,58 @@ public class AppointmentController {
         this.appointmentService = appointmentService;
     }
 
-    @GetMapping
     @PreAuthorize("hasAuthority('SEARCH_APPOINTMENT')")
+    @GetMapping
     public List<AppointmentResponseDTO> findAppointmentsAll(){
         return appointmentService.findAppointmentsAll();
     }
 
-    @PostMapping
     @PreAuthorize("hasAuthority('CREATE_APPOINTMENT')")
+    @PostMapping
     public ResponseEntity<AppointmentResponseDTO> createAppointment(@Valid @RequestBody AppointmentRequestDTO appointmentDTO){
         AppointmentResponseDTO appointmentSaved = appointmentService.createAppointment(appointmentDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(appointmentSaved);
     }
 
-    @PutMapping("/{appointmentId}")
     @PreAuthorize("hasAuthority('UPDATE_APPOINTMENT')")
+    @PutMapping("/{appointmentId}")
     public ResponseEntity<AppointmentResponseDTO> modifyAppointment(@RequestBody AppointmentRequestDTO appointmentDTO, @PathVariable Long appointmentId){
         AppointmentResponseDTO appointmentResponseDTO = appointmentService.modifyAppointment(appointmentDTO, appointmentId);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(appointmentResponseDTO);
     }
 
-    @DeleteMapping("/{appointmentId}")
     @PreAuthorize("hasAuthority('DELETE_APPOINTMENT')")
+    @DeleteMapping("/{appointmentId}")
     public ResponseEntity<Appointment> deleteAppointment(@PathVariable Long appointmentId){
         appointmentService.deleteAppointment(appointmentId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    /*----------------------a refletir se usar @@AuthenticationPrincipal-------------------------------*/
     //AuthenticationPrincipal pega o usuario no token
-    @GetMapping("/provider/{providerId}")
     @PreAuthorize("hasAuthority('SEARCH_OWN_APPOINTMENT')")
-    public ResponseEntity<List<AppointmentResponseDTO>> findByProviderId(@PathVariable Long providerId, @AuthenticationPrincipal User loggedUser){
-        List<AppointmentResponseDTO> appointments =  appointmentService.findByProviderId(providerId, loggedUser);
+    @GetMapping("/provider/appointments")
+    public ResponseEntity<List<AppointmentResponseDTO>> findByProviderId(@AuthenticationPrincipal User loggedUser){
+        List<AppointmentResponseDTO> appointments =  appointmentService.findByProviderId(loggedUser);
         return ResponseEntity.status(HttpStatus.OK).body(appointments);
     }
 
-    @GetMapping("client/{clientId}")
     @PreAuthorize("hasAuthority('SEARCH_OWN_APPOINTMENT')")
-    public ResponseEntity<List<AppointmentResponseDTO>> findByClientId(@PathVariable Long clientId, @AuthenticationPrincipal User loggedUser){
-        List<AppointmentResponseDTO> appointments = appointmentService.findByClientId(clientId, loggedUser);
+    @GetMapping("/client/appointments")
+    public ResponseEntity<List<AppointmentResponseDTO>> findByClientId(@AuthenticationPrincipal User loggedUser){
+        List<AppointmentResponseDTO> appointments = appointmentService.findByClientId(loggedUser);
         return ResponseEntity.status(HttpStatus.OK).body(appointments);
     }
-
-    @PatchMapping("/{appointmentId}/cancel")
+/*--------------------------------------------------------------------------------------------------------------*/
     @PreAuthorize("hasAuthority('CANCEL_APPOINTMENT')")
+    @PatchMapping("/{appointmentId}/cancel")
     public ResponseEntity<AppointmentResponseDTO> canceledAppointment(@PathVariable Long appointmentId){
         AppointmentResponseDTO appointmentDTO = appointmentService.canceledAppointment(appointmentId);
         return ResponseEntity.status(HttpStatus.OK).body(appointmentDTO);
     }
 
-    @PatchMapping("/{appointmentId}/confirm")
     @PreAuthorize("hasAuthority('CONFIRM_APPOINTMENT')")
+    @PatchMapping("/{appointmentId}/confirm")
     public ResponseEntity<AppointmentResponseDTO> confirmedAppointemnt(@PathVariable Long appointmentId){
        AppointmentResponseDTO appointmentDTO = appointmentService.confirmedAppointment(appointmentId);
         return ResponseEntity.status(HttpStatus.OK).body(appointmentDTO);

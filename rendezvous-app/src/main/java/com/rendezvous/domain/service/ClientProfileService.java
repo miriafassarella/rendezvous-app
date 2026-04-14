@@ -7,6 +7,7 @@ import com.rendezvous.dto.clientProfileDto.ClientProfileRequestDTO;
 import com.rendezvous.dto.clientProfileDto.ClientProfileResponseDTO;
 import com.rendezvous.dto.providerProfileDto.ProviderProfileRequestDTO;
 import com.rendezvous.dto.providerProfileDto.ProviderProfileResponseDTO;
+import com.rendezvous.exception.ClientInUseException;
 import com.rendezvous.exception.ClientNotFoundException;
 import com.rendezvous.mapper.ClientProfileMapper;
 import com.rendezvous.mapper.ProviderProfileMapper;
@@ -77,7 +78,10 @@ public class ClientProfileService {
     public void deleteClient(Long id){
         ClientProfile client = clientProfileRepository.findById(id)
                 .orElseThrow(()-> new ClientNotFoundException());
-
-            clientProfileRepository.delete(client);
+        boolean hasAppointments  = appointmentRepository.existsByClient(client);
+        if (hasAppointments){
+            throw new ClientInUseException();
+        }
+        clientProfileRepository.delete(client);
     }
 }

@@ -9,7 +9,7 @@ import com.rendezvous.dto.providerServiceDto.ProviderServiceRequestDTO;
 import com.rendezvous.dto.providerServiceDto.ProviderServiceResponseDTO;
 
 import com.rendezvous.exception.ProviderNotFoundException;
-import com.rendezvous.exception.ServiceExceptionInUse;
+import com.rendezvous.exception.ServiceInUseException;
 import com.rendezvous.exception.ServiceNotFoundException;
 import com.rendezvous.mapper.ProviderServiceMapper;
 import org.springframework.beans.BeanUtils;
@@ -86,7 +86,7 @@ public class ProviderServiceService {
                 .orElseThrow(()-> new ServiceNotFoundException());
 
         if(appointmentRepository.existsByService(providerService)){
-            throw new ServiceExceptionInUse();
+            throw new ServiceInUseException();
         }
 
         providerServiceRepository.delete(providerService);

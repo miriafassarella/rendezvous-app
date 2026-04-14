@@ -1,10 +1,8 @@
 package com.rendezvous.exception;
 
 import com.rendezvous.dto.exceptionError.ErrorResponse;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -26,8 +24,22 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(ServiceExceptionInUse.class)
-    public ResponseEntity<ErrorResponse> handleServiceExceptionInUse(ServiceExceptionInUse ex, WebRequest request) {
+    @ExceptionHandler(ServiceInUseException.class)
+    public ResponseEntity<ErrorResponse> handleServiceExceptionInUse(ServiceInUseException ex, WebRequest request) {
+        ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                "Business error",
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+
+    }
+
+    @ExceptionHandler(ClientInUseException.class)
+    public ResponseEntity<ErrorResponse> handleClientExceptionInUse(ClientInUseException ex, WebRequest request) {
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.CONFLICT.value(),

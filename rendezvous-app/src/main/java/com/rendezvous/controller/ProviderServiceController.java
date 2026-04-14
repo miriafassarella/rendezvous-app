@@ -41,9 +41,6 @@ public class ProviderServiceController {
     public ResponseEntity<ProviderServiceResponseDTO> modifyProviderService(@RequestBody ProviderServiceRequestDTO providerServiceDTO, @PathVariable Long providerServiceId){
         ProviderServiceResponseDTO providerServiceResponseDTO = providerServiceService.modifyProviderService(providerServiceDTO, providerServiceId);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(providerServiceResponseDTO);
-
-        //TODO não posso modificar um servico se existe um rendez-vous pra ele.
-        //a api já não me permite isso, eu preciso tratar essa excessão
     }
 
     @DeleteMapping("{providerServiceId}")
@@ -51,8 +48,5 @@ public class ProviderServiceController {
     public ResponseEntity<ProviderService> deleteProviderService(@PathVariable Long providerServiceId){
         providerServiceService.deleteProviderService(providerServiceId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        //TODO
-        // não posso deletar um serviço se existe um rendez-vous para ele.
-        //a api já não me permite isso, eu preciso tratar essa excessão
     }
 }

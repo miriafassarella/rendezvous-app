@@ -80,7 +80,7 @@ public class AppointmentService {
 
 
         if (!available) {
-            throw new ProviderNotAvailableException();//aqui
+            throw new ProviderNotAvailableException();
         }
 
         //impedindo que um appointment seja agendado em uma data e horário anterior
@@ -157,11 +157,11 @@ public class AppointmentService {
     }
 
     @Transactional
-    public List<AppointmentResponseDTO> findByProviderId(Long providerId, User loggedUser) {
+    public List<AppointmentResponseDTO> findByProviderId(User loggedUser) {
         ProviderProfile provider = providerProfileRepository.findByUserId(loggedUser.getId())
                 .orElseThrow(()-> new ProviderNotFoundException());
 //impedindo que um usuario tente acessar os appointemnts de um outro usuário colocando outro id na url
-        if (!provider.getId().equals(providerId)){
+        if (!provider.getId().equals(provider.getId())){
             throw new AccessDeniedException();
         }
 
@@ -174,11 +174,11 @@ public class AppointmentService {
     }
 
     @Transactional
-    public  List<AppointmentResponseDTO> findByClientId(Long clientId, User loggedUser){
+    public  List<AppointmentResponseDTO> findByClientId( User loggedUser){
         ClientProfile client = clientProfileRepository.findByUserId(loggedUser.getId())
                 .orElseThrow(()-> new ClientNotFoundException());
 
-        if (!client.getId().equals(clientId)){
+        if (!client.getId().equals(client.getId())){
             throw new AccessDeniedException();
         }
 
