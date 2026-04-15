@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 
@@ -44,4 +45,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     boolean existsByService(ProviderService service);
     boolean existsByProvider(ProviderProfile provider);
     boolean existsByClient(ClientProfile client);
+
+    //Optional<Appointment> findByIdAndClient_User_Id(Long appointmentId, Long userId);
 }

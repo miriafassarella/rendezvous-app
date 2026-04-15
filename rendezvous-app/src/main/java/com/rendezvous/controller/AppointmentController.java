@@ -52,8 +52,8 @@ public class AppointmentController {
 
     @PreAuthorize("hasAuthority('DELETE_APPOINTMENT')")
     @DeleteMapping("/{appointmentId}")
-    public ResponseEntity<Appointment> deleteAppointment(@PathVariable Long appointmentId){
-        appointmentService.deleteAppointment(appointmentId);
+    public ResponseEntity<Appointment> deleteAppointment(@PathVariable Long appointmentId, @AuthenticationPrincipal User loggedUser){
+        appointmentService.deleteAppointment(appointmentId, loggedUser);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

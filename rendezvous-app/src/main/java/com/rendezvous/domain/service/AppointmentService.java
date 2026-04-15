@@ -150,9 +150,12 @@ public class AppointmentService {
     }
 
     @Transactional
-    public void deleteAppointment(Long appointmentId){
+    public void deleteAppointment(Long appointmentId, User user){
         Appointment appointment = appointmentRepository.findById(appointmentId)
                 .orElseThrow(()-> new AppointmentNotFoundException());
+        if (!appointment.getClient().getUser().getId().equals(user.getId())){
+                throw new AccessDeniedException();
+        }
         appointmentRepository.delete(appointment);
     }
 
@@ -160,34 +163,23 @@ public class AppointmentService {
     public List<AppointmentResponseDTO> findByProviderId(User loggedUser) {
         ProviderProfile provider = providerProfileRepository.findByUserId(loggedUser.getId())
                 .orElseThrow(()-> new ProviderNotFoundException());
-//impedindo que um usuario tente acessar os appointemnts de um outro usuário colocando outro id na url
-        if (!provider.getId().equals(provider.getId())){
-            throw new AccessDeniedException();
-        }
-
         List<Appointment> appointments = appointmentRepository.findAllByProvider_Id(provider.getId());
-
         return appointments.stream()
                 .map(appointment -> appointmentMapper.toResponseDTO(appointment))
                 .toList();
-
     }
 
     @Transactional
-    public  List<AppointmentResponseDTO> findByClientId( User loggedUser){
+    public  List<AppointmentResponseDTO> findByClientId(User loggedUser){
         ClientProfile client = clientProfileRepository.findByUserId(loggedUser.getId())
                 .orElseThrow(()-> new ClientNotFoundException());
-
-        if (!client.getId().equals(client.getId())){
-            throw new AccessDeniedException();
-        }
-
         List<Appointment> appointments = appointmentRepository.findAllByClient_Id(client.getId());
         return appointments.stream()
                 .map(appointment-> appointmentMapper.toResponseDTO(appointment))
                 .toList();
     }
 
+    /*Esse appointment pertence realmente ao clinte logado?*/
     @Transactional
     public AppointmentResponseDTO canceledAppointment(Long appointmentId){
         Appointment appointment = appointmentRepository.findById(appointmentId)
@@ -197,6 +189,7 @@ public class AppointmentService {
        return appointmentMapper.toResponseDTO(appointmentSaved);
     }
 
+    /*Esse appointment pertence realmente ao provider logado?*/
     @Transactional
     public AppointmentResponseDTO confirmedAppointment(Long appointmentId){
         Appointment appointment = appointmentRepository.findById(appointmentId)

@@ -28,7 +28,7 @@ public class ClientProfileController {
         return clientProfileService.findClientAll();
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseEntity<ClientProfileResponseDTO> createClient(@Valid @RequestBody ClientProfileRequestDTO clientDTO){
         ClientProfileResponseDTO newClient = clientProfileService.createClient(clientDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(newClient);

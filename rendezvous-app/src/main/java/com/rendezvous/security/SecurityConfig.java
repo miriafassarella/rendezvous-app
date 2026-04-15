@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -33,15 +34,21 @@ public class SecurityConfig {
                 .sessionManagement(session-> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/clients/create").permitAll()
-                        .requestMatchers("/providers/create").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/clients").permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint((request, response, authException) -> {
                             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                             response.setContentType("application/json");
-                            response.getWriter().write("{\"error\": \"Token ausente ou invalido\"}");
+                            response.getWriter().write("""
+                                    {
+                                        "status": 401,
+                                        "error": "Unauthorized",
+                                        "message": "Token missing or invalid"
+                                    }
+                                    """
+                            );
                         })
                 )
                 // Registra o JwtFilter ANTES do filtro padrão do Spring
