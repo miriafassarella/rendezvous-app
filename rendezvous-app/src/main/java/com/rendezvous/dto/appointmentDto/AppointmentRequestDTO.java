@@ -1,9 +1,11 @@
 package com.rendezvous.dto.appointmentDto;
 
+import com.rendezvous.domain.model.Availability;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 public class AppointmentRequestDTO {
@@ -50,6 +52,5 @@ public class AppointmentRequestDTO {
     public void setClientId(Long clientId) {
         this.clientId = clientId;
     }
-
 
 }

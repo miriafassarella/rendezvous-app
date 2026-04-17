@@ -31,7 +31,7 @@ public class UserService {
                 .toList();
     }
 
-    public UserResponseDTO findUserById(Long userId){
+    public UserResponseDTO findById(Long userId){
       User user = userRepository.findById(userId)
               .orElseThrow(()-> new UserNotFoundException());
 

@@ -32,7 +32,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public UserResponseDTO searchId(@PathVariable Long id){
-        return userService.findUserById(id);
+        return userService.findById(id);
     }
 
 }

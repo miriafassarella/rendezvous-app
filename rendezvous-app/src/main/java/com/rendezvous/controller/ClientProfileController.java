@@ -24,8 +24,16 @@ public class ClientProfileController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('SEARCH_CLIENT_PROFILE')")
-    public List<ClientProfileResponseDTO> findClientAll(){
-        return clientProfileService.findClientAll();
+    public ResponseEntity<List<ClientProfileResponseDTO>> findClientAll(){
+        List<ClientProfileResponseDTO> clients = clientProfileService.findClientAll();
+        return ResponseEntity.status(HttpStatus.OK).body(clients);
+    }
+
+    @PreAuthorize("hasAuthority('SEARCH_CLIENT_PROFILE')")
+    @GetMapping("/{clientId}")
+    public ResponseEntity<ClientProfileResponseDTO> findById(@PathVariable Long clientId){
+        ClientProfileResponseDTO client = clientProfileService.findById(clientId);
+        return ResponseEntity.status(HttpStatus.OK).body(client);
     }
 
     @PostMapping()
@@ -37,7 +45,7 @@ public class ClientProfileController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('DELETE_CLIENT_PROFILE')")
-    public ResponseEntity<ClientProfile> delete(@PathVariable Long id){
+    public ResponseEntity<?> delete(@PathVariable Long id){
         clientProfileService.deleteClient(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

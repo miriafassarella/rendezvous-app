@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import com.rendezvous.domain.enums.Status;
 
 import java.time.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -41,6 +42,9 @@ public class Appointment {
     @JoinColumn(name = "client_id", nullable = false)
     private ClientProfile client;
 
+    @ManyToOne
+    @JoinColumn(name = "availability_id", nullable = false)
+    private Availability availabilitie;
 
     public Long getId() {
         return id;
@@ -100,7 +104,7 @@ public class Appointment {
         this.client= client;
     }
 
-   public void calculateEndTime(){
+    public void calculateEndTime(){
         if(this.startTime != null && this.service != null){
             this.endTime = startTime.plusMinutes(getService().getDuration_minutes());
         }
@@ -143,6 +147,7 @@ public class Appointment {
     }
 
     public void completed(){
+
         this.setStatus(Status.COMPLETED);
     }
 

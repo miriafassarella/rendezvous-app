@@ -7,6 +7,9 @@ import com.rendezvous.dto.clientProfileDto.ClientProfileRequestDTO;
 import com.rendezvous.dto.clientProfileDto.ClientProfileResponseDTO;
 import com.rendezvous.dto.providerProfileDto.ProviderProfileRequestDTO;
 import com.rendezvous.dto.providerProfileDto.ProviderProfileResponseDTO;
+import com.rendezvous.exception.ClientInUseException;
+import com.rendezvous.exception.ClientNotFoundException;
+import com.rendezvous.exception.ProviderInUseException;
 import com.rendezvous.exception.ProviderNotFoundException;
 import com.rendezvous.mapper.ClientProfileMapper;
 import com.rendezvous.mapper.ProviderProfileMapper;
@@ -61,6 +64,13 @@ public class ProviderProfileService {
                 .toList();
     }
 
+    @Transactional
+    public ProviderProfileResponseDTO findById(Long providerId){
+        ProviderProfile provider = providerProfileRepository.findById(providerId)
+                .orElseThrow(()-> new ProviderNotFoundException());
+        return providerProfileMapper.toResponseDTO(provider);
+    }
+
 
     @Transactional
     public ProviderProfileResponseDTO createProvide(ProviderProfileRequestDTO providerDTO){
@@ -80,7 +90,11 @@ public class ProviderProfileService {
     public void deleteProvider(Long id){
         ProviderProfile provider = providerProfileRepository.findById(id)
                 .orElseThrow(()-> new ProviderNotFoundException());
-
-            providerProfileRepository.delete(provider);
+        boolean hasAppointments  = appointmentRepository.existsByProvider(provider);
+        if (hasAppointments){
+            throw new ProviderInUseException();
+        }
+        providerProfileRepository.delete(provider);
     }
+
 }

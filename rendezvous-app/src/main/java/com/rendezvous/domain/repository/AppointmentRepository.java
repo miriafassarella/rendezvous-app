@@ -46,5 +46,4 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     boolean existsByProvider(ProviderProfile provider);
     boolean existsByClient(ClientProfile client);
 
-    //Optional<Appointment> findByIdAndClient_User_Id(Long appointmentId, Long userId);
 }

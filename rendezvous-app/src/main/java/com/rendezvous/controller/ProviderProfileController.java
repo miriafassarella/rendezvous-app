@@ -7,6 +7,7 @@ import com.rendezvous.domain.service.ProviderProfileService;
 import com.rendezvous.domain.service.ProviderServiceService;
 import com.rendezvous.dto.availabilityDto.AvailabilityRequestDTO;
 import com.rendezvous.dto.availabilityDto.AvailabilityResponseDTO;
+import com.rendezvous.dto.clientProfileDto.ClientProfileResponseDTO;
 import com.rendezvous.dto.providerProfileDto.ProviderProfileRequestDTO;
 import com.rendezvous.dto.providerProfileDto.ProviderProfileResponseDTO;
 import jakarta.validation.Valid;
@@ -35,6 +36,13 @@ public class ProviderProfileController {
         return providerProfileService.findProviderAll();
     }
 
+    @PreAuthorize("hasAuthority('SEARCH_PROVIDER_PROFILE')")
+    @GetMapping("/{providerId}")
+    public ResponseEntity<ProviderProfileResponseDTO> findById(@PathVariable Long providerId){
+        ProviderProfileResponseDTO provider = providerProfileService.findById(providerId);
+        return ResponseEntity.status(HttpStatus.OK).body(provider);
+    }
+
     @PostMapping()
     public ResponseEntity<ProviderProfileResponseDTO> createProvider(@Valid @RequestBody ProviderProfileRequestDTO providerDTO){
         ProviderProfileResponseDTO providerSave = providerProfileService.createProvide(providerDTO);
@@ -43,7 +51,7 @@ public class ProviderProfileController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('DELETE_PROVIDER_PROFILE')")
-    public ResponseEntity<ProviderProfile> deleteProvider(@PathVariable Long id){
+    public ResponseEntity<?> deleteProvider(@PathVariable Long id){
         providerProfileService.deleteProvider(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

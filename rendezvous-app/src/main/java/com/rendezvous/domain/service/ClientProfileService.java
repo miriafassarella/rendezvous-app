@@ -61,6 +61,13 @@ public class ClientProfileService {
     }
 
     @Transactional
+    public ClientProfileResponseDTO findById(Long clientId){
+        ClientProfile client = clientProfileRepository.findById(clientId)
+                .orElseThrow(()-> new ClientNotFoundException());
+        return clientProfileMapper.toResponseDTO(client);
+    }
+
+    @Transactional
     public ClientProfileResponseDTO createClient(ClientProfileRequestDTO clientDTO){
         List<Role> roles = new ArrayList<>(roleRepository.findAllById(clientDTO.getRolesIds()));
 

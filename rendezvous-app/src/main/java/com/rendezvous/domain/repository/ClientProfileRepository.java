@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ClientProfileRepository extends JpaRepository<ClientProfile, Long> {
-
+    /*Método usado no appointemntService para pesquisar os appointemnts de um cliente*/
     Optional<ClientProfile> findByUserId(Long userId);
 
 }

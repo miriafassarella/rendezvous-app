@@ -1,10 +1,12 @@
 package com.rendezvous.dto.appointmentDto;
 
 import com.rendezvous.domain.enums.Status;
+import com.rendezvous.domain.model.Availability;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 public class AppointmentResponseDTO {
@@ -25,6 +27,7 @@ public class AppointmentResponseDTO {
     private Long clientId;
     @NotNull
     private Status status;
+
 
     public AppointmentResponseDTO(Long id, DayOfWeek dayOfWeek, LocalDateTime startTime,
                                   LocalDateTime endTime, Long serviceId, Long providerId, Long clientId, Status status){
@@ -105,4 +108,5 @@ public class AppointmentResponseDTO {
     public void setStatus(Status status) {
         this.status = status;
     }
+
 }

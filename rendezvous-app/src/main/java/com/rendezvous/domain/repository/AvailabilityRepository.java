@@ -20,4 +20,6 @@ public interface AvailabilityRepository extends JpaRepository<Availability, Long
     );
 
     List<Availability> findByProvider(ProviderProfile providerProfile);
+
+
 }

@@ -22,6 +22,7 @@ public class ProviderProfile {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+
     public Long getId() {
         return id;
     }
@@ -61,6 +62,7 @@ public class ProviderProfile {
     public void setUser(User user) {
         this.user = user;
     }
+
 
     @Override
     public boolean equals(Object o) {

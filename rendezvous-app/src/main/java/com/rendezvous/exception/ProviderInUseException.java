@@ -6,6 +6,6 @@ public class ProviderInUseException extends BusinessException{
     }
 
     public ProviderInUseException(){
-        super("\"It is not possible to delete a provider because it is linked to one or more appointments.\"");
+        super("\"Provider has appointments and cannot be deleted\"");
     }
 }
