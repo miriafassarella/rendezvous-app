@@ -10,6 +10,7 @@ import com.rendezvous.domain.repository.UserRepository;
 import com.rendezvous.dto.adminProfileDto.AdminProfileRequestDTO;
 import com.rendezvous.dto.adminProfileDto.AdminProfileResponseDTO;
 
+import com.rendezvous.exception.AdminNotFoundException;
 import com.rendezvous.mapper.AdminProfileMapper;
 import com.rendezvous.mapper.UserMapper;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,14 @@ public class AdminProfileService {
     }
 
     @Transactional
+    public List<AdminProfileResponseDTO> findAdminAll(){
+        List<AdminProfile> admins = adminProfileRepository.findAll();
+        return admins.stream()
+                .map(adminProfileMapper::toResponseDTO)
+                .toList();
+    }
+
+    @Transactional
     public AdminProfileResponseDTO createAdmin(AdminProfileRequestDTO adminDTO){
         List<Role> roles = new ArrayList<>(roleRepository.findAllById(adminDTO.getRolesIds()));
 
@@ -51,5 +60,12 @@ public class AdminProfileService {
         AdminProfile adminSaved = adminProfileRepository.save(admin);
 
         return adminProfileMapper.toResponseDTO(adminSaved);
+    }
+
+    @Transactional
+    public void deleteAdmin(Long adminId){
+        AdminProfile admin = adminProfileRepository.findById(adminId)
+                .orElseThrow(()-> new AdminNotFoundException());
+        adminProfileRepository.delete(admin);
     }
 }
