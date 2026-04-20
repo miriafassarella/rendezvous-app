@@ -42,7 +42,6 @@ public class ClientProfileController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newClient);
     }
 
-
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('DELETE_CLIENT_PROFILE')")
     public ResponseEntity<?> delete(@PathVariable Long id){

@@ -28,6 +28,7 @@ public class RoleController {
         return roleRepository.findAll();
     }
 
+    @GetMapping("/{id}")
     public ResponseEntity<Role> searchId(@PathVariable Long id){
         Optional<Role> role = roleRepository.findById(id);
         return ResponseEntity.ok().body(role.get());

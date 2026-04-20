@@ -3,14 +3,12 @@ package com.rendezvous.domain.service;
 import com.rendezvous.domain.model.Availability;
 import com.rendezvous.domain.model.ProviderProfile;
 import com.rendezvous.domain.model.User;
+import com.rendezvous.domain.repository.AppointmentRepository;
 import com.rendezvous.domain.repository.AvailabilityRepository;
 import com.rendezvous.domain.repository.ProviderProfileRepositoy;
 import com.rendezvous.dto.availabilityDto.AvailabilityRequestDTO;
 import com.rendezvous.dto.availabilityDto.AvailabilityResponseDTO;
-import com.rendezvous.exception.AccessDeniedException;
-import com.rendezvous.exception.AvailabilityFoundException;
-import com.rendezvous.exception.AvailabilityNotFoundException;
-import com.rendezvous.exception.ProviderNotFoundException;
+import com.rendezvous.exception.*;
 import com.rendezvous.mapper.AvailabilityMapper;
 
 import org.springframework.stereotype.Service;
@@ -27,14 +25,17 @@ public class AvailabilityService {
 
     private AvailabilityMapper availabilityMapper;
 
+    private AppointmentRepository appointmentRepository;
+
     public AvailabilityService(ProviderProfileRepositoy providerProfileRepositoy,
                                AvailabilityRepository availabilityRepository,
-                               AvailabilityMapper availabilityMapper){
+                               AvailabilityMapper availabilityMapper,
+                               AppointmentRepository appointmentRepository){
 
         this.providerProfileRepositoy = providerProfileRepositoy;
         this.availabilityRepository = availabilityRepository;
         this.availabilityMapper = availabilityMapper;
-
+        this.appointmentRepository = appointmentRepository;
     }
 
     @Transactional
@@ -89,6 +90,11 @@ public class AvailabilityService {
     public void deleteAvailability(Long availabilityId){
         Availability availability = availabilityRepository.findById(availabilityId)
                 .orElseThrow(()-> new AvailabilityNotFoundException());
+        boolean hasAppointment = appointmentRepository.existsByProviderAndDayOfWeek(availability.getProvider(),
+                availability.getDayOfWeek());
+        if (hasAppointment){
+            throw new AvailabilityInUseException();
+        }
         availabilityRepository.delete(availability);
     }
 

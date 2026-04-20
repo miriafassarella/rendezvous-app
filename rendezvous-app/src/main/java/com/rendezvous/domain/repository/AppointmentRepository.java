@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.security.Provider;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -46,4 +47,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     boolean existsByProvider(ProviderProfile provider);
     boolean existsByClient(ClientProfile client);
 
+
+    boolean existsByProviderAndDayOfWeek(ProviderProfile providerProfile, DayOfWeek dayOfWeek);
 }

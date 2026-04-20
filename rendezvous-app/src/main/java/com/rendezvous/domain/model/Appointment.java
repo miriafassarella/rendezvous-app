@@ -42,10 +42,6 @@ public class Appointment {
     @JoinColumn(name = "client_id", nullable = false)
     private ClientProfile client;
 
-    @ManyToOne
-    @JoinColumn(name = "availability_id", nullable = false)
-    private Availability availabilitie;
-
     public Long getId() {
         return id;
     }
