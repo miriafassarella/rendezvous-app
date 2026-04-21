@@ -1,5 +1,6 @@
 package com.rendezvous.domain.repository;
 
+import com.rendezvous.domain.enums.Status;
 import com.rendezvous.domain.model.Appointment;
 import com.rendezvous.domain.model.ClientProfile;
 import com.rendezvous.domain.model.ProviderProfile;
@@ -48,5 +49,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     boolean existsByClient(ClientProfile client);
 
 
-    boolean existsByProviderAndDayOfWeek(ProviderProfile providerProfile, DayOfWeek dayOfWeek);
+    boolean existsByProviderAndDayOfWeekAndStartTimeAfterAndStatusNotIn(ProviderProfile providerProfile,
+                                         DayOfWeek dayOfWeek,
+                                         LocalDateTime now,
+                                         List<Status> excludedStatuses);
 }

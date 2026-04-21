@@ -1,5 +1,6 @@
 package com.rendezvous.domain.service;
 
+import com.rendezvous.domain.enums.Status;
 import com.rendezvous.domain.model.Availability;
 import com.rendezvous.domain.model.ProviderProfile;
 import com.rendezvous.domain.model.User;
@@ -14,6 +15,8 @@ import com.rendezvous.mapper.AvailabilityMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Service
@@ -90,8 +93,11 @@ public class AvailabilityService {
     public void deleteAvailability(Long availabilityId){
         Availability availability = availabilityRepository.findById(availabilityId)
                 .orElseThrow(()-> new AvailabilityNotFoundException());
-        boolean hasAppointment = appointmentRepository.existsByProviderAndDayOfWeek(availability.getProvider(),
-                availability.getDayOfWeek());
+        boolean hasAppointment = appointmentRepository.existsByProviderAndDayOfWeekAndStartTimeAfterAndStatusNotIn(availability.getProvider(),
+                availability.getDayOfWeek(),
+                LocalDateTime.now(ZoneOffset.UTC),
+                List.of(Status.CANCELED, Status.COMPLETED));
+
         if (hasAppointment){
             throw new AvailabilityInUseException();
         }
