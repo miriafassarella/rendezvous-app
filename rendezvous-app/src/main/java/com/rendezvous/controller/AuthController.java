@@ -46,8 +46,6 @@ public class AuthController {
                        loginRequest.getPassword()
                 )
         );
-        /*String email = authentication.getName();
-        String token = jwtUtil.generateToken(email);*/
 
         User user = (User) authentication.getPrincipal();
         String accessToken = jwtUtil.generateToken(user.getEmail());

@@ -33,6 +33,7 @@ public class User implements UserDetails {
 
 
 /*---------------------------------------------UserDetails------------------------------------------------------------*/
+  /*O spring usa para fazer as perguntas sobre o usuario ao banco, como por exemplo quais permissoes ele tem*/
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // Converte suas Roles em GrantedAuthority que o Spring entende
