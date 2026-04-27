@@ -6,6 +6,7 @@ import com.rendezvous.domain.repository.ClientProfileRepository;
 import com.rendezvous.domain.repository.RoleRepository;
 import com.rendezvous.domain.repository.UserRepository;
 import com.rendezvous.dto.clientProfileDto.ClientProfileResponseDTO;
+import com.rendezvous.exception.ClientNotFoundException;
 import com.rendezvous.mapper.ClientProfileMapper;
 import com.rendezvous.mapper.UserMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -56,13 +58,49 @@ class ClientProfileServiceTest {
 
     @Test
     void shouldReturnClientList_whenClientsExist(){
+        //arrange
         when(clientProfileRepository.findAll()).thenReturn(List.of(clientProfile));
         when(clientProfileMapper.toResponseDTO(clientProfile)).thenReturn(clientProfileResponseDTO);
 
+        //act
         List<ClientProfileResponseDTO> result = clientProfileService.findClientAll();
 
+        //assert
         assertThat(result).hasSize(1);
         verify(clientProfileRepository, times(1)).findAll();
+
+    }
+
+
+    @Test
+    void shouldReturnEmptyList_whenNoClientsExist(){
+        when(clientProfileRepository.findAll()).thenReturn(List.of());
+
+        List<ClientProfileResponseDTO> result = clientProfileService.findClientAll();
+
+
+        assertThat(result).isEmpty();
+
+    }
+
+    @Test
+    void shouldReturnClient_whenClientExist(){
+
+        when(clientProfileRepository.findById(1L)).thenReturn(Optional.of(clientProfile));
+        when(clientProfileMapper.toResponseDTO(clientProfile)).thenReturn(clientProfileResponseDTO);
+
+        ClientProfileResponseDTO result = clientProfileService.findById(1L);
+
+        assertThat(result).isNotNull();
+
+    }
+
+    @Test
+    void shouldThrowClientNotFoundException_whenClientNotFound(){
+        when(clientProfileRepository.findById(99L)).thenReturn(Optional.empty());
+
+       assertThatThrownBy(()-> clientProfileService.findById(99L))
+               .isInstanceOf(ClientNotFoundException.class);
 
     }
 
