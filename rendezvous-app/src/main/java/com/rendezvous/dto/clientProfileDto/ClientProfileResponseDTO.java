@@ -23,6 +23,10 @@ public class ClientProfileResponseDTO {
         this.email = email;
     }
 
+    public ClientProfileResponseDTO(){
+
+    }
+
 
     public Long getId() {
         return id;
