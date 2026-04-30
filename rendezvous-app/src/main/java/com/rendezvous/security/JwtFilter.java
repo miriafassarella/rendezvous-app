@@ -59,7 +59,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null){
-            if (jwtUtil.isTokenValid(token) && !jwtUtil.isTokenExpired(token)){
+            if (jwtUtil.isTokenValid(token, email)){
                 UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
                 // 5. Cria o objeto de autenticação e coloca no contexto
@@ -81,4 +81,5 @@ public class JwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
 
     }
+
 }

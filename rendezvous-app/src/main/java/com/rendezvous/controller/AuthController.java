@@ -91,7 +91,6 @@ public class AuthController {
         if (request.getCookies() != null) {
             for (Cookie cookie : request.getCookies()) {
                 if ("refresh_token".equals(cookie.getName())) {
-                    refreshTokenService.validate(cookie.getValue());
                     RefreshToken refreshToken = refreshTokenService.validate(cookie.getValue());
                     refreshTokenService.revokeAllByUser(refreshToken.getUser());
                 }

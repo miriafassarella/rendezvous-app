@@ -21,7 +21,7 @@ import tools.jackson.databind.ObjectMapper;
 
 import java.time.LocalDateTime;
 
-@EnableMethodSecurity // para habilitar p @PreAuthorize que será usado no controller
+@EnableMethodSecurity // para habilitar o @PreAuthorize que será usado no controller
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
