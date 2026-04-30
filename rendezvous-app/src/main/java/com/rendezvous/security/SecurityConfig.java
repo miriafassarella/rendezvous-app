@@ -1,5 +1,6 @@
 package com.rendezvous.security;
 
+import com.rendezvous.dto.exceptionError.ErrorResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,16 +17,21 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import tools.jackson.databind.ObjectMapper;
+
+import java.time.LocalDateTime;
 
 @EnableMethodSecurity // para habilitar p @PreAuthorize que será usado no controller
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
 
-    private JwtFilter jwtFilter;
+    private final JwtFilter jwtFilter;
+    private ObjectMapper objectMapper;
 
-    public SecurityConfig(JwtFilter jwtFilter){
+    public SecurityConfig(JwtFilter jwtFilter, ObjectMapper objectMapper){
         this.jwtFilter = jwtFilter;
+        this.objectMapper = objectMapper;
     }
 
    @Bean
@@ -41,16 +47,16 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint((request, response, authException) -> {
+                            ErrorResponse error = new ErrorResponse(
+                                   LocalDateTime.now(),
+                                   HttpServletResponse.SC_UNAUTHORIZED,
+                                   "Unauthorized",
+                                   "Token missing or invalid",
+                                   request.getRequestURI()//path: caminho
+                            );
                             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                             response.setContentType("application/json");
-                            response.getWriter().write("""
-                                    {
-                                        "status": 401,
-                                        "error": "Unauthorized",
-                                        "message": "Token missing or invalid"
-                                    }
-                                    """
-                            );
+                            response.getWriter().write(objectMapper.writeValueAsString(error));
                         })
                 )
                 // Registra o JwtFilter ANTES do filtro padrão do Spring
