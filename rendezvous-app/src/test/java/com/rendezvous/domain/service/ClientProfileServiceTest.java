@@ -6,6 +6,7 @@ import com.rendezvous.domain.repository.ClientProfileRepository;
 import com.rendezvous.domain.repository.RoleRepository;
 import com.rendezvous.domain.repository.UserRepository;
 import com.rendezvous.dto.clientProfileDto.ClientProfileResponseDTO;
+import com.rendezvous.exception.ClientInUseException;
 import com.rendezvous.exception.ClientNotFoundException;
 import com.rendezvous.mapper.ClientProfileMapper;
 import com.rendezvous.mapper.UserMapper;
@@ -104,6 +105,36 @@ class ClientProfileServiceTest {
 
     }
 
+    @Test
+    void shouldDeleteClient_whenClientHasNoAppointments(){
+        when(clientProfileRepository.findById(1L)).thenReturn(Optional.of(clientProfile));
+        when(appointmentRepository.existsByClient(clientProfile)).thenReturn(false);
 
+        clientProfileService.deleteClient(1L);
+
+        verify(clientProfileRepository, times(1)).delete(clientProfile);
+    }
+
+    @Test
+    void shouldThrown_WhenTheClientHasAppointments(){
+        when(clientProfileRepository.findById(1L)).thenReturn(Optional.of(clientProfile));
+        when(appointmentRepository.existsByClient(clientProfile)).thenReturn(true);
+
+        assertThatThrownBy(()->clientProfileService.deleteClient(1L))
+                .isInstanceOf(ClientInUseException.class);
+
+        verify(clientProfileRepository, never()).delete(any());
+    }
+
+    @Test
+    void exceptionShouldThrown_whenClientNotFound(){
+        when(clientProfileRepository.findById(99L)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(()-> clientProfileService.deleteClient(99L))
+                .isInstanceOf(ClientNotFoundException.class);
+
+    }
 
 }
+
+

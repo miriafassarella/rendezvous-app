@@ -41,7 +41,7 @@ public class RefreshTokenService {
                 .orElseThrow(()-> new RefreshTokenNotFound());
 
         if (!refreshToken.isValid()){
-            throw new RefreshTokenExpired("Refresh token expired or revoked.");
+            throw new RefreshTokenExpired();
         }
         return refreshToken;
     }
