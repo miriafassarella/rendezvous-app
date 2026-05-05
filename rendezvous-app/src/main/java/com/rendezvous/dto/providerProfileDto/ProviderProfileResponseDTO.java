@@ -20,19 +20,23 @@ public class ProviderProfileResponseDTO {
    @NotEmpty
    private List<Long> roles;
 
-   public ProviderProfileResponseDTO(Long id, String companyName, String phone, String description, String email, List<Long> roles){
+  /* public ProviderProfileResponseDTO(Long id, String companyName, String phone, String description, String email, List<Long> roles){
        this.id = id;
        this.companyName = companyName;
        this.phone = phone;
        this.description = description;
        this.roles = roles;
-   }
+   }*/
 
     public ProviderProfileResponseDTO(Long id, String companyName, String phone, String description){
         this.id = id;
         this.companyName = companyName;
         this.phone = phone;
         this.description = description;
+    }
+
+    public ProviderProfileResponseDTO(){
+
     }
 
     public Long getId() {
