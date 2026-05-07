@@ -37,6 +37,7 @@ public class JwtUtil {
     }
 
     public String extractEmail(String token){
+
         return extractClaims(token).getSubject();
     }
 
@@ -50,6 +51,7 @@ public class JwtUtil {
     }
 
     public boolean isTokenExpired(String token){
+
         return extractClaims(token).getExpiration().before(new Date());
     }
 

@@ -2,6 +2,7 @@ package com.rendezvous.domain.service;
 import com.rendezvous.domain.model.ProviderProfile;
 import com.rendezvous.domain.repository.*;
 import com.rendezvous.dto.providerProfileDto.ProviderProfileResponseDTO;
+import com.rendezvous.exception.ProviderInUseException;
 import com.rendezvous.exception.ProviderNotFoundException;
 import com.rendezvous.mapper.ProviderProfileMapper;
 import com.rendezvous.mapper.UserMapper;
@@ -95,5 +96,23 @@ class ProviderProfileServiceTest {
        providerProfileService.deleteProvider(1L);
 
        verify(providerProfileRepositoy, times(1)).delete(providerProfile);
+    }
+
+    @Test
+    void shouldThrown_WhenTheProviderHasAppointments(){
+        when(providerProfileRepositoy.findById(1L)).thenReturn(Optional.of(providerProfile));
+        when(appointmentRepository.existsByProvider(providerProfile)).thenReturn(true);
+
+        assertThatThrownBy(()-> providerProfileService.deleteProvider(1L))
+                .isInstanceOf(ProviderInUseException.class);
+        verify(providerProfileRepositoy, never()).delete(any());
+    }
+
+    @Test
+    void exceptionShouldThrown_whenProviderNotFound(){
+        when(providerProfileRepositoy.findById(99L)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(()-> providerProfileService.deleteProvider(99L))
+                .isInstanceOf(ProviderNotFoundException.class);
     }
 }
