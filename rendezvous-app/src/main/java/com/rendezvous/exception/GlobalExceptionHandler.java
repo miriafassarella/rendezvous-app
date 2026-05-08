@@ -16,41 +16,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleResourceNotFound(BusinessException ex, WebRequest request) {
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
-                HttpStatus.NOT_FOUND.value(),
+                ex.getStatus().value(),
                 "Business error",
                 ex.getMessage(),
                 request.getDescription(false)
         );
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, ex.getStatus());
     }
-
-    @ExceptionHandler(ServiceInUseException.class)
-    public ResponseEntity<ErrorResponse> handleServiceExceptionInUse(ServiceInUseException ex, WebRequest request) {
-        ErrorResponse error = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.CONFLICT.value(),
-                "Business error",
-                ex.getMessage(),
-                request.getDescription(false)
-        );
-
-        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
-
-    }
-
-    @ExceptionHandler(ClientInUseException.class)
-    public ResponseEntity<ErrorResponse> handleClientExceptionInUse(ClientInUseException ex, WebRequest request) {
-        ErrorResponse error = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.CONFLICT.value(),
-                "Business error",
-                ex.getMessage(),
-                request.getDescription(false)
-        );
-
-        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
-
-    }
-
 
 }

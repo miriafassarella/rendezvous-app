@@ -1,5 +1,7 @@
 package com.rendezvous.exception;
 
+import org.springframework.http.HttpStatus;
+
 public class ServiceNotFoundException extends BusinessException{
 
     public ServiceNotFoundException(String message){
@@ -8,6 +10,6 @@ public class ServiceNotFoundException extends BusinessException{
     }
 
     public ServiceNotFoundException(){
-        super("Service type not found");
+        super("Service type not found", HttpStatus.NOT_FOUND);
     }
 }

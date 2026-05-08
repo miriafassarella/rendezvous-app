@@ -24,7 +24,7 @@ public class JwtUtil {
     private SecretKey getSiningKey(){
         //decodando minha secret para o texto original sem base 64
         byte[] keyBytes = Base64.getDecoder().decode(secret);
-        return Keys.hmacShaKeyFor(secret.getBytes());
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
     public String generateToken(String email){

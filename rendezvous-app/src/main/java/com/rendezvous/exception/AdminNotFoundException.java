@@ -1,13 +1,10 @@
 package com.rendezvous.exception;
 
+import org.springframework.http.HttpStatus;
+
 public class AdminNotFoundException extends BusinessException{
 
-
-    public AdminNotFoundException(String message) {
-        super(message);
-    }
-
     public AdminNotFoundException(){
-        super("Admin not found");
+        super("Admin not found", HttpStatus.NOT_FOUND);
     }
 }
