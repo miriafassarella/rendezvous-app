@@ -1,6 +1,7 @@
 
 package com.rendezvous.security;
 
+import com.rendezvous.dto.exceptionError.ErrorResponse;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
@@ -13,8 +14,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
@@ -23,10 +26,13 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private UserDetailsServiceImpl userDetailsService;
 
-    public JwtFilter(JwtUtil jwtUtil, UserDetailsServiceImpl userDetailsService){
+    private ObjectMapper objectMapper;
+
+    public JwtFilter(JwtUtil jwtUtil, UserDetailsServiceImpl userDetailsService, ObjectMapper objectMapper){
 
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
+        this.objectMapper = objectMapper;
     }
 
 
@@ -45,14 +51,26 @@ public class JwtFilter extends OncePerRequestFilter {
            try {
                 email = jwtUtil.extractEmail(token);
             } catch (ExpiredJwtException e) {
+                ErrorResponse error = new ErrorResponse(
+                           LocalDateTime.now(),
+                           HttpServletResponse.SC_UNAUTHORIZED,
+                           "Unauthorized",
+                           "Token expired",
+                           request.getRequestURI());//path: caminho
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.setContentType("application/json");
-                response.getWriter().write("{\"error\": \"Token expirado\"}");
+                response.getWriter().write(objectMapper.writeValueAsString(error));
                 return; // ← para aqui, não continua a cadeia
             } catch (JwtException e) {
+               ErrorResponse error = new ErrorResponse(
+                       LocalDateTime.now(),
+                       HttpServletResponse.SC_UNAUTHORIZED,
+                       "Unauthorized",
+                       "Invalid token",
+                       request.getRequestURI());
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.setContentType("application/json");
-                response.getWriter().write("{\"error\": \"Token inválido\"}");
+                response.getWriter().write(objectMapper.writeValueAsString(error));
                 return;
             }
 
