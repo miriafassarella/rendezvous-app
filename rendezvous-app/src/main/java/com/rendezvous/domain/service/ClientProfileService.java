@@ -89,6 +89,8 @@ public class ClientProfileService {
         if (hasAppointments){
             throw new ClientInUseException();
         }
+        Optional<User> user = userRepository.findById(client.getUser().getId());
         clientProfileRepository.delete(client);
+        userRepository.delete(user.get());
     }
 }

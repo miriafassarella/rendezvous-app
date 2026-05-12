@@ -29,25 +29,15 @@ public class JwtUtil {
 
     public String generateToken(String email){
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(email) //adiciona o email
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(getSiningKey())
-                .compact();
+                .signWith(getSiningKey()) // adciona a chave decodificada para os bytes originais
+                .compact(); // compact() tranforma tudo em uma string
     }
 
     public String extractEmail(String token){
-
         return extractClaims(token).getSubject();
-    }
-
-    public boolean isTokenValid(String token){
-        try{
-            extractClaims(token);
-            return true;
-        }catch (JwtException | IllegalArgumentException e){
-            return false;
-        }
     }
 
     public boolean isTokenExpired(String token){
