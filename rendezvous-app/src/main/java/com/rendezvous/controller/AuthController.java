@@ -5,7 +5,6 @@ import com.rendezvous.domain.model.User;
 import com.rendezvous.domain.service.RefreshTokenService;
 import com.rendezvous.dto.loginDto.LoginRequestDto;
 import com.rendezvous.dto.loginDto.LoginResponseDto;
-import com.rendezvous.security.JwtUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

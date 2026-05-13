@@ -45,7 +45,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/clients").permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated())
-                .exceptionHandling(exception -> exception
+                //À verificar se realmente eu preciso disto
+                /*.exceptionHandling(exception -> exception
                         .authenticationEntryPoint((request, response, authException) -> {
                             ErrorResponse error = new ErrorResponse(
                                    LocalDateTime.now(),
@@ -58,7 +59,7 @@ public class SecurityConfig {
                             response.setContentType("application/json");
                             response.getWriter().write(objectMapper.writeValueAsString(error));
                         })
-                )
+                )*/
                 // Registra o JwtFilter ANTES do filtro padrão do Spring
                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
