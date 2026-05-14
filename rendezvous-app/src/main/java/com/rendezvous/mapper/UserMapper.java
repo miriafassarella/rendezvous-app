@@ -11,16 +11,16 @@ import java.util.List;
 @Component
 public class UserMapper {
 
-    private final PasswordEncoder passwordEncoder;
+    //private final PasswordEncoder passwordEncoder;
 
-    public UserMapper(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
+    public UserMapper(/*PasswordEncoder passwordEncoder*/) {
+        //this.passwordEncoder = passwordEncoder;
     }
 
     public User toEntity(String email, String password, List<Role> roles) {
         User user = new User();
         user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
+        user.setPassword(/*passwordEncoder.encode(password)*/ password);
         user.setRoles(roles);
         return user;
     }

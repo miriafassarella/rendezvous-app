@@ -1,6 +1,8 @@
 package com.rendezvous.exception;
 
+import com.rendezvous.dto.exceptionError.ErrorResponse;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -12,6 +14,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ErrorResponse> handleResourceNotFound(BusinessException ex, WebRequest request) {
+
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 ex.getStatus().value(),
