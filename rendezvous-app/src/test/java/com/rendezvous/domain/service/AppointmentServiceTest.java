@@ -2,12 +2,11 @@ package com.rendezvous.domain.service;
 
 import com.rendezvous.domain.model.Appointment;
 import com.rendezvous.domain.model.ClientProfile;
-import com.rendezvous.domain.repository.AppointmentRepository;
-import com.rendezvous.domain.repository.ClientProfileRepository;
-import com.rendezvous.domain.repository.RoleRepository;
-import com.rendezvous.domain.repository.UserRepository;
+import com.rendezvous.domain.repository.*;
+import com.rendezvous.dto.appointmentDto.AppointmentRequestDTO;
 import com.rendezvous.dto.appointmentDto.AppointmentResponseDTO;
 
+import com.rendezvous.exception.ProviderNotFoundException;
 import com.rendezvous.mapper.AppointmentMapper;
 
 import com.rendezvous.mapper.UserMapper;
@@ -24,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,6 +32,9 @@ class AppointmentServiceTest {
 
     @Mock
     private ClientProfileRepository clientProfileRepository;
+
+    @Mock
+    private ProviderProfileRepositoy providerProfileRepositoy;
 
     @Mock
     private UserRepository userRepository;
@@ -70,4 +73,17 @@ class AppointmentServiceTest {
             verify(appointmentRepository, times(1)).findAll();
     }
 
+    @Test
+    void shouldThrowProviderNotFoundException_whenProviderNotFound(){
+        when(providerProfileRepositoy.findById(99L)).thenReturn(Optional.empty());
+
+        AppointmentRequestDTO request = new AppointmentRequestDTO();
+        request.setProviderId(99L);
+
+        assertThatThrownBy(()-> appointmentService.createAppointment(request))
+                .isInstanceOf(ProviderNotFoundException.class);
+
+        verify(providerProfileRepositoy, times(1)).findById(99L);
+
+    }
 }
