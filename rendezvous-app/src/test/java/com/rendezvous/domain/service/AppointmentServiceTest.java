@@ -2,11 +2,16 @@ package com.rendezvous.domain.service;
 
 import com.rendezvous.domain.model.Appointment;
 import com.rendezvous.domain.model.ClientProfile;
+import com.rendezvous.domain.model.ProviderProfile;
+import com.rendezvous.domain.model.ProviderService;
 import com.rendezvous.domain.repository.*;
 import com.rendezvous.dto.appointmentDto.AppointmentRequestDTO;
 import com.rendezvous.dto.appointmentDto.AppointmentResponseDTO;
 
+import com.rendezvous.dto.clientProfileDto.ClientProfileRequestDTO;
+import com.rendezvous.exception.ClientNotFoundException;
 import com.rendezvous.exception.ProviderNotFoundException;
+import com.rendezvous.exception.ServiceNotFoundException;
 import com.rendezvous.mapper.AppointmentMapper;
 
 import com.rendezvous.mapper.UserMapper;
@@ -37,20 +42,18 @@ class AppointmentServiceTest {
     private ProviderProfileRepositoy providerProfileRepositoy;
 
     @Mock
-    private UserRepository userRepository;
-    @Mock
-    private RoleRepository roleRepository;
-    @Mock
     private AppointmentRepository appointmentRepository;
     @Mock
     private AppointmentMapper appointmentMapper;
     @Mock
-    private UserMapper userMapper;
+    private ProviderServiceRepository providerServiceRepository;
 
     @InjectMocks
     private AppointmentService appointmentService;
     private Appointment appointment;
     private AppointmentResponseDTO appointmentResponseDTO;
+    private ProviderProfile providerProfile;
+    private ClientProfile client;
 
     @BeforeEach
     void setUp(){
@@ -58,6 +61,12 @@ class AppointmentServiceTest {
         appointment.setDayOfWeek(DayOfWeek.MONDAY);
 
         AppointmentResponseDTO appointment = new AppointmentResponseDTO();
+
+        providerProfile = new ProviderProfile();
+        providerProfile.setId(1L);
+
+        client = new ClientProfile();
+        client.setId(1L);
     }
 
 
@@ -85,5 +94,41 @@ class AppointmentServiceTest {
 
         verify(providerProfileRepositoy, times(1)).findById(99L);
 
+    }
+
+    @Test
+    void shouldThrowClientNotFoundException_whenClientNotFound(){
+        when(providerProfileRepositoy.findById(1L)).thenReturn(Optional.of(providerProfile));
+        when(clientProfileRepository.findById(99L)).thenReturn(Optional.empty());
+
+        AppointmentRequestDTO request = new AppointmentRequestDTO();
+        request.setProviderId(1L);
+        request.setClientId(99L);
+
+        assertThatThrownBy(()-> appointmentService.createAppointment(request))
+                .isInstanceOf(ClientNotFoundException.class);
+
+        verify(providerProfileRepositoy, times(1)).findById(1L);
+        verify(clientProfileRepository, times(1)).findById(99L);
+
+    }
+
+    @Test
+    void shouldThrowServiceNotFoundException_whenServiceNotFound(){
+        when(providerProfileRepositoy.findById(1L)).thenReturn(Optional.of(providerProfile));
+        when(clientProfileRepository.findById(1L)).thenReturn(Optional.of(client));
+        when(providerServiceRepository.findById(99L)).thenReturn(Optional.empty());
+
+        AppointmentRequestDTO request = new AppointmentRequestDTO();
+        request.setProviderId(1L);
+        request.setClientId(1L);
+        request.setServiceId(99L);
+
+        assertThatThrownBy(()-> appointmentService.createAppointment(request))
+                .isInstanceOf(ServiceNotFoundException.class);
+
+        verify(providerProfileRepositoy, times(1)).findById(1L);
+        verify(clientProfileRepository, times(1)).findById(1L);
+        verify(providerServiceRepository, times(1)).findById(99L);
     }
 }
