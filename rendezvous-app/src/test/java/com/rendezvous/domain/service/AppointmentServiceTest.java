@@ -10,6 +10,7 @@ import com.rendezvous.dto.appointmentDto.AppointmentResponseDTO;
 
 import com.rendezvous.dto.clientProfileDto.ClientProfileRequestDTO;
 import com.rendezvous.exception.ClientNotFoundException;
+import com.rendezvous.exception.InvalidProviderServiceException;
 import com.rendezvous.exception.ProviderNotFoundException;
 import com.rendezvous.exception.ServiceNotFoundException;
 import com.rendezvous.mapper.AppointmentMapper;
@@ -54,6 +55,7 @@ class AppointmentServiceTest {
     private AppointmentResponseDTO appointmentResponseDTO;
     private ProviderProfile providerProfile;
     private ClientProfile client;
+    private ProviderService service;
 
     @BeforeEach
     void setUp(){
@@ -67,6 +69,10 @@ class AppointmentServiceTest {
 
         client = new ClientProfile();
         client.setId(1L);
+
+        service = new ProviderService();
+        service.setId(1L);
+        service.setProvider(providerProfile);
     }
 
 
@@ -130,5 +136,26 @@ class AppointmentServiceTest {
         verify(providerProfileRepositoy, times(1)).findById(1L);
         verify(clientProfileRepository, times(1)).findById(1L);
         verify(providerServiceRepository, times(1)).findById(99L);
+    }
+
+    @Test
+    void shouldThrowInvalidProviderServiceException_whenProviderNotHaveService(){
+        when(providerProfileRepositoy.findById(99L)).thenReturn(Optional.of(providerProfile));
+        when(clientProfileRepository.findById(1L)).thenReturn(Optional.of(client));
+        when(providerServiceRepository.findById(1L)).thenReturn(Optional.of(service));
+
+
+        AppointmentRequestDTO request = new AppointmentRequestDTO();
+        request.setProviderId(99L);
+        request.setClientId(1L);
+        request.setServiceId(1L);
+
+        assertThatThrownBy(()-> appointmentService.createAppointment(request))
+                .isInstanceOf(InvalidProviderServiceException.class);
+
+        verify(providerProfileRepositoy, times(1)).findById(99L);
+        verify(clientProfileRepository, times(1)).findById(1L);
+        verify(providerServiceRepository, times(1)).findById(1L);
+
     }
 }
