@@ -48,6 +48,8 @@ class AppointmentServiceTest {
     private AppointmentMapper appointmentMapper;
     @Mock
     private ProviderServiceRepository providerServiceRepository;
+    @Mock
+    private AvailabilityRepository availabilityRepository;
 
     @InjectMocks
     private AppointmentService appointmentService;
@@ -158,4 +160,20 @@ class AppointmentServiceTest {
         verify(providerServiceRepository, times(1)).findById(1L);
 
     }
+
+    @Test
+    void  shouldThrowProviderNotAvailableException_whenProviderIsUnavailable(){
+        when(providerProfileRepositoy.findById(1L)).thenReturn(Optional.of(providerProfile));
+        when(clientProfileRepository.findById(1L)).thenReturn(Optional.of(client));
+        when(providerServiceRepository.findById(1L)).thenReturn(Optional.of(service));
+
+
+        AppointmentRequestDTO request = new AppointmentRequestDTO();
+        request.setProviderId(1L);
+        request.setClientId(1L);
+        request.setServiceId(1L);
+
+    }
+
+
 }
