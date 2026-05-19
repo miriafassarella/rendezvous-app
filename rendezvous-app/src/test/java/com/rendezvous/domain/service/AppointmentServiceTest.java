@@ -9,10 +9,7 @@ import com.rendezvous.dto.appointmentDto.AppointmentRequestDTO;
 import com.rendezvous.dto.appointmentDto.AppointmentResponseDTO;
 
 import com.rendezvous.dto.clientProfileDto.ClientProfileRequestDTO;
-import com.rendezvous.exception.ClientNotFoundException;
-import com.rendezvous.exception.InvalidProviderServiceException;
-import com.rendezvous.exception.ProviderNotFoundException;
-import com.rendezvous.exception.ServiceNotFoundException;
+import com.rendezvous.exception.*;
 import com.rendezvous.mapper.AppointmentMapper;
 
 import com.rendezvous.mapper.UserMapper;
@@ -167,13 +164,31 @@ class AppointmentServiceTest {
         when(clientProfileRepository.findById(1L)).thenReturn(Optional.of(client));
         when(providerServiceRepository.findById(1L)).thenReturn(Optional.of(service));
 
-
         AppointmentRequestDTO request = new AppointmentRequestDTO();
         request.setProviderId(1L);
         request.setClientId(1L);
         request.setServiceId(1L);
 
-    }
+        request.setStartTime(LocalDateTime.now().plusDays(1));
+        service.setDuration_minutes(60L);
 
+        when(availabilityRepository.existsByProviderAndDayOfWeekAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
+                providerProfile, request.getStartTime().getDayOfWeek(), request.getStartTime().toLocalTime(),
+                request.getStartTime().plusMinutes(service.getDuration_minutes()).toLocalTime()
+        )).thenReturn(false);
+
+        assertThatThrownBy(()-> appointmentService.createAppointment(request))
+                .isInstanceOf(ProviderNotAvailableException.class);
+
+        verify(providerProfileRepositoy, times(1)).findById(1L);
+        verify(clientProfileRepository, times(1)).findById(1L);
+        verify(providerServiceRepository, times(1)).findById(1L);
+        verify(availabilityRepository,
+                times(1)).existsByProviderAndDayOfWeekAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
+                providerProfile, request.getStartTime().getDayOfWeek(), request.getStartTime().toLocalTime(),
+                request.getStartTime().plusMinutes(service.getDuration_minutes()).toLocalTime()
+        );
+
+    }
 
 }
