@@ -191,4 +191,29 @@ class AppointmentServiceTest {
 
     }
 
+    @Test
+    void shouldThrowTimeSlotAlreadyBookedException_whenScheduledTooCloseToStartTime(){
+        when(providerProfileRepositoy.findById(1L)).thenReturn(Optional.of(providerProfile));
+        when(clientProfileRepository.findById(1L)).thenReturn(Optional.of(client));
+        when(providerServiceRepository.findById(1L)).thenReturn(Optional.of(service));
+
+        AppointmentRequestDTO request = new AppointmentRequestDTO();
+        request.setProviderId(1L);
+        request.setClientId(1L);
+        request.setServiceId(1L);
+
+        request.setStartTime(LocalDateTime.now());
+        service.setDuration_minutes(60L);
+
+        when(availabilityRepository.existsByProviderAndDayOfWeekAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
+                providerProfile, request.getStartTime().getDayOfWeek(), request.getStartTime().toLocalTime(),
+                request.getStartTime().plusMinutes(service.getDuration_minutes()).toLocalTime()
+        )).thenReturn(true);
+
+        assertThatThrownBy(()-> appointmentService.createAppointment(request))
+                .isInstanceOf(TimeSlotAlreadyBookedException.class)
+                .hasMessage("Appointments must be scheduled at least 30 minutes in advance.");
+
+    }
+
 }
