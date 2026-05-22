@@ -1,5 +1,6 @@
 package com.rendezvous.domain.service;
 
+import com.rendezvous.domain.enums.Status;
 import com.rendezvous.domain.model.Appointment;
 import com.rendezvous.domain.model.ClientProfile;
 import com.rendezvous.domain.model.ProviderProfile;
@@ -219,7 +220,6 @@ class AppointmentServiceTest {
 
     @Test
     void shouldThrowTimeSlotAlreadyBookedException_whenAppointmentTimeConflictsWithExistingAppointment(){
-
         when(providerProfileRepositoy.findById(1L)).thenReturn(Optional.of(providerProfile));
         when(clientProfileRepository.findById(1L)).thenReturn(Optional.of(client));
         when(providerServiceRepository.findById(1L)).thenReturn(Optional.of(service));
@@ -246,4 +246,41 @@ class AppointmentServiceTest {
                 .hasMessage("Time slot already booked");
     }
 
+    @Test
+    void shouldReturnAppointmentResponseDTO_whenAppointmentIsCreatedSuccessfully(){
+        when(providerProfileRepositoy.findById(1L)).thenReturn(Optional.of(providerProfile));
+        when(clientProfileRepository.findById(1L)).thenReturn(Optional.of(client));
+        when(providerServiceRepository.findById(1L)).thenReturn(Optional.of(service));
+
+        AppointmentRequestDTO request = new AppointmentRequestDTO();
+        request.setProviderId(1L);
+        request.setClientId(1L);
+        request.setServiceId(1L);
+
+        request.setStartTime(LocalDateTime.now().plusMinutes(60));
+        service.setDuration_minutes(60L);
+
+        when(availabilityRepository.existsByProviderAndDayOfWeekAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
+                providerProfile, request.getStartTime().getDayOfWeek(), request.getStartTime().toLocalTime(),
+                request.getStartTime().plusMinutes(service.getDuration_minutes()).toLocalTime()
+        )).thenReturn(true);
+
+        when(appointmentRepository.findConflictingAppointmentsForLock(providerProfile,
+                request.getStartTime(), request.getStartTime().plusMinutes(service.getDuration_minutes())))
+                .thenReturn(List.of());
+
+        when(appointmentMapper.toEntity(request, providerProfile, client, service))
+                .thenReturn(appointment);
+        when(appointmentRepository.save(appointment)).thenReturn(appointment);
+
+        when(appointmentMapper.toResponseDTO(appointment)).thenReturn(appointmentResponseDTO);
+
+        AppointmentResponseDTO response = appointmentService.createAppointment(request);
+
+        assertThat(response).isNotNull();
+        assertThat(appointment.getStatus()).isEqualTo(Status.PENDING);
+        assertThat(appointment.getDayOfWeek()).isEqualTo(request.getStartTime().getDayOfWeek());
+
+        verify(appointmentRepository, times(1)).save(appointment);
+    }
 }
