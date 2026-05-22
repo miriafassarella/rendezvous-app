@@ -72,6 +72,7 @@ class AppointmentServiceTest {
         service = new ProviderService();
         service.setId(1L);
         service.setProvider(providerProfile);
+        service.setDuration_minutes(60L);
     }
 
 
@@ -214,6 +215,35 @@ class AppointmentServiceTest {
                 .isInstanceOf(TimeSlotAlreadyBookedException.class)
                 .hasMessage("Appointments must be scheduled at least 30 minutes in advance.");
 
+    }
+
+    @Test
+    void shouldThrowTimeSlotAlreadyBookedException_whenAppointmentTimeConflictsWithExistingAppointment(){
+
+        when(providerProfileRepositoy.findById(1L)).thenReturn(Optional.of(providerProfile));
+        when(clientProfileRepository.findById(1L)).thenReturn(Optional.of(client));
+        when(providerServiceRepository.findById(1L)).thenReturn(Optional.of(service));
+
+        AppointmentRequestDTO request = new AppointmentRequestDTO();
+        request.setProviderId(1L);
+        request.setClientId(1L);
+        request.setServiceId(1L);
+
+        request.setStartTime(LocalDateTime.now().plusMinutes(60));
+        service.setDuration_minutes(60L);
+
+        when(availabilityRepository.existsByProviderAndDayOfWeekAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
+                providerProfile, request.getStartTime().getDayOfWeek(), request.getStartTime().toLocalTime(),
+                request.getStartTime().plusMinutes(service.getDuration_minutes()).toLocalTime()
+        )).thenReturn(true);
+
+        when(appointmentRepository.findConflictingAppointmentsForLock(providerProfile,
+                request.getStartTime(), request.getStartTime().plusMinutes(service.getDuration_minutes())))
+                .thenReturn(List.of(appointment));
+
+        assertThatThrownBy(()-> appointmentService.createAppointment(request))
+                .isInstanceOf(TimeSlotAlreadyBookedException.class)
+                .hasMessage("Time slot already booked");
     }
 
 }
