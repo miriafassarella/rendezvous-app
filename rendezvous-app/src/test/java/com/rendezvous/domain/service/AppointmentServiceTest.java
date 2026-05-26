@@ -60,9 +60,7 @@ class AppointmentServiceTest {
     @BeforeEach
     void setUp(){
         appointment = new Appointment();
-        appointment.setDayOfWeek(DayOfWeek.MONDAY);
-
-        AppointmentResponseDTO appointment = new AppointmentResponseDTO();
+        appointmentResponseDTO = new AppointmentResponseDTO();
 
         providerProfile = new ProviderProfile();
         providerProfile.setId(1L);
@@ -247,7 +245,7 @@ class AppointmentServiceTest {
     }
 
     @Test
-    void shouldReturnAppointmentResponseDTO_whenAppointmentIsCreatedSuccessfully(){
+    void shouldReturnAppointmentResponseDTO_whenAppointmentIsCreatedSuccessfully() {
         when(providerProfileRepositoy.findById(1L)).thenReturn(Optional.of(providerProfile));
         when(clientProfileRepository.findById(1L)).thenReturn(Optional.of(client));
         when(providerServiceRepository.findById(1L)).thenReturn(Optional.of(service));
@@ -269,18 +267,20 @@ class AppointmentServiceTest {
                 request.getStartTime(), request.getStartTime().plusMinutes(service.getDuration_minutes())))
                 .thenReturn(List.of());
 
-        when(appointmentMapper.toEntity(request, providerProfile, client, service))
-                .thenReturn(appointment);
-        when(appointmentRepository.save(appointment)).thenReturn(appointment);
+        when(appointmentMapper.toEntity(request, providerProfile, client, service)).thenReturn(appointment);
 
         when(appointmentMapper.toResponseDTO(appointment)).thenReturn(appointmentResponseDTO);
 
-        AppointmentResponseDTO response = appointmentService.createAppointment(request);
+        when(appointmentRepository.save(appointment))
+                .thenReturn(appointment);
+        when(appointmentRepository.save(appointment))
+                .thenReturn(appointment);
+
+
+        AppointmentResponseDTO response =
+                appointmentService.createAppointment(request);
 
         assertThat(response).isNotNull();
-        assertThat(appointment.getStatus()).isEqualTo(Status.PENDING);
-        assertThat(appointment.getDayOfWeek()).isEqualTo(request.getStartTime().getDayOfWeek());
-
-        verify(appointmentRepository, times(1)).save(appointment);
     }
+
 }

@@ -104,10 +104,8 @@ public class AppointmentService {
 
         Appointment appointment = appointmentMapper.toEntity(appointmentDTO, provider, client, service);
                 appointment.setStatus(Status.PENDING);
-                appointment.setDayOfWeek(appointment.getStartTime().getDayOfWeek());
-        Appointment appointmentSaved = appointmentRepository.save(appointment);
-
-        return appointmentMapper.toResponseDTO(appointmentSaved);
+                Appointment appointmentSaved = appointmentRepository.save(appointment);
+                return appointmentMapper.toResponseDTO(appointmentSaved);
 
     }
 

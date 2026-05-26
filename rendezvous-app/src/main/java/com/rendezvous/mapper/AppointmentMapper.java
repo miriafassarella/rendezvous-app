@@ -18,6 +18,7 @@ public class AppointmentMapper {
         appointment.setEndTime(appointmentDTO.getStartTime().plusMinutes(service.getDuration_minutes()));
         appointment.setClient(client);
         appointment.setProvider(provider);
+        appointment.setDayOfWeek(appointment.getStartTime().getDayOfWeek()); // à verificar se não vai quebrar :(
         appointment.setService(service);
         return appointment;
     }
